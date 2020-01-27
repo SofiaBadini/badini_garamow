@@ -1,0 +1,19 @@
+#! python
+
+
+def build(ctx):
+
+    from src.final.project_dependency_graph import make_project_dependency_graph
+    ctx.add_post_fun(make_project_dependency_graph)
+
+    # ctx(
+    #     features="run_py_script",
+    #     source="xxx",
+    #     deps=[
+    #         ctx.path_to(ctx, "xxx", "xxx"),
+    #     ],
+    #     target=[
+    #         ctx.path_to(ctx, "OUT_FIGURES", "xxx"),
+    #     ],
+    #     name="xxx",
+    # )

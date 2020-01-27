@@ -1,0 +1,11 @@
+#! python
+
+
+def build(ctx):
+    ctx(
+        features="run_py_script",
+        source="clean_data.py",
+        deps=ctx.path_to(ctx, "xxx", "xxx.dta"),
+        target=ctx.path_to(ctx, "xxx", "xxx.csv"),
+        name="clean_data",
+    )

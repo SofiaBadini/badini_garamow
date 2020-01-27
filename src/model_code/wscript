@@ -1,0 +1,14 @@
+#! python
+import os
+
+
+def build(ctx):
+    abspath = os.path.join(ctx.path.abspath(), "test_impute.py")
+    ctx(
+        features="run_py_script",
+        source="test_impute.py",
+        deps=[
+            ctx.path_to(ctx, "IN_MODEL_CODE", "impute.py"),
+        ],
+        append=abspath
+    )

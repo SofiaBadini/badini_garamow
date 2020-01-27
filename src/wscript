@@ -1,0 +1,14 @@
+#! python
+
+
+def build(ctx):
+    ctx.recurse("analysis")
+    ctx.recurse("data_management")
+    ctx.recurse("final")
+    ctx.recurse("model_code")
+    ctx.recurse("model_specs")
+    # Safety measure -- else the LaTeX scanner might fail because some
+    # '.tex'-source file has not been generated.
+    ctx.add_group()
+    ctx.recurse("paper")
+    ctx.recurse("documentation")

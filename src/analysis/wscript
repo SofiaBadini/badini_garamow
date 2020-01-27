@@ -1,0 +1,14 @@
+#! python
+
+
+def build(ctx):
+    ctx(
+        features="run_py_script",
+        source="ols_regression.py",
+        deps=[
+            ctx.path_to(ctx, "xxx", "xxx"),
+            #ctx.path_to(ctx, "", ""),
+        ],
+        target=ctx.path_to(ctx, "xxx", "xxx"),
+        name="ols_regression",
+    )
