@@ -1,0 +1,37 @@
+Variable,Variable description
+gateid, -
+treatment,-
+w2_completed,Completed wave 2 questionnaire (1 year and a half after random assignment)
+site,GATE site
+gender,Gender
+age,Age at random assignment
+race_white_not_hispanic,Race: white and not hispanic/latino
+race_white_hispanic,Race: white and hispanic/latino
+race_black_hispanic,Race: black and hispanic/latino
+race_black_not_hispanic,Race: black and not hispanic/latino
+race_asian,Race: asian
+race_american_indian_alaskan,Race: american indian or alaskan native
+race_hawaiian_pacific_islander,Race: native hawaiian or other pacific islander
+race_other,Race: other
+language,Primary language
+has_children_in_hh,Number of children in household
+marital_status,Marital status
+household_income,Household income in last 12 months
+grade,Highest grade in school completed
+born_us,Was born in the US
+disability,Has health or disability problem
+self_employed_at_application,Was self-employed as of date of application
+working_in_wage_and_salary_job,Working in wage and salary job as of date of application
+currently_receiving_ui_benefits, Receiving unemployment benefits as of date of application
+has_health_insurance,Has health insurance
+health_insurance_source,Source of health insurance
+relatives_friends_ever_se,Relatives or friends ever self-employed
+worked_for_relatives_friends_se,Ever worked for business owned by relatives or friends
+has_credit_history,Has a credit history
+has_credit_history_problem,Credit history has a problem
+sa_enjoys_working_independently,Enjoys working independently
+sa_is_risk_averse,Takes risks only if success is assured
+sa_will_not_risk_savings,Will not risks savings for the business
+einc, -
+einc_c2, -
+einc_c3, -
