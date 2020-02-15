@@ -1,24 +1,28 @@
-"""Pre-process data from the original GATE datasets, stored in ``Application.csv``
-and ``Wave2.csv`` located in the "IN_DATA" directory, and save the final datasets
-to ``gate_long.csv`` and ``gate_final.csv`` in the "OUT_DATA" directory.
+"""Pre-process data from the original GATE datasets. Variables of interest refers
+to information that respondents provided when applying to the GATE services and
+one year and a half after having received the GATE services.
 
-Variables of interest refers to information that respondents provided when
-applying to the GATE services and one year and a half after having received
-the GATE services.
+Process original data are stored in ``Application.csv`` and ``Wave2.csv`` located
+in the "IN_DATA" directory, and save the final datasets to ``gate_long.csv`` and
+``gate_final.csv`` in the "OUT_DATA" directory.
 
 """
-# import os
-# os.chdir("C:/Projects/badini_garamow/src/original_data")
 import numpy as np
 import pandas as pd
+
 from bld.project_paths import project_paths_join as ppj
 
 
+# import os
+# os.chdir("C:/Projects/badini_garamow/src/original_data")
+
+
+# Load datasets
 filenames = [
-    "Info_original_variables.csv",
-    "Application.csv",
-    "Wave2.csv",
-    "Final_variables.csv",
+    "info_original_variables.csv",
+    "application.csv",
+    "wave2.csv",
+    "final_variables.csv",
 ]
 dataframes = []
 for filename in filenames:
@@ -28,17 +32,11 @@ for filename in filenames:
 
 # Create dataset of variables of interest
 variables_name = dataframes[0]["Variable"].to_numpy()
-
 variables_baseline = dataframes[1][dataframes[1].columns.intersection(variables_name)]
 variables_w2 = dataframes[2][dataframes[2].columns.intersection(variables_name)]
 variables_w2 = variables_w2.drop(["treatment"], axis=1)
-
 gate_df = pd.merge(variables_baseline, variables_w2, on="gateid", how="left")
 
-
-# -4 and -2 are coded as "Refused" and "Don't know" respectively.
-# -1 indicates a legitimate skip, so it is case specific.
-gate_df = gate_df.replace([-4, -2], np.nan)
 
 # Rename variables
 mapping = {
@@ -53,11 +51,28 @@ mapping = {
     "household_income": "hhincome",
     "w2_completed": "completed_w2",
 }
-
 gate_df.rename(columns=mapping, inplace=True)
 
 
+# Convert appropriate values to NaN.
+# -4 and -2 are coded as "Refused" and "Don't know" respectively.
+# -1 indicates a legitimate skip, so it is case specific.
+gate_df = gate_df.replace([-4, -2], np.nan)
+
+
+# Replace -1 with 0, as respondents claimed to work a salary job
+# or to have no self-employed relatives or friends in previous
+# answers.
+gate_df["self_employed"] = gate_df["self_employed"].replace(-1, 0)
+gate_df["worked_for_relatives_friends_se"] = gate_df[
+    "worked_for_relatives_friends_se"
+].replace(-1, 0)
+
+
 # Create dummy variables from categorical ones
+dummies = [0, 1]
+
+
 mapping_site = {
     1: "philadelphia",
     2: "pittsburgh",
@@ -65,7 +80,6 @@ mapping_site = {
     4: "duluth",
     5: "maine",
 }
-
 for key in mapping_site.keys():
     gate_df[mapping_site.get(key)] = np.where(
         np.isnan(gate_df["site"]), np.nan, np.where(gate_df["site"] == key, 1, 0)
@@ -73,16 +87,23 @@ for key in mapping_site.keys():
 
 
 conditions = [(gate_df["language"] == 1), (gate_df["language"] >= 2)]
-choices = [0, 1]
-gate_df["nonenglish"] = pd.Series(np.select(conditions, choices, default=np.nan))
+gate_df["nonenglish"] = pd.Series(np.select(conditions, dummies, default=np.nan))
 
 
 conditions = [
     ((gate_df["marital_status"] == 1) | (gate_df["marital_status"] == 2)),
     (gate_df["marital_status"] >= 3),
 ]
-choices = [1, 0]
-gate_df["married"] = pd.Series(np.select(conditions, choices, default=np.nan))
+gate_df["married"] = pd.Series(np.select(conditions, dummies, default=np.nan))
+
+
+conditions = [
+    ((gate_df["has_health_insurance"] == 0) | (gate_df["health_insurance_source"] > 1)),
+    (gate_df["health_insurance_source"] == 1),
+]
+gate_df["employer_healthins"] = pd.Series(
+    np.select(conditions, dummies, default=np.nan)
+)
 
 
 gate_df["hhincome_p25"] = np.where(
@@ -101,21 +122,10 @@ gate_df["hhincome_p25_49"] = np.where(
 gate_df["hhincome_p50_74"] = np.where((gate_df["hhincome"] == 6), 1, 0)
 gate_df["hhincome_p75_99"] = np.where((gate_df["hhincome"] == 7), 1, 0)
 gate_df["hhincome_p100"] = np.where((gate_df["hhincome"] == 8), 1, 0)
-
 # Observation with no income indicated must be converted to NaN.
 index = gate_df[gate_df["hhincome"].isnull()].index.tolist()
 filter_col = [col for col in gate_df if col.startswith("hhincome_p")]
 gate_df.loc[index, filter_col] = np.nan
-
-
-conditions = [
-    ((gate_df["has_health_insurance"] == 0) | (gate_df["health_insurance_source"] > 1)),
-    (gate_df["health_insurance_source"] == 1),
-]
-choices = [0, 1]
-gate_df["employer_healthins"] = pd.Series(
-    np.select(conditions, choices, default=np.nan)
-)
 
 
 # Create new variables from existing ones
@@ -123,8 +133,7 @@ conditions = [
     ((gate_df["self_employed"] == 1) | (gate_df["salaried_worker"] == 1)),
     ((gate_df["self_employed"] == 0) & (gate_df["salaried_worker"] == 0)),
 ]
-choices = [0, 1]
-gate_df["unemployed"] = pd.Series(np.select(conditions, choices, default=np.nan))
+gate_df["unemployed"] = pd.Series(np.select(conditions, dummies, default=np.nan))
 
 
 gate_df["female"] = np.where(
@@ -144,8 +153,7 @@ conditions = [
     ),
     (gate_df["has_credit_history_problem"] == 1),
 ]
-choices = [0, 1]
-gate_df["badcredit"] = pd.Series(np.select(conditions, choices, default=np.nan))
+gate_df["badcredit"] = pd.Series(np.select(conditions, dummies, default=np.nan))
 
 
 gate_df["agesqr"] = gate_df["age"] ** 2
@@ -154,7 +162,6 @@ gate_df["agesqr"] = gate_df["age"] ** 2
 gate_df["latino"] = np.where(
     (gate_df["race_white_hispanic"] == 1) | (gate_df["race_black_hispanic"] == 1), 1, 0,
 )
-
 gate_df["other"] = np.where(
     (gate_df["race_american_indian_alaskan"] == 1)
     | (gate_df["race_hawaiian_pacific_islander"] == 1)
@@ -162,7 +169,6 @@ gate_df["other"] = np.where(
     1,
     0,
 )
-
 # Observation with no race indicated must be converted to NaN.
 race_df = gate_df[(gate_df.columns[pd.Series(gate_df.columns).str.startswith("race")])]
 index = race_df[race_df.isnull().any(axis=1)].index
@@ -243,24 +249,11 @@ choices = [
 gate_df["hhincome_w2"] = pd.Series(np.select(conditions, choices, default=np.nan))
 
 
-# Replace -1 with 0, as respondents claimed to work a salary job
-# or to have no self-employed relatives or friends in previous
-# answers.
-gate_df["self_employed"] = gate_df["self_employed"].replace(-1, 0)
-
-
-gate_df["worked_for_relatives_friends_se"] = gate_df[
-    "worked_for_relatives_friends_se"
-].replace(-1, 0)
-
-
 # Create standardized measure of autonomy and risk-tolerance
 gate_df["autonomy"] = abs(gate_df["sa_enjoys_working_independently"] - 6)
 gate_df["autonomy_std"] = (
     gate_df["autonomy"] - gate_df["autonomy"].mean() / gate_df["autonomy"].std()
 )
-
-
 gate_df["risk_tolerance"] = (
     gate_df["sa_is_risk_averse"] + gate_df["sa_will_not_risk_savings"]
 )
