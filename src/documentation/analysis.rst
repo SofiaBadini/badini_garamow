@@ -4,7 +4,7 @@
 OLS Regressions after Imputation
 *********************************
 
-Documentation of the code in *src.analysis*. This is the core of the project.
+Documentation of the code in *src.analysis*.
 
 
 ``ols_regression.py``
@@ -12,7 +12,7 @@ Documentation of the code in *src.analysis*. This is the core of the project.
 
 Text here.
 
-.. automodule:: src.analysis.xxx
+.. automodule:: src.analysis.ols_regression
     :members:
 
 Text here.

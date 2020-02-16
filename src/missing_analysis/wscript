@@ -4,7 +4,7 @@
 def build(ctx):
     ctx(
         features="run_py_script",
-        source="missing_analysis.py",
+        source="tables.py",
         deps=[ctx.path_to(ctx, "OUT_DATA", "gate_final.csv")],
         target=[
             ctx.path_to(ctx, "OUT_TABLES", "table_integrity.tex"),
@@ -12,15 +12,15 @@ def build(ctx):
             ctx.path_to(ctx, "OUT_TABLES", "table_levene.tex"),
             ctx.path_to(ctx, "OUT_TABLES", "table_chisq.tex"),
         ],
-        name="missing_analysis",
+        name="tables",
     ),
     ctx(
         features="run_py_script",
-        source="missing_plots.py",
+        source="plots.py",
         deps=[ctx.path_to(ctx, "OUT_DATA", "gate_final.csv")],
         target=[
             ctx.path_to(ctx, "OUT_FIGURES", "matrix_nan.png"),
             ctx.path_to(ctx, "OUT_FIGURES", "heatmap_nan.png"),
         ],
-        name="missing_plots",
+        name="plots",
     )

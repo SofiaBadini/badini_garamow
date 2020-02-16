@@ -8,22 +8,19 @@ and ``table_chisq.tex`` in the "OUT_TABLES" directory.
 """
 import numpy as np
 import pandas as pd
-from formatting import assign_stars
-from formatting import format_table
-from functions_analysis import chisquare_by_column
-from functions_analysis import levene_by_column
-from functions_analysis import ttest_by_column
 
 from bld.project_paths import project_paths_join as ppj
-
-
-# import os
-# os.chdir("C:/Projects/badini_garamow/bld/out/data")
+from src.missing_analysis.formatting_tables import assign_stars_to_column
+from src.missing_analysis.formatting_tables import format_as_percentage
+from src.missing_analysis.functions_tables import chisquare_by_column
+from src.missing_analysis.functions_tables import compute_sample_sizes
+from src.missing_analysis.functions_tables import create_quantile_dummy
+from src.missing_analysis.functions_tables import levene_by_column
+from src.missing_analysis.functions_tables import ttest_by_column
 
 
 # Load dataset
 gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
-# gate_final = pd.read_csv("gate_final.csv")
 
 
 # Renaming for aesthetic reasons
@@ -75,9 +72,7 @@ pretty_index = {
 
 
 # RANDOMIZATION INTEGRITY CHECK
-
-
-# Drop redundant variables
+# Drop redundant variables from application dataset
 gate_app = gate_final.drop(
     ["gateid", "hhincome", "hhincome_w2", "site", "agesqr"], axis=1,
 )
@@ -92,23 +87,18 @@ app = ttest_by_column(gate_app, "treatment", equal_var=True)
 wave2 = ttest_by_column(gate_wave2, "treatment", equal_var=True)
 
 
-# Include sample sizes
-sample_sizes = []
-for df in [gate_app, gate_wave2]:
-    for dummy in (1, 0):
-        sample_size = pd.Series(
-            df.groupby("treatment").size()[dummy], index=["sample_size"]
-        )
-        sample_sizes.append(sample_size)
+# Compute sample sizes for treatment and control
+app_size = compute_sample_sizes(gate_app)
+wave2_size = compute_sample_sizes(gate_wave2)
 
 
 # Create MultiIndex DataFrame
 table_integrity = {
-    ("Baseline", "Treatment group"): app["mean1"].append(sample_sizes[0]),
-    ("Baseline", "Control group"): app["mean0"].append(sample_sizes[1]),
+    ("Baseline", "Treatment"): app["mean1"].append(app_size[1]),
+    ("Baseline", "Control"): app["mean0"].append(app_size[0]),
     ("Baseline", "p-value"): app["pvalue"],
-    ("Follow-up wave 2", "Treatment group"): wave2["mean1"].append(sample_sizes[2]),
-    ("Follow-up wave 2", "Control group"): wave2["mean0"].append(sample_sizes[3]),
+    ("Follow-up wave 2", "Treatment"): wave2["mean1"].append(wave2_size[1]),
+    ("Follow-up wave 2", "Control"): wave2["mean0"].append(wave2_size[0]),
     ("Follow-up wave 2", "p-value"): wave2["pvalue"],
 }
 table_integrity = pd.DataFrame.from_dict(table_integrity).reindex(pretty_index)
@@ -127,30 +117,25 @@ keep_format = [
     "Standardized risk-tolerance index",
 ]
 rows_to_format = [item for item in table_integrity.index if item not in keep_format]
-columns_to_format = ["Treatment group", "Control group"]
-table_integrity = format_table(
-    table_integrity, rows_to_format, columns_to_format, "{:,.2%}"
+columns_to_format = pd.IndexSlice[:, ["Treatment", "Control"]]
+table_integrity = format_as_percentage(
+    table_integrity, rows_to_format, columns_to_format
 )
-table_integrity = format_table(
-    table_integrity, "Sample size", columns_to_format, "{:,.0f}"
-)
-table_integrity = assign_stars(
-    table_integrity, "p-value", correction=len(table_integrity) - 1
+table_integrity = assign_stars_to_column(
+    table_integrity, pd.IndexSlice[:, "p-value"], correction=len(table_integrity) - 1
 )
 
 
 # Save to latex table
 table_integrity.to_latex(
     ppj("OUT_TABLES", "table_integrity.tex"),
-    float_format="{:.3g}".format,
+    float_format="{:.3f}".format,
     na_rep=" ",
     multicolumn_format="c",
 )
 
 
 # MISSING VALUES ANALYSIS
-
-
 # Drop redundant variables
 gate_missing = gate_final.drop(
     ["gateid", "completed_w2", "hhincome", "hhincome_w2", "site", "agesqr"], axis=1
@@ -159,7 +144,6 @@ gate_missing = gate_final.drop(
 
 # Dummy variables to indicate whether missing value(s) are present in covariates...
 gate_missing["missing_cov"] = np.where(np.isnan(gate_missing).any(axis=1), 1, 0)
-# ... or in outcome
 gate_missing["missing_out"] = np.where(np.isnan(gate_final["hhincome_w2"]), 1, 0)
 
 
@@ -170,11 +154,11 @@ ttest_out = ttest_by_column(gate_missing, "missing_out", equal_var=False)
 
 # Create MultiIndex DataFrame
 table_missing_dict = {
-    ("Covariates", "Missing value(s)"): ttest_cov["mean1"],
-    ("Covariates", "No missing value(s)"): ttest_cov["mean0"],
+    ("Covariates", "Missing"): ttest_cov["mean1"],
+    ("Covariates", "No missing"): ttest_cov["mean0"],
     ("Covariates", "p-value"): ttest_cov["pvalue"],
-    ("Outcome of interest", "Missing value"): ttest_out["mean1"],
-    ("Outcome of interest", "No missing value"): ttest_out["mean0"],
+    ("Outcome of interest", "Missing"): ttest_out["mean1"],
+    ("Outcome of interest", "No missing"): ttest_out["mean0"],
     ("Outcome of interest", "p-value"): ttest_out["pvalue"],
 }
 table_missing = pd.DataFrame.from_dict(table_missing_dict).reindex(pretty_index)
@@ -187,33 +171,22 @@ keep_format = [
     "Highest grade achieved",
     "Standardized autonomy index",
     "Standardized risk-tolerance index",
-    "Missing value(s) in covariates",
-    "Missing value in outcome",
 ]
 rows_to_format = [item for item in table_missing.index if item not in keep_format]
-columns_to_format = [
-    "Missing value(s)",
-    "No missing value(s)",
-    "Missing value",
-    "No missing value",
+columns_to_format = pd.IndexSlice[:, ["Missing", "No missing"]]
+table_missing = format_as_percentage(table_missing, rows_to_format, columns_to_format)
+table_missing.loc["Missing value(s) in covariates", "Covariates"] = [
+    np.nan,
+    np.nan,
+    np.nan,
 ]
-table_missing = format_table(
-    table_missing, rows_to_format, columns_to_format, "{:,.2%}"
-)
-table_missing = format_table(
-    table_missing,
-    "Missing value(s) in covariates",
-    ["Missing value", "No missing value"],
-    "{:,.2%}",
-)
-table_missing = format_table(
-    table_missing,
-    "Missing value in outcome",
-    ["Missing value(s)", "No missing value(s)"],
-    "{:,.2%}",
-)
-table_missing = assign_stars(
-    table_missing, "p-value", correction=len(table_missing) - 1
+table_missing.loc["Missing value in outcome", "Outcome of interest"] = [
+    np.nan,
+    np.nan,
+    np.nan,
+]
+table_missing = assign_stars_to_column(
+    table_missing, pd.IndexSlice[:, "p-value"], correction=len(table_missing) - 1
 )
 
 
@@ -227,8 +200,6 @@ table_missing.to_latex(
 
 
 # CONSISTENCY CHECK: LEVENE TEST FOR EQUAL VARIANCES
-
-
 # Compute Levene statistic and p-values
 levene_cov = levene_by_column(gate_missing, "missing_cov")
 levene_out = levene_by_column(gate_missing, "missing_out")
@@ -246,7 +217,9 @@ table_levene = table_levene.rename(pretty_index).dropna(how="all")
 
 
 # Format DataFrame
-table_levene = assign_stars(table_levene, "p-value", correction=len(table_levene) - 1)
+table_levene = assign_stars_to_column(
+    table_levene, pd.IndexSlice[:, "p-value"], correction=len(table_levene) - 1
+)
 table_levene = table_levene.fillna(" ")
 
 
@@ -259,70 +232,23 @@ table_levene.to_latex(
 
 
 # CHI-SQUARE TEST
-
-
 # Create dummy variables from continuous variables
-gate_missing["age_p25"] = np.where(
-    np.isnan(gate_missing["age"]),
-    np.nan,
-    np.where(gate_missing["age"] <= gate_missing["age"].quantile(0.25), 1, 0),
+gate_missing["age_p25"] = create_quantile_dummy(gate_missing, "age", 0.25)
+gate_missing["age_p25_75"] = create_quantile_dummy(gate_missing, "age", [0.25, 0.75])
+gate_missing["age_p75"] = create_quantile_dummy(gate_missing, "age", 0.75, lower=False)
+
+gate_missing["grade_p25"] = create_quantile_dummy(gate_missing, "grade", 0.25)
+gate_missing["grade_p25_75"] = create_quantile_dummy(
+    gate_missing, "grade", [0.25, 0.75]
 )
-gate_missing["age_p25_75"] = np.where(
-    np.isnan(gate_missing["age"]),
-    np.nan,
-    np.where(
-        (gate_missing["age"] > gate_missing["age"].quantile(0.25))
-        & (gate_missing["age"] < gate_missing["age"].quantile(0.75)),
-        1,
-        0,
-    ),
-)
-gate_missing["age_p75"] = np.where(
-    np.isnan(gate_missing["age"]),
-    np.nan,
-    np.where(gate_missing["age"] >= gate_missing["age"].quantile(0.75), 1, 0),
+gate_missing["grade_p75"] = create_quantile_dummy(
+    gate_missing, "grade", 0.75, lower=False
 )
 
-
-gate_missing["grade_p25"] = np.where(
-    np.isnan(gate_missing["grade"]),
-    np.nan,
-    np.where(gate_missing["grade"] <= gate_missing["grade"].quantile(0.25), 1, 0),
+gate_missing["low_risk_tolerance"] = create_quantile_dummy(
+    gate_missing, "risk_tolerance_std", 0.5
 )
-gate_missing["grade_p25_75"] = np.where(
-    np.isnan(gate_missing["grade"]),
-    np.nan,
-    np.where(
-        (gate_missing["grade"] > gate_missing["grade"].quantile(0.25))
-        & (gate_missing["grade"] < gate_missing["grade"].quantile(0.75)),
-        1,
-        0,
-    ),
-)
-gate_missing["grade_p75"] = np.where(
-    np.isnan(gate_missing["grade"]),
-    np.nan,
-    np.where(gate_missing["grade"] >= gate_missing["grade"].quantile(0.75), 1, 0),
-)
-
-
-gate_missing["low_risk_tolerance"] = np.where(
-    np.isnan(gate_missing["risk_tolerance_std"]),
-    np.nan,
-    np.where(
-        gate_missing["risk_tolerance_std"]
-        <= gate_missing["risk_tolerance_std"].median(),
-        1,
-        0,
-    ),
-)
-gate_missing["low_autonomy"] = np.where(
-    np.isnan(gate_missing["autonomy_std"]),
-    np.nan,
-    np.where(
-        gate_missing["autonomy_std"] <= gate_missing["autonomy_std"].median(), 1, 0
-    ),
-)
+gate_missing["low_autonomy"] = create_quantile_dummy(gate_missing, "autonomy_std", 0.5)
 
 
 # Drop continuous variables
@@ -348,7 +274,9 @@ table_chisq = table_chisq.rename(pretty_index).dropna(how="all")
 
 
 # Format DataFrame
-table_chisq = assign_stars(table_chisq, "p-value", correction=len(table_chisq) - 1)
+table_chisq = assign_stars_to_column(
+    table_chisq, pd.IndexSlice[:, "p-value"], correction=len(table_chisq) - 1
+)
 table_chisq = table_chisq.fillna(" ")
 
 

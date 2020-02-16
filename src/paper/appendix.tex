@@ -1,4 +1,44 @@
+% !TEX root = 000_paper.tex
+
 \begin{appendices}
 	\section{APPENDIX}
- 	 This is an appendix.
+\subsection{Additional Tables for Missing Data Analysis}
+\begin{table}[H]
+\centering
+\caption{\textsc{Levene's Test for Homogeneity of Variances}}
+\begin{adjustbox}{width=\textwidth,totalheight=\textheight,keepaspectratio}
+\input{../../out/tables/table_levene}
+\end{adjustbox}
+
+
+\label{tab:table_levene}
+\medskip
+\raggedright
+\footnotesize
+\textit{Notes:} Levene's tests for equal variances are performed for all the individuals' characteristics.
+All reported characteristics are measured at time of application, prior to random assignment. The wave 2 survey is conducted 18 months after time of application. We adjust the significance levels for multiple testing using a Bonferroni correction. \\
+*** Significant at the 1 percent level ** Significant at the 5 percent level * Significant at the 1 percent level
+\end{table}
+
+
+\begin{table}
+\centering
+\caption{\textsc{Missing Values Comparison of Characteristics for GATE Experiment}}
+\begin{adjustbox}{width=\textwidth,totalheight=\textheight,keepaspectratio}
+\input{../../out/tables/table_chisq}
+\end{adjustbox}
+
+
+\label{tab:table_chisq}
+\medskip
+\raggedright
+\footnotesize
+\textit{Notes:} Chi-squared tests are performed to assess whether missingness in the data is related to individuals' characteristics.
+All reported characteristics are measured at time of application, prior to random assignment. The outcome of interest is household income 18 months after time of application. We adjust the significance levels for multiple testing using a Bonferroni correction. \\
+*** Significant at the 1 percent level ** Significant at the 5 percent level * Significant at the 1 percent level
+\end{table}
+
+
+
+
 \end{appendices}

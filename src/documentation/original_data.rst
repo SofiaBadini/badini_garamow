@@ -1,21 +1,39 @@
 .. _original_data:
 
 *************
-Original data
+Original Data
 *************
 
 Documentation of the different datasets in *original_data*.
 
 
-xxx data set
-==============
+application.csv
+================
 
-The original panel data set, xxx, is taken from xxx.
-It is available in the dta format and contains xxx observations of individuals.
-For each individual we observe xxx covariates in xxx categories.
-The data set contains three waves. The first wave was collected in xxx, xxx...
-The data set suffers from missing observations. Observations are missing because of non-response and because of attrition.
-We find missing values because of non-response in ...
-In the first wave, 6 months after the project implementation, xxx participants drop out, which leads to an attrition rate of xxx%.
-In the second wave, xxx months after the project implementation, xxx participants drop out, which leads to an attrition rate of xxx%.
-In the third wave, xxx months after the project implementation, xxx participants drop out, which leads to an attrition rate of xxx%.
+The original panel dataset of applicants' data, collected at the application
+for the GATE services. Available in .sas7bcat format at the `ETA`_
+website (Employment & Training Administration, an agency within the U.S.
+Department of Labor).
+
+.. _ETA: https://www.doleta.gov/reports/projectgate/
+
+wave2.csv
+==========
+
+The original panel dataset of applicants' data, collected 18 months after
+receipt of the GATE services. Available in .sas7bcat format at the `ETA`_
+website (Employment & Training Administration, an agency within the U.S.
+Department of Labor).
+
+.. _ETA: https://www.doleta.gov/reports/projectgate/
+
+
+info_original_variables.csv
+============================
+
+Information on the original datasets' variable.
+
+final_variables.csv
+====================
+
+Variables to be kept after data cleaning.

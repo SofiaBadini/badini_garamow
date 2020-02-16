@@ -1,4 +1,92 @@
-\section{The GATE Project} 
+% !TEX root = 000_paper.tex
 
-% INTRODUCING GATE
-This is the gate project and its problems. 
+\section{Missing Data Analysis}
+
+\subsection{The GATE Experiment}
+Project Growing America Through Entrepreneurship (GATE) was a longitudinal study conducted by the US Department of Labor and the Small Business Administration in which free entrepreneurship training was randomly offered to individuals interested in starting or implementing a business. More than 4000 individuals applied for a limited number of slots, making this, as of 2015, the largest-ever randomized evaluation of entrepreneurship training and assistance.
+
+Subjects assigned to the treatment group were offered an array of (highly heterogeneous) free best-practice training services, while subjects assigned to the control group were not offered any free service. The treatment phase ran from September 2003 to July 2005 in 7 different sites across 3 states and there were follow-up surveys at 6, 18, and 60 months after random assignment.
+
+Project GATE sought to increase employment, earnings, and self-sufficiency by promoting economic development in low-income areas. Most communities have organizations that provide assistance to people who want to start their own businesses, but Project GATE differed from the programs already available at the sites: it employed a particularly extensive outreach, it provided highly individualized training, it was free and it did not screen out participants based on their likelihood of success.
+
+Fairlie et al. (2008) estimate the effects of receiving entrepreneurship training (LATE). First, they check whether participating into the GATE experiment actually increased the quantity and quality of training received by the treated. Second, they estimate the impact of such training on a number of business outcomes at each time horizon, restricting the anaylsis to the complete case. Their results suggest that entrepreneurship training had limited impacts on business ownership, scale, and household income. While entrepreneurship training did increase the likelihood of business ownership in the short-run (6-months), this effect depreciated over time and was not significant anymore at 18 and 60 months. There is no evidence that training affected other outcomes at any horizon.
+
+In this paper, we focus on the effects of being offered free entrepreneurship training ("intent-to-treat" effect) on household income 18 months after random assignment. % Something about human capital.
+The rationale to focus on the ITT is ... % Justify.
+Moreover, results from Fairlie et al. (2008) indicate that ... % Justify more
+
+\subsection{Data Structure and Missing Data Pattern}
+
+The applicants' answers to the application survey provide a rich set of baseline characteristics. These include general information about age, gender, racial background and education; as well as information about household composition and socio-economics status, health, credit history, and employment. Personal characteristics associated with entrepreneurial success were assessed via the self-reported surveys and are boiled down to two main (standardized) indexes of risk-tolerance and autonomy.
+
+Later follow-up surveys asked whether the individuals received GATE services since random assignment and how they evaluated the usefulness of those services; and contained questions on measures of business outcomes such as business ownership, business size and revenues, household income, and overall work satisfaction.
+
+Throughout our paper we focus on a subset of about 30 baseline characteristics and on only one outcome, household income at the wave 2 follow-up survey. Therefore, when imputing we implicitely assume that all the relevant information on the outcome of interest can be drawn from the observed baseline characteristics (plus treatment and attrition status). This greatly simplify the analysis, but a clear drawback is that we neglect information on business outcomes present in the wave 1 follow-up survey and information on business outcomes besides household income present in the wave 2 follow-up survey, which are both likely correlated with our outcome of interest and thus may be used to predict its missing values.
+
+% Brief paragraph in which we describe what we define as "missing value" and "attrition"? I would not devote a whole
+% section to this.
+
+\begin{figure}
+    \caption{Nullity Matrix for GATE Dataset}
+    \includegraphics[width=\textwidth]{../../out/figures/matrix_nan.png}
+    \label{fig:matrix_nan}
+\end{figure}
+
+\begin{figure}
+    \caption{Nullity Correlation Heatmap for GATE Dataset}
+    \includegraphics[width=\textwidth]{../../out/figures/heatmap_nan.png}
+    \label{fig:heatmap_nan}
+\end{figure}
+
+
+Figure~\ref{fig:matrix_nan} displays the missing data pattern for this subset of variables. Missing values in the baseline characteristics are found in 12\% of the total individuals, and appear to be more numerous for questions related to employment status, credit history, personal characteristics and health. About ... of the individuals do not report a value for household income at wave 2. Among them, ... \% are attriters --- in this context, individuals who do not answer any question of the wave 2 follow-up survey ---, while the remaining ...\% do take part in the survey, but do not answer the questions related to household income.
+
+Figure~\ref{fig:heatmap_nan} displays the degree of nullity correlation between paired different characteristics (variables
+with no missing values are excluded). A positive nullity correlation indicates that the first and the second characteristics are likely to both have missing values, while a negative nullity correlation means that one of the features is missing and the second is likely not to be missing. The heatmap shows that, in general, the nullity correlation is weakly positive, with ...
+% Describe the figure
+
+\begin{table}[t]
+\centering
+\caption{\textsc{Treatment/Control Comparison of Characteristics for GATE Experiment}}
+\begin{adjustbox}{width=\textwidth, totalheight=\textheight, keepaspectratio}
+\input{../../out/tables/table_integrity}
+\end{adjustbox}
+
+
+\label{tab:table_integrity}
+\medskip
+\raggedright
+\footnotesize
+\textit{Notes:} All reported characteristics are measured at time of application, prior to random assignment. The wave 2 follow-up survey is conducted 18 months after time of application. We adjust the significance levels for multiple testing using a Bonferroni correction. \\
+** Significant at the 5 percent level
+\end{table}
+
+Importantly, the internal validity of the complete case analysis' intention-to-treat, which we use as a benchmark, is unharmed as long as treatment and control groups are comparable. Table~\ref{tab:table_integrity} shows that baseline characteristics are balanced between treatment and control both after application and at the wave 2 follow-up survey, a reassuring result. However, attrition appears not to be balanced between treatment groups, with untreated individual being statistically more likely to attrit: this is not uncommon in the literature, as ... % Give reasons
+
+% Conclude
+
+
+\subsection{Exploring the Missing Data Mechanism}
+
+We explore the missing data mechanism performing Welch's t-tests for each characteristic. The idea is that ...
+We choose Welch's t-tests over the more common Student's t-test to take into account the unequal sample sizes, and therefore unequal sample variances ... % Explain better. Reference to Tables in Appendix.
+Table~\ref{tab: table_missing} shows that ...
+For consistency, we additionally perform chi-square tests for each characteristic. The result are shown in~\ref{tab: table_chisq}, in Appendix A. % Reference to Appendix!
+
+\begin{table}
+\centering
+\caption{\textsc{Missing Values Comparison of Characteristics for GATE Experiment}}
+\begin{adjustbox}{width=\textwidth,totalheight=\textheight,keepaspectratio}
+\input{../../out/tables/table_missing}
+\end{adjustbox}
+
+
+\label{tab:table_missing}
+\medskip
+\raggedright
+\footnotesize
+\textit{Notes:} Welch's t-tests are performed to assess whether missingness in the data is related to individuals' characteristics.
+All reported characteristics are measured at time of application, prior to random assignment. The outcome of interest is household income 18 months after time of application. We adjust the significance levels for multiple testing using a Bonferroni correction. \\
+*** Significant at the 1 percent level ** Significant at the 5 percent level * Significant at the 1 percent level
+\end{table}
+

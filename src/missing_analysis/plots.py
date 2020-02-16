@@ -1,8 +1,8 @@
-"""Graphical analysis of missing data. Produces heatmap to show nullity
-correlation and nullity matrix to visualize pattern in missing data.
+"""Produce nullity correlation heatmap and nullity matrix.
 
-Analyse data in ``gate_final.csv``, stored in the "OUT_DATA" directory, and save
-plots to ``heatmap_nan.png`` and ``matrix_nan.png`` in the "OUT_FIGURES" directory.
+Visualize missing data pattern in ``gate_final.csv``, stored in the "OUT_DATA"
+directory, and save plots to ``heatmap_nan.png`` and ``matrix_nan.png`` in the
+"OUT_FIGURES" directory.
 
 """
 import matplotlib.pyplot as plt
@@ -11,15 +11,12 @@ import numpy as np
 import pandas as pd
 
 from bld.project_paths import project_paths_join as ppj
-
-
-# import os
-# os.chdir("C:/Projects/badini_garamow/bld/out/data")
+from src.missing_analysis.functions_plots import heatmap_nan
+from src.missing_analysis.functions_plots import matrix_nan
 
 
 # Load dataset
 gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
-# gate_final = pd.read_csv("gate_final.csv")
 
 
 # Mapping names for aesthetic reasons
@@ -58,7 +55,7 @@ new_names = [
     "RECEIVES UNEMPLOYMENT BENEFITS",
     "HOUSEHOLD INCOME",
     "HEALTH INSURANCE PROVIDED \n BY EMPLOYER",
-    "HAS AN HEALTH PROBLEM",
+    "HAS A HEALTH PROBLEM",
     "SALARIED WORKER",
     "SELF-EMPLOYED",
     "UNEMPLOYED",
@@ -114,9 +111,17 @@ gate_for_plot["race"] = np.where(
 gate_for_plot = gate_for_plot.rename(columns=mapping_aes)
 
 
+# To avoid cropping pictures when saving them
+plt.tight_layout()
+
+
 # Sort dataset according to nan, by index and by column
 index_missing = gate_for_plot.isna().sum().sort_values().index
 sorted_by_missing = msno.nullity_sort(gate_for_plot[index_missing])
+
+
+# Matrix
+matrix_nan = matrix_nan(sorted_by_missing)
 
 
 # Sort dataset by characteristic category
@@ -124,39 +129,10 @@ index_category = pd.Index(new_names)
 sorted_by_category = gate_for_plot[index_category]
 
 
-# To avoid cropping pictures when saving them
-plt.tight_layout()
-
-
-# Matrix
-matrix_nan = msno.matrix(sorted_by_missing)
-matrix_nan.set_ylabel("INDEX OF OBSERVATIONS", labelpad=0, fontsize=18)
-# Outcome in bold
-matrix_nan.get_xticklabels()[19].set_fontweight("bold")
-
-
 # Heatmap
-heatmap_nan = msno.heatmap(sorted_by_category, vmin=0, cmap="OrRd")
-# Outcome in bold
-heatmap_nan.get_xticklabels()[16].set_fontweight("bold")
-heatmap_nan.get_yticklabels()[16].set_fontweight("bold")
-# Interesting fact:
-# When plotting heatmaps with seaborn (on which the "missingno" library builds)
-# the first and the last row is cut in halve, because of a bug in the matplotlib
-# regression between 3.1.0 and 3.1.1
-# We are correcting it this way:
-bottom, top = heatmap_nan.get_ylim()
-heatmap_nan.set_ylim(bottom + 0.5, top - 0.5)
-positions = np.array([1, 3, 5, 8, 10, 14, 16])
-labels = ["BACKGROUND", "HOUSEHOLD", "FINANCE", "HEALTH", "EMPLOYMENT", "PERSONALITY"]
-heatmap_nan.hlines(positions, xmin=0, xmax=positions, lw=8, color="white")
-for position, label in zip(positions, labels):
-    heatmap_nan.text(position + 0.35, position + 0.35, label, fontsize=14)
+heatmap_nan = heatmap_nan(sorted_by_category)
 
 
 # Save plots as png
 matrix_nan.figure.savefig(ppj("OUT_FIGURES", "matrix_nan.png"), bbox_inches="tight")
 heatmap_nan.figure.savefig(ppj("OUT_FIGURES", "heatmap_nan.png"), bbox_inches="tight")
-
-# matrix_nan.figure.savefig("matrix_nan.png", bbox_inches="tight")
-# heatmap_nan.figure.savefig("heatmap_nan.png", bbox_inches="tight")

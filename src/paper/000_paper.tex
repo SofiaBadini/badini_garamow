@@ -1,5 +1,11 @@
-%%% PREAMBEL %%%
-\documentclass[12pt, a4paper, leqno]{article}
+%%% PREAMBLE %%%
+\documentclass[11pt, a4paper, leqno]{article}
+\usepackage{graphicx}
+%
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
+%
 
 % PACKAGES
 \input{0_packages.tex}
@@ -30,23 +36,11 @@
 
 
 %%% MAIN PART %%%
-\newpage 
+\newpage
 \onehalfspacing
 
 \input{1_intro.tex}
-
 \input{2_gate.tex}
-
-\input{3_missing.tex}
-
-\input{4_attrition.tex}
-
-\input{5_summary.tex}
-
-\input{6_results.tex}
-
-\input{7_conclusion.tex}
-
 
 %%% APPENDIX %%%
 \clearpage %or \newpage

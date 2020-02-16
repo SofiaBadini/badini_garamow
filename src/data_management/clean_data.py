@@ -1,20 +1,14 @@
-"""Pre-process data from the original GATE datasets. Variables of interest refers
-to information that respondents provided when applying to the GATE services and
-one year and a half after having received the GATE services.
+"""Pre-process data from the original GATE datasets.
 
-Process original data are stored in ``Application.csv`` and ``Wave2.csv`` located
-in the "IN_DATA" directory, and save the final datasets to ``gate_long.csv`` and
-``gate_final.csv`` in the "OUT_DATA" directory.
+Process original data stored in ``application.csv`` and ``wave2.csv`` located
+in the "IN_DATA" directory, and save the final datasets to ``gate_long.csv``
+and ``gate_final.csv`` in the "OUT_DATA" directory.
 
 """
 import numpy as np
 import pandas as pd
 
 from bld.project_paths import project_paths_join as ppj
-
-
-# import os
-# os.chdir("C:/Projects/badini_garamow/src/original_data")
 
 
 # Load datasets
@@ -27,7 +21,6 @@ filenames = [
 dataframes = []
 for filename in filenames:
     dataframes.append(pd.read_csv(ppj("IN_DATA", filename)))
-#    dataframes.append(pd.read_csv(filename))
 
 
 # Create dataset of variables of interest
