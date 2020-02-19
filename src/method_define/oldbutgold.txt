@@ -1,0 +1,14 @@
+def impute_median(data):
+    """Impute missing values with the median of each column.
+
+        Inputs:
+        data (pd.DataFrame)
+
+        Returns:
+        imputed data set, df_imputed_median (pd.DataFrame)
+
+    """
+    imputer = SimpleImputer(missing_values=np.nan, strategy=median)
+    df_imputed_median = imputer.fit_transform(data)
+
+    return df_imputed_median
