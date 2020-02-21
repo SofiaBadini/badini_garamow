@@ -21,7 +21,18 @@ The applicants' answers to the application survey provide a rich set of baseline
 
 Later follow-up surveys asked whether the individuals received GATE services since random assignment and how they evaluated the usefulness of those services; and contained questions on measures of business outcomes such as business ownership, business size and revenues, household income, and overall work satisfaction.
 
-Throughout our paper we focus on a subset of about 30 baseline characteristics and on only one outcome, household income at the wave 2 follow-up survey. Therefore, when imputing we implicitely assume that all the relevant information on the outcome of interest can be drawn from the observed baseline characteristics (plus treatment and attrition status). This greatly simplify the analysis, but a clear drawback is that we neglect information on business outcomes present in the wave 1 follow-up survey and information on business outcomes besides household income present in the wave 2 follow-up survey, which are both likely correlated with our outcome of interest and thus may be used to predict its missing values.
+Throughout our paper we focus on a subset of about 30 baseline characteristics and on only one outcome, household income at the wave 2 follow-up survey.
+
+Figure~\ref{fig:matrix_nan} displays the missing data pattern for this subset of variables. Missing values in the baseline characteristics are found in 12\% of the total individuals, and appear to be more numerous for questions related to employment status, credit history, personal characteristics and health. About ... of the individuals do not report a value for household income at wave 2. Among them, ... \% are attriters --- in this context, individuals who do not answer any question of the wave 2 follow-up survey ---, while the remaining ...\% do take part in the survey, but do not answer the questions related to household income.
+
+Figure~\ref{fig:heatmap_nan} displays the degree of nullity correlation between paired different characteristics (variables
+with no missing values are excluded). A positive nullity correlation indicates that the first and the second characteristics are likely to both have missing values, while a negative nullity correlation means that one of the features is missing and the second is likely not to be missing. The heatmap shows that, in general, the nullity correlation is weakly positive, with ...
+% Describe the figure
+
+
+
+%Later
+%Therefore, when imputing we implicitely assume that all the relevant information on the outcome of interest can be drawn from the observed baseline characteristics (plus treatment and attrition status). This greatly simplify the analysis, but a clear drawback is that we neglect information on business outcomes present in the wave 1 follow-up survey and information on business outcomes besides household income present in the wave 2 follow-up survey, which are both likely correlated with our outcome of interest and thus may be used to predict its missing values.
 
 % Brief paragraph in which we describe what we define as "missing value" and "attrition"? I would not devote a whole
 % section to this.
@@ -39,31 +50,6 @@ Throughout our paper we focus on a subset of about 30 baseline characteristics a
 \end{figure}
 
 
-Figure~\ref{fig:matrix_nan} displays the missing data pattern for this subset of variables. Missing values in the baseline characteristics are found in 12\% of the total individuals, and appear to be more numerous for questions related to employment status, credit history, personal characteristics and health. About ... of the individuals do not report a value for household income at wave 2. Among them, ... \% are attriters --- in this context, individuals who do not answer any question of the wave 2 follow-up survey ---, while the remaining ...\% do take part in the survey, but do not answer the questions related to household income.
-
-Figure~\ref{fig:heatmap_nan} displays the degree of nullity correlation between paired different characteristics (variables
-with no missing values are excluded). A positive nullity correlation indicates that the first and the second characteristics are likely to both have missing values, while a negative nullity correlation means that one of the features is missing and the second is likely not to be missing. The heatmap shows that, in general, the nullity correlation is weakly positive, with ...
-% Describe the figure
-
-\begin{table}[t]
-\centering
-\caption{\textsc{Treatment/Control Comparison of Characteristics for GATE Experiment}}
-\begin{adjustbox}{width=\textwidth, totalheight=\textheight, keepaspectratio}
-\input{../../out/tables/table_integrity}
-\end{adjustbox}
-
-
-\label{tab:table_integrity}
-\medskip
-\raggedright
-\footnotesize
-\textit{Notes:} All reported characteristics are measured at time of application, prior to random assignment. The wave 2 follow-up survey is conducted 18 months after time of application. We adjust the significance levels for multiple testing using a Bonferroni correction. \\
-** Significant at the 5 percent level
-\end{table}
-
-Importantly, the internal validity of the complete case analysis' intention-to-treat, which we use as a benchmark, is unharmed as long as treatment and control groups are comparable. Table~\ref{tab:table_integrity} shows that baseline characteristics are balanced between treatment and control both after application and at the wave 2 follow-up survey, a reassuring result. However, attrition appears not to be balanced between treatment groups, with untreated individual being statistically more likely to attrit: this is not uncommon in the literature, as ... % Give reasons
-
-% Conclude
 
 
 \subsection{Exploring the Missing Data Mechanism}
@@ -72,6 +58,11 @@ We explore the missing data mechanism performing Welch's t-tests for each charac
 We choose Welch's t-tests over the more common Student's t-test to take into account the unequal sample sizes, and therefore unequal sample variances ... % Explain better. Reference to Tables in Appendix.
 Table~\ref{tab: table_missing} shows that ...
 For consistency, we additionally perform chi-square tests for each characteristic. The result are shown in~\ref{tab: table_chisq}, in Appendix A. % Reference to Appendix!
+
+Importantly, the internal validity of the complete case analysis' intention-to-treat, which we use as a benchmark, is unharmed as long as treatment and control groups are comparable. Table~\ref{tab:table_integrity} shows that baseline characteristics are balanced between treatment and control both after application and at the wave 2 follow-up survey, a reassuring result. However, attrition appears not to be balanced between treatment groups, with untreated individual being statistically more likely to attrit: this is not uncommon in the literature, as ... % Give reasons
+
+% Conclude
+
 
 \begin{table}
 \centering
@@ -89,4 +80,21 @@ For consistency, we additionally perform chi-square tests for each characteristi
 All reported characteristics are measured at time of application, prior to random assignment. The outcome of interest is household income 18 months after time of application. We adjust the significance levels for multiple testing using a Bonferroni correction. \\
 *** Significant at the 1 percent level ** Significant at the 5 percent level * Significant at the 1 percent level
 \end{table}
+
+\begin{table}[t]
+\centering
+\caption{\textsc{Treatment/Control Comparison of Characteristics for GATE Experiment}}
+\begin{adjustbox}{width=\textwidth, totalheight=\textheight, keepaspectratio}
+\input{../../out/tables/table_integrity}
+\end{adjustbox}
+
+
+\label{tab:table_integrity}
+\medskip
+\raggedright
+\footnotesize
+\textit{Notes:} All reported characteristics are measured at time of application, prior to random assignment. The wave 2 follow-up survey is conducted 18 months after time of application. We adjust the significance levels for multiple testing using a Bonferroni correction. \\
+** Significant at the 5 percent level
+\end{table}
+
 

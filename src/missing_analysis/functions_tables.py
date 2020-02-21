@@ -1,4 +1,4 @@
-"""Functions to perform the calculations needed for ``tables.py``.
+"""Functions to perform the calculations needed to generate the tables.
 
 """
 import numpy as np
@@ -6,8 +6,8 @@ import pandas as pd
 import scipy.stats as stats
 
 
-def ttest_by_column(df, dummy, equal_var):
-    """Perform two-sample t-test for each column of a DataFrame, after splitting
+def ttest_by_column(df, dummy, equal_var=True):
+    """Iterate two-sample t-test for each column of a DataFrame, after splitting
     the observations in two groups according to a dummy variable.
 
     Args:
@@ -25,7 +25,7 @@ def ttest_by_column(df, dummy, equal_var):
     """
     df1 = df[df[dummy] == 1].drop(dummy, axis=1)
     df0 = df[df[dummy] == 0].drop(dummy, axis=1)
-    ttest_pvalue = pd.Series(
+    ttest_pval = pd.Series(
         stats.ttest_ind(
             df0.values.reshape(df0.shape),
             df1.values.reshape(df1.shape),
@@ -34,33 +34,38 @@ def ttest_by_column(df, dummy, equal_var):
             equal_var=equal_var,
         ).pvalue,
         index=df0.columns,
-    ).rename("pvalue")
+    )
     mean = df.groupby([dummy]).mean().T
     ttest_df = pd.concat(
-        [mean[0].rename("mean0"), mean[1].rename("mean1"), ttest_pvalue], axis=1
+        [mean[0].rename("mean0"), mean[1].rename("mean1"), ttest_pval.rename("pvalue")],
+        axis=1,
     )
     return ttest_df
 
 
-def compute_sample_sizes(df):
-    """Compute sample sizes for control and treatment groups.
+def compute_sample_sizes(df, dummy):
+    """Split dataset in two groups according to a dummy variable and count the
+    number of observations in each group.
 
     Args:
         df (pd.DataFrame): The dataset of interest.
+        dummy (string): Name of *df* column (e.g. "Treatment"). Must be
+            a dummy variable.
 
     Returns:
-        pd.Series: Sample size for control and for treatment.
+        list of pd.Series: Sample size for control and for treatment, with
+            index "sample_size".
 
     """
     sample_size = []
-    for dummy in (0, 1):
-        size = pd.Series(df.groupby("treatment").size()[dummy], index=["sample_size"])
+    for value in (0, 1):
+        size = pd.Series(df.groupby(dummy).size()[value], index=["sample_size"])
         sample_size.append(size)
     return sample_size
 
 
 def levene_by_column(df, dummy):
-    """Perform Levene's test for equality of variances for each column of a
+    """Iterate Levene's test for equality of variances for each column of a
     DataFrame, after splitting the observations in two groups according to a
     dummy variable.
 
@@ -71,7 +76,7 @@ def levene_by_column(df, dummy):
 
     Returns:
         pd.DataFrame: A dataframe displaying, in each row,
-            the test statistic and p-value for the test for each column.
+            the Levene's test statistic and p-value for each column.
 
     """
     df1 = df[df[dummy] == 1].drop(dummy, axis=1)
@@ -86,7 +91,7 @@ def levene_by_column(df, dummy):
 
 
 def chisquare_by_column(df, dummy):
-    """Perform chi-square t-test for each column of a DataFrame, after splitting
+    """Iterate chi-square t-test for each column of a DataFrame, after splitting
     the observations in two groups according to a dummy variable.
 
     Args:
@@ -114,52 +119,54 @@ def chisquare_by_column(df, dummy):
     return chisq_df
 
 
-def create_quantile_dummy(df, variable, quantile, lower=True):
-    """Create dummy variable from continuous one, according to the specified
-    quantile.
+def create_quantile_dummy(df, variable, median=False):
+    """Create dummy variable(s) from continuous one.
 
     Args:
         df (pd.DataFrame): Original dataframe.
         variable (string): Original (continuous) variable.
-        quantile (real number or list of length 2): Quantile of the original
-            continuous variable. If a real number is given, the dummy variable will
-            be 1 for values of *variable* lower/higher than *quantile* and 0 elsewhere.
-            If a list of length 2 is given, the dummy variable will be 1 for
-            values of *variable* between the two bounds and 0 elsewhere.
-        lower (boolean): Indicates whether the dummy variable is 1 for values
-            of *variable* lower or higher than *quantile*. Default is True.
+        median (boolean): If True, the returned dummy variable is 1 for values
+            of *variable* lower than the median. If False, three dummy variables
+            are returned respectively for values of *variable* lower than the
+            first quantile, between the first and the third quantile, and higher
+            than the third quantile. Default is False.
 
     Returns:
-        pd.Series: Dummy variable with same index as *variable*
-
-    Raises:
-        ValueError: If *quantile* is not a real number or a list on length 2.
+        pd.Series or pd.DataFrame: Dummy variable(s) with same index as *variable*.
 
     """
-    if isinstance(quantile, float) or isinstance(quantile, int):
-        if lower is False:
-            quantile_values = np.where(
-                np.isnan(df[variable]),
-                np.nan,
-                np.where(df[variable] >= df[variable].quantile(quantile), 1, 0),
-            )
-        else:
-            quantile_values = np.where(
-                np.isnan(df[variable]),
-                np.nan,
-                np.where(df[variable] <= df[variable].quantile(quantile), 1, 0),
-            )
-    elif len(quantile) == 2:
-        quantile_values = np.where(
+    if median is False:
+        values_p25 = np.where(
+            np.isnan(df[variable]),
+            np.nan,
+            np.where(df[variable] <= df[variable].quantile(0.25), 1, 0),
+        )
+        values_p25_75 = np.where(
             np.isnan(df[variable]),
             np.nan,
             np.where(
-                (df[variable] > df[variable].quantile(quantile[0]))
-                & (df[variable] < df[variable].quantile(quantile[1])),
+                (df[variable] > df[variable].quantile(0.25))
+                & (df[variable] < df[variable].quantile(0.75)),
                 1,
                 0,
             ),
         )
+        values_p75 = np.where(
+            np.isnan(df[variable]),
+            np.nan,
+            np.where(df[variable] >= df[variable].quantile(0.75), 1, 0),
+        )
+        dummies = np.vstack((values_p25, values_p25_75, values_p75)).T
+        out = pd.DataFrame(
+            dummies,
+            columns=[variable + "_p25", variable + "_p25_75", variable + "_p75"],
+            index=df.index,
+        )
     else:
-        raise ValueError("There must be either one or two (numeric) bounds")
-    return pd.Series(quantile_values, index=df[variable].index)
+        values = np.where(
+            np.isnan(df[variable]),
+            np.nan,
+            np.where(df[variable] <= df[variable].quantile(0.5), 1, 0),
+        )
+        out = pd.Series(values, name="low_" + variable, index=df.index)
+    return out

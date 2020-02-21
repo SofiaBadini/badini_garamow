@@ -22,14 +22,12 @@ dataframes = []
 for filename in filenames:
     dataframes.append(pd.read_csv(ppj("IN_DATA", filename)))
 
-
 # Create dataset of variables of interest
 variables_name = dataframes[0]["Variable"].to_numpy()
 variables_baseline = dataframes[1][dataframes[1].columns.intersection(variables_name)]
 variables_w2 = dataframes[2][dataframes[2].columns.intersection(variables_name)]
 variables_w2 = variables_w2.drop(["treatment"], axis=1)
 gate_df = pd.merge(variables_baseline, variables_w2, on="gateid", how="left")
-
 
 # Rename variables
 mapping = {
@@ -46,12 +44,10 @@ mapping = {
 }
 gate_df.rename(columns=mapping, inplace=True)
 
-
 # Convert appropriate values to NaN.
 # -4 and -2 are coded as "Refused" and "Don't know" respectively.
 # -1 indicates a legitimate skip, so it is case specific.
 gate_df = gate_df.replace([-4, -2], np.nan)
-
 
 # Replace -1 with 0, as respondents claimed to work a salary job
 # or to have no self-employed relatives or friends in previous
@@ -61,10 +57,8 @@ gate_df["worked_for_relatives_friends_se"] = gate_df[
     "worked_for_relatives_friends_se"
 ].replace(-1, 0)
 
-
 # Create dummy variables from categorical ones
 dummies = [0, 1]
-
 
 mapping_site = {
     1: "philadelphia",
@@ -78,17 +72,14 @@ for key in mapping_site.keys():
         np.isnan(gate_df["site"]), np.nan, np.where(gate_df["site"] == key, 1, 0)
     )
 
-
 conditions = [(gate_df["language"] == 1), (gate_df["language"] >= 2)]
 gate_df["nonenglish"] = pd.Series(np.select(conditions, dummies, default=np.nan))
-
 
 conditions = [
     ((gate_df["marital_status"] == 1) | (gate_df["marital_status"] == 2)),
     (gate_df["marital_status"] >= 3),
 ]
 gate_df["married"] = pd.Series(np.select(conditions, dummies, default=np.nan))
-
 
 conditions = [
     ((gate_df["has_health_insurance"] == 0) | (gate_df["health_insurance_source"] > 1)),
@@ -97,7 +88,6 @@ conditions = [
 gate_df["employer_healthins"] = pd.Series(
     np.select(conditions, dummies, default=np.nan)
 )
-
 
 gate_df["hhincome_p25"] = np.where(
     (
@@ -120,7 +110,6 @@ index = gate_df[gate_df["hhincome"].isnull()].index.tolist()
 filter_col = [col for col in gate_df if col.startswith("hhincome_p")]
 gate_df.loc[index, filter_col] = np.nan
 
-
 # Create new variables from existing ones
 conditions = [
     ((gate_df["self_employed"] == 1) | (gate_df["salaried_worker"] == 1)),
@@ -128,16 +117,13 @@ conditions = [
 ]
 gate_df["unemployed"] = pd.Series(np.select(conditions, dummies, default=np.nan))
 
-
 gate_df["female"] = np.where(
     np.isnan(gate_df["gender"]), np.nan, np.where(gate_df["gender"] == 0, 1, 0)
 )
 
-
 gate_df["not_born_us"] = np.where(
     np.isnan(gate_df["born_us"]), np.nan, np.where(gate_df["born_us"] == 1, 0, 1)
 )
-
 
 conditions = [
     (
@@ -148,9 +134,7 @@ conditions = [
 ]
 gate_df["badcredit"] = pd.Series(np.select(conditions, dummies, default=np.nan))
 
-
 gate_df["agesqr"] = gate_df["age"] ** 2
-
 
 gate_df["latino"] = np.where(
     (gate_df["race_white_hispanic"] == 1) | (gate_df["race_black_hispanic"] == 1), 1, 0,
@@ -166,7 +150,6 @@ gate_df["other"] = np.where(
 race_df = gate_df[(gate_df.columns[pd.Series(gate_df.columns).str.startswith("race")])]
 index = race_df[race_df.isnull().any(axis=1)].index
 gate_df.loc[index, ["latino", "other"]] = np.nan
-
 
 # Information on household income at wave2, our outcome of interest.
 # Respondents were asked to indicate their household income by
@@ -241,7 +224,6 @@ choices = [
 ]
 gate_df["hhincome_w2"] = pd.Series(np.select(conditions, choices, default=np.nan))
 
-
 # Create standardized measure of autonomy and risk-tolerance
 gate_df["autonomy"] = abs(gate_df["sa_enjoys_working_independently"] - 6)
 gate_df["autonomy_std"] = (
@@ -255,12 +237,17 @@ gate_df["risk_tolerance_std"] = (
     - gate_df["risk_tolerance"].mean() / gate_df["risk_tolerance"].std()
 )
 
-
-# Save gate_df as long dataset
-gate_df.to_csv(ppj("OUT_DATA", "gate_long.csv"), index=False)
-
-
-# Create and save final dataset to work with
+# Create final dataset
 var_names = dataframes[3]["Final variables"].to_numpy()
 gate_final = gate_df[gate_df.columns.intersection(var_names)]
+
+# Dummy variables to indicate whether missing value(s) are present
+gate_cov = gate_final.drop(
+    ["gateid", "completed_w2", "hhincome", "hhincome_w2", "site", "agesqr"], axis=1
+)
+gate_final["missing_cov"] = np.where(np.isnan(gate_cov).any(axis=1), 1, 0)
+gate_final["missing_out"] = np.where(np.isnan(gate_final["hhincome_w2"]), 1, 0)
+
+# Save gate_df as long dataset and gate_final as final dataset to work with
+gate_df.to_csv(ppj("OUT_DATA", "gate_long.csv"), index=False)
 gate_final.to_csv(ppj("OUT_DATA", "gate_final.csv"), index=False)

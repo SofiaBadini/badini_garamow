@@ -5,56 +5,46 @@ import numpy as np
 import pandas as pd
 
 
-def format_as_percentage(df, row_to_format, column_to_format):
+def format_as_percentage(df, subset):
     """Format slice of dataframe as percentage.
 
     Args:
         df (pd.DataFrame): the dataframe whose slice must be formatted.
-        row_to_format (string, list, IndexSlice object): row(s) to be formatted.
-        column_to_format (string, list, IndexSlice object): column(s) to be
-            formatted.
+        subset (IndexSlice): An argument to DataFrame.loc that restricts which
+            elements of the dataframe must be formatted.
 
     Returns:
         pd.DataFrame: formatted original dataframe.
 
     """
-    subset_to_format = df.loc[row_to_format, column_to_format]
-    if isinstance(subset_to_format, pd.DataFrame):
-        df.loc[row_to_format, column_to_format] = subset_to_format.applymap(
-            lambda x: f"{x:,.2%}"
-        )
-    elif isinstance(subset_to_format, pd.Series):
-        df.loc[row_to_format, column_to_format] = subset_to_format.apply(
-            lambda x: f"{x:,.2%}"
-        )
-    else:
-        df.loc[row_to_format, column_to_format] = f"{subset_to_format:,.2%}"
+    df.loc[subset] = df.loc[subset].applymap(
+        lambda x: x if pd.isnull(x) else f"{x:,.2%}"
+    )
     return df
 
 
-def assign_stars_to_column(df, column_to_format, correction):
-    """ Assign stars for level of significance to specific column(s) of
-    DataFrame, implementing the Bonferroni correction for multiple testing.
+def assign_stars_to_column(df, subset, correction=1):
+    """ Assign stars for level of significance to subset of DataFrame.
+    If reqruied, implement the Bonferroni correction for multiple testing.
 
     Args:
-        df (pd.Dataframe): the dataframe whose column(s) must be formatted.
-        column_to_format (string, list, IndexSlice object): column(s) to be
-            formatted.
-        correction (float): number of hypothesis.
+        df (pd.Dataframe): The dataframe to be formatted.
+        subset (IndexSlice): An argument to DataFrame.loc that restricts which
+            elements of the dataframe must be formatted.
+        correction (float): number of hypothesis. Default to 1 (no Bonferroni
+            correction).
 
     Returns:
         pd.DataFrame: formatted original dataframe.
 
     """
     significance_levels = np.array([0.1, 0.05, 0.01]) / correction
-    pval = df.loc[:, column_to_format]
+    pval = df.loc[subset]
     formats = [
         pval.applymap(lambda x: f"{x:.3g}*"),
         pval.applymap(lambda x: f"{x:.3g}**"),
         pval.applymap(lambda x: f"{x:.3g}***"),
     ]
     for significance_level, format in zip(significance_levels, formats):
-        df.loc[:, column_to_format] = df.loc[:, column_to_format].mask(
-            pval <= significance_level, format
-        )
+        df.loc[subset] = df.loc[subset].mask(pval <= significance_level, format)
     return df

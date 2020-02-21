@@ -21,12 +21,29 @@ Documentation of the code in *src.missing_analysis*.
     :members:
 
 
-``tables.py``
+``table_integrity.py``
 =========================
 
-.. automodule:: src.missing_analysis.tables
+.. automodule:: src.missing_analysis.table_integrity
     :members:
 
+``table_missing.py``
+=========================
+
+.. automodule:: src.missing_analysis.table_missing
+    :members:
+
+``table_levene.py``
+=========================
+
+.. automodule:: src.missing_analysis.table_levene
+    :members:
+
+``table_chisq.py``
+=========================
+
+.. automodule:: src.missing_analysis.table_chisq
+    :members:
 
 ``functions_tables.py``
 =========================
