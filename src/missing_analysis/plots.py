@@ -18,7 +18,6 @@ from src.missing_analysis.functions_plots import matrix_nan
 # Load dataset
 gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
 
-
 # Mapping names for aesthetic reasons
 old_names = [
     "age",
@@ -66,7 +65,6 @@ new_names = [
 ]
 mapping_aes = dict(zip(old_names, new_names))
 
-
 # Drop redundant variables from dataset
 gate_for_plot = gate_final.drop(
     [
@@ -74,7 +72,6 @@ gate_for_plot = gate_final.drop(
         "completed_w2",
         "gateid",
         "site",
-        "agesqr",
         "hhincome_p25",
         "hhincome_p25_49",
         "hhincome_p50_74",
@@ -96,7 +93,6 @@ gate_for_plot = gate_final.drop(
     axis=1,
 )
 
-
 # Create new variable "race"
 gate_for_plot["race"] = np.where(
     (np.isnan(gate_final["white"]))
@@ -108,32 +104,25 @@ gate_for_plot["race"] = np.where(
     1,
 )
 
-
 # Rename columns
 gate_for_plot = gate_for_plot.rename(columns=mapping_aes)
 
-
 # To avoid cropping pictures when saving them
 plt.tight_layout()
-
 
 # Sort dataset according to nan, by index and by column
 index_missing = gate_for_plot.isna().sum().sort_values().index
 sorted_by_missing = msno.nullity_sort(gate_for_plot[index_missing])
 
-
 # Matrix
 matrix_nan = matrix_nan(sorted_by_missing)
-
 
 # Sort dataset by characteristic category
 index_category = pd.Index(new_names)
 sorted_by_category = gate_for_plot[index_category]
 
-
 # Heatmap
 heatmap_nan = heatmap_nan(sorted_by_category)
-
 
 # Save plots as png
 matrix_nan.figure.savefig(ppj("OUT_FIGURES", "matrix_nan.png"), bbox_inches="tight")

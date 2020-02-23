@@ -134,8 +134,6 @@ conditions = [
 ]
 gate_df["badcredit"] = pd.Series(np.select(conditions, dummies, default=np.nan))
 
-gate_df["agesqr"] = gate_df["age"] ** 2
-
 gate_df["latino"] = np.where(
     (gate_df["race_white_hispanic"] == 1) | (gate_df["race_black_hispanic"] == 1), 1, 0,
 )
@@ -243,7 +241,7 @@ gate_final = gate_df[gate_df.columns.intersection(var_names)].copy()
 
 # Dummy variables to indicate whether missing value(s) are present
 gate_cov = gate_final.drop(
-    ["gateid", "completed_w2", "hhincome", "hhincome_w2", "site", "agesqr"], axis=1
+    ["gateid", "completed_w2", "hhincome", "hhincome_w2", "site"], axis=1
 )
 gate_final["missing_cov"] = np.where(np.isnan(gate_cov).any(axis=1), 1, 0)
 gate_final["missing_out"] = np.where(np.isnan(gate_final["hhincome_w2"]), 1, 0)

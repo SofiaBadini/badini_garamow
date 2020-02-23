@@ -64,7 +64,7 @@ def configure(ctx):
     ctx.load("sphinx_build")
     ctx.load("write_project_headers")
     # ctx.find_program("dot")
-    ctx.load("tex")
+    ctx.load("biber")
 
 
 def build(ctx):

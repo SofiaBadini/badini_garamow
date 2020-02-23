@@ -15,7 +15,7 @@ from src.missing_analysis.pretty_index import pretty_index_dict
 # Load dataset
 gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
 
-# Drop redundant variables dataset
+# Drop redundant variables from dataset
 gate_logit = gate_final.drop(
     [
         "gateid",
@@ -27,7 +27,6 @@ gate_logit = gate_final.drop(
         "philadelphia",
         "white",
         "hhincome_p50_74",
-        "agesqr",
         "worked_for_relatives_friends_se",
     ],
     axis=1,

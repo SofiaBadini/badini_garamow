@@ -18,7 +18,7 @@ gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
 
 # Drop redundant variables
 gate_missing = gate_final.drop(
-    ["gateid", "completed_w2", "hhincome", "hhincome_w2", "site", "agesqr"], axis=1
+    ["gateid", "completed_w2", "hhincome", "hhincome_w2", "site"], axis=1
 )
 
 # Compute Welch`s t-test p-values and mean comparison

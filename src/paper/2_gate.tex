@@ -3,23 +3,23 @@
 \section{Missing Data Analysis}
 
 \subsection{The GATE Experiment}
-Project Growing America Through Entrepreneurship (\ac{GATE}) was a longitudinal study conducted by the US Department of Labor and the Small Business Administration in which free entrepreneurship training was randomly offered to individuals interested in starting or implementing a business. More than 4000 individuals applied for a limited number of slots, making this, as of 2015, the largest-ever randomized evaluation of entrepreneurship training and assistance.
+Project Growing America Through Entrepreneurship (GATE) was a longitudinal study conducted by the US Department of Labor and the Small Business Administration in which free entrepreneurship training was randomly offered to individuals interested in starting or implementing a business. More than 4000 individuals applied for a limited number of slots, making this, as of 2015, the largest-ever randomized evaluation of entrepreneurship training and assistance.
 
 Subjects assigned to the treatment group were offered an array of (highly heterogeneous) free best-practice training services, while subjects assigned to the control group were not offered any free service. The treatment phase ran from September 2003 to July 2005 in 7 different sites across 3 states and there were follow-up surveys at 6, 18, and 60 months after random assignment.
 
 Project GATE sought to increase employment, earnings, and self-sufficiency by promoting economic development in low-income areas. Most communities have organizations that provide assistance to people who want to start their own businesses, but Project GATE differed from the programs already available at the sites: it employed a particularly extensive outreach, it provided highly individualized training, it was free and it did not screen out participants based on their likelihood of success.
 
-Fairlie et al. (2008) estimate the effects of receiving entrepreneurship training (\ac{LATE}). First, they check whether participating into the GATE experiment actually increased the quantity and quality of training received by the treated. Second, they estimate the impact of such training on a number of business outcomes at each time horizon, restricting the anaylsis to the complete case. Their results suggest that entrepreneurship training had limited impacts on business ownership, scale, and household income. While entrepreneurship training did increase the likelihood of business ownership in the short-run (6-months), this effect depreciated over time and was not significant anymore at 18 and 60 months. There is no evidence that training affected other outcomes at any horizon.
+Fairlie, Kalran, and Zinman estimate the effects of receiving entrepreneurship training (LATE). First, they check whether participating into the GATE experiment actually increased the quantity and quality of training received by the treated. Second, they estimate the impact of such training on a number of business outcomes at each time horizon, restricting the anaylsis to the complete case. Their results suggest that entrepreneurship training had limited impacts on business ownership, scale, and household income. While entrepreneurship training did increase the likelihood of business ownership in the short-run (6-months), this effect depreciated over time and was not significant anymore at 18 and 60 months. There is no evidence that training affected other outcomes at any horizon.
 
-In this paper, we focus on the effects of being offered free entrepreneurship training ("intent-to-treat" effect, or \ac{ITT}) on household income 18 months after random assignment. % Something about human capital.
-The rationale to focus on the \ac{ITT} is ... % Justify.
-Moreover, results from Fairlie et al. (2008) indicate that ... % Justify more
+In this paper, we focus on the effects of being offered free entrepreneurship training ("intent-to-treat" effect, or ITT) on household income 18 months after random assignment. % Something about human capital.
+The rationale to focus on the ITT is ... % Justify.
+Moreover, results from \cite{fairlie2015behind} indicate that ... % Justify more
 
 \subsection{Data Structure and Missing Data Pattern}
 
 The applicants' answers to the application survey provide a rich set of baseline characteristics. These include general information about age, gender, racial background and education; as well as information about household composition and socio-economics status, health, credit history, and employment. Personal characteristics associated with entrepreneurial success were assessed via the self-reported surveys and are boiled down to two main (standardized) indexes of risk-tolerance and autonomy.
 
-Later follow-up surveys asked whether the individuals received \ac{GATE} services since random assignment and how they evaluated the usefulness of those services; and contained questions on measures of business outcomes such as business ownership, business size and revenues, household income, and overall work satisfaction.
+Later follow-up surveys asked whether the individuals received GATE services since random assignment and how they evaluated the usefulness of those services; and contained questions on measures of business outcomes such as business ownership, business size and revenues, household income, and overall work satisfaction.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t]
@@ -69,7 +69,7 @@ All reported characteristics are measured at time of application, prior to rando
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We explore the missing data mechanism by first performing paired t-tests between respondent and non-respondent for each characteristic (\cite{acock1997working}, \cite{huisman1998missing}). We differentiate between individuals with missing values in the baseline characteristics and individuals with missing values in outcomes. A significant difference between respondents and non-respondents indicates an association between the given characteristic and the missigness pattern, therefore ruling out \ac{MCAR}.
+We explore the missing data mechanism by first performing paired t-tests between respondent and non-respondent for each characteristic (\cite{acock2005working}, \cite{huisman1998missing}). We differentiate between individuals with missing values in the baseline characteristics and individuals with missing values in outcomes. A significant difference between respondents and non-respondents indicates an association between the given characteristic and the missigness pattern, therefore ruling out MCAR.
 
 We choose Welch's t-tests, also known as unequal variances t-test, over the more common Student's t-test, because respondents are about one order of magnitude more numerous than non-respondents for each characteristic. As the variance of a sample is affected by its size, we expect unequal variances across respondents and non-respondents for each characteristics. Indeed, the Levene's test rejects the null hypothesis of equal variances for a number of characteristics, as shown in Table~\ref{tab:table_levene} in ~\ref{missing_analysis}.
 
@@ -124,9 +124,9 @@ In all, these results seem to rule out the possibility of MCAR. Missingness appe
 
 Later, we impute these missing values assuming different missingness mechanisms.
 
-First, we assume a \ac{MCAR} pattern and employ a k-nearest neighbor algorithm to ... . We assume that all the relevant information on the outcome of interest can be drawn from the observed baseline characteristics (plus treatment and attrition status). This greatly simplify the analysis, but a clear drawback is that we neglect information on business outcomes present in the wave 1 follow-up survey and information on business outcomes besides household income present in the wave 2 follow-up survey, which are both likely correlated with our outcome of interest and thus may be used to predict its missing values.
+First, we assume a MCAR pattern and employ a k-nearest neighbor algorithm to ... . We assume that all the relevant information on the outcome of interest can be drawn from the observed baseline characteristics (plus treatment and attrition status). This greatly simplify the analysis, but a clear drawback is that we neglect information on business outcomes present in the wave 1 follow-up survey and information on business outcomes besides household income present in the wave 2 follow-up survey, which are both likely correlated with our outcome of interest and thus may be used to predict its missing values.
 
-Second, we assume a \ac{MANR} pattern for the outcome of interest. We address the different non-renspose rate for treatment and control conducting a bounds analysis to investigate the potential outcome of interest on ITT estimates.
+Second, we assume a MANR pattern for the outcome of interest. We address the different non-renspose rate for treatment and control conducting a bounds analysis to investigate the potential outcome of interest on ITT estimates.
 
 
 

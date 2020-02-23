@@ -19,16 +19,7 @@ gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
 
 # Drop redundant variables from application dataset
 gate_app = gate_final.drop(
-    [
-        "gateid",
-        "hhincome",
-        "hhincome_w2",
-        "site",
-        "agesqr",
-        "missing_cov",
-        "missing_out",
-    ],
-    axis=1,
+    ["gateid", "hhincome", "hhincome_w2", "site", "missing_cov", "missing_out"], axis=1,
 )
 
 # Restrict follow-up wave 2 to individuals who did not attrit

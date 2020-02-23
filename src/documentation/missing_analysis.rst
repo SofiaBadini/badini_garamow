@@ -1,4 +1,4 @@
-.. _analysis:
+.. _missing_analysis:
 
 ***********************************************
 Anaylsis of Missing Data Pattern and Mechanism
