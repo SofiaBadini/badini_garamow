@@ -7,9 +7,9 @@ tables to ``table_levene.tex`` in the "OUT_TABLES" directory.
 import pandas as pd
 
 from bld.project_paths import project_paths_join as ppj
-from src.missing_analysis.formatting_tables import assign_stars_to_column
+from src.missing_analysis.formatting_tables import assign_stars
 from src.missing_analysis.functions_tables import levene_by_column
-from src.missing_analysis.pretty_index_dict import pretty_index
+from src.missing_analysis.pretty_index import pretty_index_dict
 
 
 # Load dataset
@@ -24,22 +24,21 @@ gate_missing = gate_final.drop(
 levene_cov = levene_by_column(gate_missing, "missing_cov")
 levene_out = levene_by_column(gate_missing, "missing_out")
 
-# Create MultiIndex DataFrame
-table_levene_dict = {
-    ("Covariates", "Levene's test statistic"): levene_cov["levene_stat"],
-    ("Covariates", "p-value"): levene_cov["pvalue"],
-    ("Outcome of interest", "Levene's test statistic"): levene_out["levene_stat"],
-    ("Outcome of interest", "p-value"): levene_out["pvalue"],
-}
-table_levene = pd.DataFrame.from_dict(table_levene_dict).reindex(pretty_index)
-table_levene = table_levene.rename(pretty_index).dropna(how="all")
+# Create MultiIndex dataframe
+table_levene = pd.concat(
+    [levene_cov, levene_out],
+    axis=1,
+    keys=["Covariates", "Outcome of interest"],
+    sort=False,
+)
 
 # Format DataFrame
+table_levene = table_levene.reindex(pretty_index_dict).rename(pretty_index_dict)
+table_levene = table_levene.dropna(how="all")
 idx = pd.IndexSlice
-subset_stars = idx[:, idx[:, "p-value"]]
-table_levene = assign_stars_to_column(
-    table_levene, subset_stars, correction=len(table_levene) - 1
-)
+subset = idx[:, idx[:, "p-value"]]
+correction = len(table_levene) - 1
+table_levene = assign_stars(table_levene, subset, correction)
 table_levene = table_levene.fillna(" ")
 
 # Save to latex table

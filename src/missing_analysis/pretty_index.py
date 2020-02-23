@@ -2,7 +2,7 @@
 
 """
 
-pretty_index = {
+pretty_index_dict = {
     "treatment": "Treatment",
     "philadelphia": "Philadelphia",
     "pittsburgh": "Pittsburgh",

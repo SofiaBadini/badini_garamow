@@ -239,7 +239,7 @@ gate_df["risk_tolerance_std"] = (
 
 # Create final dataset
 var_names = dataframes[3]["Final variables"].to_numpy()
-gate_final = gate_df[gate_df.columns.intersection(var_names)]
+gate_final = gate_df[gate_df.columns.intersection(var_names)].copy()
 
 # Dummy variables to indicate whether missing value(s) are present
 gate_cov = gate_final.drop(

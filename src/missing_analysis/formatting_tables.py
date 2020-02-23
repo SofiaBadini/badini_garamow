@@ -6,7 +6,7 @@ import pandas as pd
 
 
 def format_as_percentage(df, subset):
-    """Format slice of dataframe as percentage.
+    """Format slice of dataframe as percentage.z
 
     Args:
         df (pd.DataFrame): the dataframe whose slice must be formatted.
@@ -23,9 +23,9 @@ def format_as_percentage(df, subset):
     return df
 
 
-def assign_stars_to_column(df, subset, correction=1):
+def assign_stars(df, subset, correction=1):
     """ Assign stars for level of significance to subset of DataFrame.
-    If reqruied, implement the Bonferroni correction for multiple testing.
+    If required, implement the Bonferroni correction for multiple testing.
 
     Args:
         df (pd.Dataframe): The dataframe to be formatted.

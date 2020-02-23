@@ -90,6 +90,8 @@ gate_for_plot = gate_final.drop(
         "latino",
         "asian",
         "other",
+        "missing_cov",
+        "missing_out",
     ],
     axis=1,
 )

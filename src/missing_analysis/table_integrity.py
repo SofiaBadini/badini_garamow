@@ -8,11 +8,11 @@ import numpy as np
 import pandas as pd
 
 from bld.project_paths import project_paths_join as ppj
-from src.missing_analysis.formatting_tables import assign_stars_to_column
+from src.missing_analysis.formatting_tables import assign_stars
 from src.missing_analysis.formatting_tables import format_as_percentage
 from src.missing_analysis.functions_tables import compute_sample_sizes
 from src.missing_analysis.functions_tables import ttest_by_column
-from src.missing_analysis.pretty_index_dict import pretty_index
+from src.missing_analysis.pretty_index import pretty_index_dict
 
 # Load dataset
 gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
@@ -46,15 +46,15 @@ wave2_size = compute_sample_sizes(gate_wave2, "treatment")
 table_integrity = {
     ("Baseline", "Treatment"): app["mean1"].append(app_size[1]),
     ("Baseline", "Control"): app["mean0"].append(app_size[0]),
-    ("Baseline", "p-value"): app["pvalue"],
+    ("Baseline", "p-value"): app["p-value"],
     ("Follow-up wave 2", "Treatment"): wave2["mean1"].append(wave2_size[1]),
     ("Follow-up wave 2", "Control"): wave2["mean0"].append(wave2_size[0]),
-    ("Follow-up wave 2", "p-value"): wave2["pvalue"],
+    ("Follow-up wave 2", "p-value"): wave2["p-value"],
 }
-table_integrity = pd.DataFrame.from_dict(table_integrity).reindex(pretty_index)
+table_integrity = pd.DataFrame.from_dict(table_integrity).reindex(pretty_index_dict)
 
 # Format DataFrame
-table_integrity = table_integrity.rename(pretty_index).dropna(how="all")
+table_integrity = table_integrity.rename(pretty_index_dict).dropna(how="all")
 new_values = table_integrity.loc["Percent of baseline sample", "Baseline"].values
 table_integrity.loc["Percent of baseline sample", "Follow-up wave 2"] = new_values
 table_integrity.loc["Percent of baseline sample", "Baseline"] = [1, 1, np.nan]
@@ -67,12 +67,11 @@ keep_format = [
 ]
 rows_to_format = [item for item in table_integrity.index if item not in keep_format]
 idx = pd.IndexSlice
-table_integrity = format_as_percentage(
-    table_integrity, idx[rows_to_format, idx[:, ["Treatment", "Control"]]]
-)
-table_integrity = assign_stars_to_column(
-    table_integrity, idx[:, idx[:, "p-value"]], correction=len(table_integrity) - 1
-)
+subset = idx[rows_to_format, idx[:, ["Treatment", "Control"]]]
+table_integrity = format_as_percentage(table_integrity, subset)
+subset_stars = idx[:, idx[:, "p-value"]]
+correction = len(table_integrity) - 1
+table_integrity = assign_stars(table_integrity, subset_stars, correction)
 
 # Save to latex table
 table_integrity.to_latex(

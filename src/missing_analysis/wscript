@@ -11,7 +11,7 @@ def build(ctx):
         append=abspath,
     )
 
-    for s in ("integrity", "missing", "levene", "chisq"):
+    for s in ("integrity", "missing", "levene", "chisq", "logistic"):
         ctx(
             features="run_py_script",
             source="table_" + s + ".py",

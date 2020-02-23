@@ -37,7 +37,11 @@ def ttest_by_column(df, dummy, equal_var=True):
     )
     mean = df.groupby([dummy]).mean().T
     ttest_df = pd.concat(
-        [mean[0].rename("mean0"), mean[1].rename("mean1"), ttest_pval.rename("pvalue")],
+        [
+            mean[0].rename("mean0"),
+            mean[1].rename("mean1"),
+            ttest_pval.rename("p-value"),
+        ],
         axis=1,
     )
     return ttest_df
@@ -85,7 +89,7 @@ def levene_by_column(df, dummy):
     for col in df1.columns:
         levene_outcome.append(stats.levene(df0[col].dropna(), df1[col].dropna()))
     levene_df = pd.DataFrame(
-        levene_outcome, index=df1.columns, columns=["levene_stat", "pvalue"]
+        levene_outcome, index=df1.columns, columns=["test stat.", "p-value"]
     )
     return levene_df
 
@@ -115,7 +119,7 @@ def chisquare_by_column(df, dummy):
             ]
         )
         chisq.append(list(stats.chi2_contingency(f_obs)[0:2]))
-    chisq_df = pd.DataFrame(chisq, index=col_index, columns=["chisq", "pvalue"])
+    chisq_df = pd.DataFrame(chisq, index=col_index, columns=["test stat.", "p-value"])
     return chisq_df
 
 

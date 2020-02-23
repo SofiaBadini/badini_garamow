@@ -1,4 +1,4 @@
-"""Check for patterns in missing values via chi-square two-sample tests.
+"""Check for missing values mechanism via chi-square two-sample tests.
 
 Analyse data in ``gate_final.csv``, stored in the "OUT_DATA" directory, and save
 tables to ``table_chisq.tex`` in the "OUT_TABLES" directory.
@@ -7,10 +7,10 @@ tables to ``table_chisq.tex`` in the "OUT_TABLES" directory.
 import pandas as pd
 
 from bld.project_paths import project_paths_join as ppj
-from src.missing_analysis.formatting_tables import assign_stars_to_column
+from src.missing_analysis.formatting_tables import assign_stars
 from src.missing_analysis.functions_tables import chisquare_by_column
 from src.missing_analysis.functions_tables import create_quantile_dummy
-from src.missing_analysis.pretty_index_dict import pretty_index
+from src.missing_analysis.pretty_index import pretty_index_dict
 
 
 # Load dataset
@@ -38,21 +38,20 @@ chisq_cov = chisquare_by_column(gate_missing, "missing_cov")
 chisq_out = chisquare_by_column(gate_missing, "missing_out")
 
 # Create MultiIndex DataFrame
-table_chisq_dict = {
-    ("Covariates", "chi-squared test statistics"): chisq_cov["chisq"],
-    ("Covariates", "p-value"): chisq_cov["pvalue"],
-    ("Outcome of interest", "chi-squared test statistics"): chisq_out["chisq"],
-    ("Outcome of interest", "p-value"): chisq_out["pvalue"],
-}
-table_chisq = pd.DataFrame.from_dict(table_chisq_dict).reindex(pretty_index)
-table_chisq = table_chisq.rename(pretty_index).dropna(how="all")
+table_chisq = pd.concat(
+    [chisq_cov, chisq_out],
+    axis=1,
+    keys=["Covariates", "Outcome of interest"],
+    sort=False,
+)
 
 # Format DataFrame
+table_chisq = table_chisq.reindex(pretty_index_dict).rename(pretty_index_dict)
+table_chisq = table_chisq.dropna(how="all")
 idx = pd.IndexSlice
-subset_stars = idx[:, idx[:, "p-value"]]
-table_chisq = assign_stars_to_column(
-    table_chisq, subset_stars, correction=len(table_chisq) - 1
-)
+subset = idx[:, idx[:, "p-value"]]
+correction = len(table_chisq) - 1
+table_chisq = assign_stars(table_chisq, subset, correction)
 table_chisq = table_chisq.fillna(" ")
 
 # Save to latex table
