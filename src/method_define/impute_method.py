@@ -1,11 +1,10 @@
-"""Define different imputation methods.
+"""Define methods to construct a complete data set on covariates or the outcome
+variable(s) or both.
 
-    1. k-Nearest-Neighbor imputation for covariates and outcome variable:
+    *For outcome variable(s) and covariates*
+    impute_kNN(): Imputation of missings using the average kNN method.
 
-        impute_kNN(data)
-
-    2. Median imputation for covariates:
-
-        impute_median(data)
+    impute_median(): Impute missings by the median of each column,
+    plus/ minus some standard deviation.
 
 """

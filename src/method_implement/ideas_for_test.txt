@@ -1,3 +1,0 @@
-1. test if data set is complete
-2. test if mean not below min/ max
-3. missings = imputations

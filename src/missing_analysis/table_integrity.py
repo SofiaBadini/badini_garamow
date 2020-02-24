@@ -1,7 +1,7 @@
 """Verify randomization integrity at application and follow-up wave 2.
 
 Analyse data in ``gate_final.csv``, stored in the "OUT_DATA" directory, and save
-tables to ``table_integrity.tex`` in the "OUT_TABLES" directory.
+table to ``table_integrity.tex`` in the "OUT_TABLES" directory.
 
 """
 import numpy as np

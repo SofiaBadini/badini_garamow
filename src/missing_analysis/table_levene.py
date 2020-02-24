@@ -1,7 +1,7 @@
 """Perform paired Levene's test for equal variances as consistency check.
 
 Analyse data in ``gate_final.csv``, stored in the "OUT_DATA" directory, and save
-tables to ``table_levene.tex`` in the "OUT_TABLES" directory.
+table to ``table_levene.tex`` in the "OUT_TABLES" directory.
 
 """
 import pandas as pd

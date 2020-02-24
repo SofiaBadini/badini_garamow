@@ -2,15 +2,10 @@
 
 
 def build(ctx):
-    #    ctx(
-    #        features="run_py_script",
-    #        source="ols_regression.py",
-    #        deps=[
-    #            ctx.path_to(ctx, "xxx", "xxx"),
-    #            #ctx.path_to(ctx, "", ""),
-    #        ],
-    #        target=ctx.path_to(ctx, "xxx", "xxx"),
-    #        name="ols_regression",
-    #    )
-
-    pass
+    ctx(
+        features="run_py_script",
+        source="table_ols_controls.py",
+        deps=[ctx.path_to(ctx, "OUT_DATA", "gate_final.csv")],
+        target=[ctx.path_to(ctx, "OUT_TABLES", "table_ols_controls.tex")],
+        name="table_ols_controls",
+    )

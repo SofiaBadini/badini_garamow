@@ -1,7 +1,7 @@
 """Check for missing values mechanism via chi-square two-sample tests.
 
 Analyse data in ``gate_final.csv``, stored in the "OUT_DATA" directory, and save
-tables to ``table_chisq.tex`` in the "OUT_TABLES" directory.
+table to ``table_chisq.tex`` in the "OUT_TABLES" directory.
 
 """
 import pandas as pd

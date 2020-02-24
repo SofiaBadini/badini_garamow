@@ -1,9 +1,10 @@
-"""Functions to perform the calculations needed to generate the tables.
+"""Functions to perform the calculations needed to generate all the tables.
 
 """
 import numpy as np
 import pandas as pd
 import scipy.stats as stats
+import statsmodels.api as sm
 
 
 def ttest_by_column(df, dummy, equal_var=True):
@@ -174,3 +175,28 @@ def create_quantile_dummy(df, variable, median=False):
         )
         out = pd.Series(values, name="low_" + variable, index=df.index)
     return out
+
+
+def generate_regression_output(df, regressand, type="OLS"):
+    """Generate DataFrame containing output of OLS or Logistic regression.
+
+    Args:
+        df: dataframe containing regressand and regressor(s)
+        regressand: the variable to be regressed on
+        type: "OLS" or "Logit", the regression to be performed. Default is OLS.
+
+    Returns:
+        pd.DataFrame: dataframe containing output of regression.
+
+    """
+    y = df[regressand]
+    x = df.drop(regressand, axis=1)
+    x.insert(0, "constant", 1)
+    if type == "OLS":
+        model = sm.OLS(endog=y, exog=x, missing="drop").fit()
+        result = model.get_robustcov_results().summary().tables[1].as_html()
+    elif type == "Logit":
+        model = sm.Logit(y, x, missing="drop").fit(disp=False)
+        result = model.summary().tables[1].as_html()
+    result_df = pd.read_html(result, header=0, index_col=0)[0]
+    return result_df

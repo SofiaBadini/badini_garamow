@@ -221,6 +221,9 @@ choices = [
     112500,
 ]
 gate_df["hhincome_w2"] = pd.Series(np.select(conditions, choices, default=np.nan))
+gate_df["hhincome_w2"] = gate_df["hhincome_w2"].apply(
+    lambda x: x if x == 0 else np.log(x)
+)
 
 # Create standardized measure of autonomy and risk-tolerance
 gate_df["autonomy"] = abs(gate_df["sa_enjoys_working_independently"] - 6)

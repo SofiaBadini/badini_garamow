@@ -1,133 +1,21 @@
 % !TEX root = 000_paper.tex
 
-\section{Missing Data Analysis}
+\section{The GATE Experiment}
 
-\subsection{The GATE Experiment}
-Project Growing America Through Entrepreneurship (GATE) was a longitudinal study conducted by the US Department of Labor and the Small Business Administration in which free entrepreneurship training was randomly offered to individuals interested in starting or implementing a business. More than 4000 individuals applied for a limited number of slots, making this, as of 2015, the largest-ever randomized evaluation of entrepreneurship training and assistance.
-
-Subjects assigned to the treatment group were offered an array of (highly heterogeneous) free best-practice training services, while subjects assigned to the control group were not offered any free service. The treatment phase ran from September 2003 to July 2005 in 7 different sites across 3 states and there were follow-up surveys at 6, 18, and 60 months after random assignment.
+Project Growing America Through Entrepreneurship (GATE) was a longitudinal study conducted by the US Department of Labor and the Small Business Administration in which free entrepreneurship training was randomly offered to individuals interested in starting or running a business. More than 4000 individuals applied for a limited number of slots, making this, as of 2015, the largest-ever randomized evaluation of entrepreneurship training and assistance.
 
 Project GATE sought to increase employment, earnings, and self-sufficiency by promoting economic development in low-income areas. Most communities have organizations that provide assistance to people who want to start their own businesses, but Project GATE differed from the programs already available at the sites: it employed a particularly extensive outreach, it provided highly individualized training, it was free and it did not screen out participants based on their likelihood of success.
 
-Fairlie, Kalran, and Zinman estimate the effects of receiving entrepreneurship training (LATE). First, they check whether participating into the GATE experiment actually increased the quantity and quality of training received by the treated. Second, they estimate the impact of such training on a number of business outcomes at each time horizon, restricting the anaylsis to the complete case. Their results suggest that entrepreneurship training had limited impacts on business ownership, scale, and household income. While entrepreneurship training did increase the likelihood of business ownership in the short-run (6-months), this effect depreciated over time and was not significant anymore at 18 and 60 months. There is no evidence that training affected other outcomes at any horizon.
+Subjects assigned to the treatment group were offered an array of (highly heterogeneous) free best-practice training services, while subjects assigned to the control group were not offered any free service. The treatment phase ran from September 2003 to July 2005 in 7 different sites across 3 states and, after the application survey, there were follow-up surveys at 6, 18, and 60 months after random assignment.
 
-In this paper, we focus on the effects of being offered free entrepreneurship training ("intent-to-treat" effect, or ITT) on household income 18 months after random assignment. % Something about human capital.
-The rationale to focus on the ITT is ... % Justify.
-Moreover, results from \cite{fairlie2015behind} indicate that ... % Justify more
-
-\subsection{Data Structure and Missing Data Pattern}
-
-The applicants' answers to the application survey provide a rich set of baseline characteristics. These include general information about age, gender, racial background and education; as well as information about household composition and socio-economics status, health, credit history, and employment. Personal characteristics associated with entrepreneurial success were assessed via the self-reported surveys and are boiled down to two main (standardized) indexes of risk-tolerance and autonomy.
+The applicants' answers to the application survey provide a rich set of baseline characteristics. These include general information about age, gender, racial background and education; as well as information about household composition and socio-economics status, health, credit history, and employment. Personal characteristics associated with entrepreneurial success, which can be boiled down to two main (standardized) indexes of risk-tolerance and autonomy, were also assessed via these self-reported surveys.
 
 Later follow-up surveys asked whether the individuals received GATE services since random assignment and how they evaluated the usefulness of those services; and contained questions on measures of business outcomes such as business ownership, business size and revenues, household income, and overall work satisfaction.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[t]
-    \caption{Nullity Matrix for GATE Dataset}
-    \includegraphics[width=\textwidth]{../../out/figures/matrix_nan.png}
-    \label{fig:matrix_nan}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Fairlie, Kalran, and Zinman (2015) estimate the effects of receiving entrepreneurship training via GATE services (LATE). First, they check whether participating into the GATE experiment actually increased the quantity and quality of training received by the treated. Second, they estimate the impact of such training on a number of business outcomes at each time horizon, restricting the anaylsis to the complete case.
 
-Throughout our paper we focus on a subset of about 30 baseline characteristics and on only one outcome, household income at the wave 2 follow-up survey. Figure~\ref{fig:matrix_nan} displays the missing data pattern for this subset of variables. Missing values in the baseline characteristics are found in 12\% of the total 4197 applicants, and appear to be more numerous for questions related to employment status, credit history, personal characteristics and health.
+Their results suggest that entrepreneurship training had limited impacts on business ownership, scale, and household income. While entrepreneurship training did increase the likelihood of business ownership in the short-run (6-months), this effect depreciated over time and was not significant anymore at 18 and 60 months. There is no evidence that training affected other outcomes at any horizon.
 
-At the wave 2 follow-up survey, 18 months after random assignment, 1570 individuals (37.4\% of the full sample) do not report a value for household income at wave 2. Among them, 748 (47.6\%) are attriters --- in this context, individuals who do not answer any question of the wave 2 follow-up survey ---, while the remaining 822 (52.4\%) are not attriters in the strict sense, as they do take part in the survey, but do not answer any of the questions related to household income.
+In this paper, we focus on the effects of being offered free entrepreneurship training ("intent-to-treat" effect, or ITT) on log household income 18 months after random assignment.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[t]
-    \caption{Nullity Correlation Heatmap for GATE Dataset}
-    \includegraphics[width=\textwidth]{../../out/figures/heatmap_nan.png}
-    \label{fig:heatmap_nan}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Figure~\ref{fig:heatmap_nan} displays the degree of nullity correlation between paired different characteristics (variables with no missing values are excluded). A positive nullity correlation indicates that the first and the second characteristics are likely to both have missing values, while a negative nullity correlation means that one of the features is missing and the second is likely not to be missing. The heatmap shows that, in general, the nullity correlation is weakly positive, with ...
-
-The nullity correlation between the variable "Unemployed" and the variables "Salaried worker" and "Self-employed" is high because "Unemployed" is a generated variable, which takes value 1 if the individual claim to be either a salaried worker or self-employed, and 0 if the individual claims to be none of these categories. It seems that ... . An hypothesis is that seasonal or occasional workers, while being clearly not salaried workers, may be unsure whether to consider themselves self-employed.
-
-We also observe a nullity correlation of 0.4 between the autonomy and risk-tolerance indexes. Since, looking at the codebook ..., all questions related to personality traits were grouped together at the end of the questionnaire, this may be taken as an hint that many individuals skipped the entire section
-
-
-\subsection{Exploring the Missing Data Mechanism}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[t!]
-\centering
-\caption{\textsc{Missing Values Comparison of Characteristics for GATE Experiment}}
-\begin{adjustbox}{width=\textwidth,totalheight=\textheight,keepaspectratio}
-\input{../../out/tables/table_missing}
-\end{adjustbox}
-
-
-\label{tab:table_missing}
-\medskip
-\raggedright
-\footnotesize
-\textit{Notes:} Welch's t-tests are performed to assess whether missingness in the data is related to individuals' characteristics.
-All reported characteristics are measured at time of application, prior to random assignment. The outcome of interest is household income 18 months after time of application. We adjust the significance levels for multiple testing using a Bonferroni correction. \\
-*** Significant at the 1 percent level ** Significant at the 5 percent level * Significant at the 1 percent level
-\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-We explore the missing data mechanism by first performing paired t-tests between respondent and non-respondent for each characteristic (\cite{acock2005working}, \cite{huisman1998missing}). We differentiate between individuals with missing values in the baseline characteristics and individuals with missing values in outcomes. A significant difference between respondents and non-respondents indicates an association between the given characteristic and the missigness pattern, therefore ruling out MCAR.
-
-We choose Welch's t-tests, also known as unequal variances t-test, over the more common Student's t-test, because respondents are about one order of magnitude more numerous than non-respondents for each characteristic. As the variance of a sample is affected by its size, we expect unequal variances across respondents and non-respondents for each characteristics. Indeed, the Levene's test rejects the null hypothesis of equal variances for a number of characteristics, as shown in Table~\ref{tab:table_levene} in ~\ref{missing_analysis}.
-
-Table~\ref{tab:table_missing} shows that having missing values is significantly associated with a number of baseline characteristics. Having missing values seem to be generally associated with site of treatment, racial background, level of education, and yearly income.
-
-Having missing values in the outcome of interest, household income 18 months after random assignment, appears to be further correlated with financial status: non-respondents are on average younger than non-respondents, and more likely to be foreigners, to belong to racial minorities, to receive employment benefits and to have a bad credit history.
-
-Moreover, individuals who claimed their yearly household income to be \$25,000 or lower at application are more likely not to state their income at the wave 2 follow-up survey, while on the contrary individuals who initially claimed to have a yearly income of \$100,000 dollars or more are less likely to be non-respondents.
-
-For a consistency check, we additionally perform chi-squared tests for each characteristic, which are more indicated for categorical variables. Although we lose some interpretability, as we do not obtain an explicit mean comparison any longer, the results shown in~\ref{tab:table_chisq}, in ~\ref{missing_analysis}, and substantially confirms the pattern.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[t!]
-\centering
-\caption{\textsc{Logistic Regression on Missing Values for GATE Experiment}}
-\begin{adjustbox}{width=\textwidth,totalheight=\textheight,keepaspectratio}
-\input{../../out/tables/table_logistic}
-\end{adjustbox}
-
-
-\label{tab:table_logistic}
-\medskip
-\raggedright
-\footnotesize
-\textit{Notes:} The dependent variable is a dummy indicating the presence of missing values in the baseline characteristics (left) and a dummy indicating a missing value in the outcome of interest (right). \\
-*** Significant at the 1 percent level ** Significant at the 5 percent level * Significant at the 1 percent level
-\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[t!]
-\centering
-\caption{\textsc{Treatment/Control Comparison of Characteristics \\ for GATE Experiment}}
-\begin{adjustbox}{width=\textwidth, totalheight=\textheight, keepaspectratio}
-\input{../../out/tables/table_integrity}
-\end{adjustbox}
-
-
-\label{tab:table_integrity}
-\medskip
-\raggedright
-\footnotesize
-\textit{Notes:} All reported characteristics are measured at time of application, prior to random assignment. The wave 2 follow-up survey is conducted 18 months after time of application. We adjust the significance levels for multiple testing using a Bonferroni correction. \\
-** Significant at the 5 percent level
-\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Importantly, the internal validity of the complete case analysis' intention-to-treat, which we use as a benchmark, is unharmed as long as treatment and control groups are comparable. Table~\ref{tab:table_integrity} shows that baseline characteristics are balanced between treatment and control both after application and at the wave 2 follow-up survey, a reassuring result. However, missingness in the outcome of interest appears not to be balanced between treatment groups, with untreated individual being statistically more likely not to answer questions related to household income. Relatedly, attrition is also higher for untreated individuals, as shown by \cite{fairlie2015behind}. The different non-response rate for treatment and control and the wave 2 follow-up survey may indicate correlation between treatment status and outcome, and therefore requires further investigation.
-
-In all, these results seem to rule out the possibility of MCAR. Missingness appears to be significantly correlated with a number of baseline observed characteristics, which does not harm the internal validity of the ITT estimates for the complete case analysis because treatment-control balance is still present, but results in certain subgroups being under-represented, which may lead the ITT estimates to be sensitive to the inclusion of controls for baseline characteristics.  Indeed, from Table~\ref{tab:table_integrity} we observe some loss of information at the wave 2 follow-up for specific subgroups. For instance, black people decrease from about 30.5\% of the sample at application to about 27\% at wave 2, while the share of white people increases (from about 55\% to about 60\%).
-
-Later, we impute these missing values assuming different missingness mechanisms.
-
-First, we assume a MCAR pattern and employ a k-nearest neighbor algorithm to ... . We assume that all the relevant information on the outcome of interest can be drawn from the observed baseline characteristics (plus treatment and attrition status). This greatly simplify the analysis, but a clear drawback is that we neglect information on business outcomes present in the wave 1 follow-up survey and information on business outcomes besides household income present in the wave 2 follow-up survey, which are both likely correlated with our outcome of interest and thus may be used to predict its missing values.
-
-Second, we assume a MANR pattern for the outcome of interest. We address the different non-renspose rate for treatment and control conducting a bounds analysis to investigate the potential outcome of interest on ITT estimates.
-
-
-
-
+In principle, if entrepreneurship training is an investment in human capital (or functions as a signaling device on the labor market), recipients should have better financial outcomes than non-recipients, at least in the medium run; either because they are more likely to successfully start or run a business or because they are able to find or transition to better jobs. On the other hand, if recipients decide to invest their own savings in starting a business, this will have a negative impact on their household income. In general, the impact of being taught entrepreneurial skills is unclear, at least in developing countries (\cite{mckenzie2014}).

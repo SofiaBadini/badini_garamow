@@ -1,18 +1,14 @@
 .. _analysis:
 
 *********************************
-OLS Regressions after Imputation
+OLS Regressions for ITT Estimates
 *********************************
 
 Documentation of the code in *src.analysis*.
 
 
-``ols_regression.py``
-=====================
+``table_ols_controls.py``
+=========================
 
-Text here.
-
-.. automodule:: src.analysis.ols_regression
+.. automodule:: src.analysis.table_ols_controls
     :members:
-
-Text here.

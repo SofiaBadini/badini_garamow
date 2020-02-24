@@ -6,7 +6,7 @@ import pandas as pd
 
 
 def format_as_percentage(df, subset):
-    """Format slice of dataframe as percentage.z
+    """Format slice of dataframe as percentage.
 
     Args:
         df (pd.DataFrame): the dataframe whose slice must be formatted.
@@ -40,11 +40,18 @@ def assign_stars(df, subset, correction=1):
     """
     significance_levels = np.array([0.1, 0.05, 0.01]) / correction
     pval = df.loc[subset]
-    formats = [
-        pval.applymap(lambda x: f"{x:.3g}*"),
-        pval.applymap(lambda x: f"{x:.3g}**"),
-        pval.applymap(lambda x: f"{x:.3g}***"),
-    ]
+    if isinstance(df.loc[subset], pd.DataFrame):
+        formats = [
+            pval.applymap(lambda x: f"{x:.3g}*"),
+            pval.applymap(lambda x: f"{x:.3g}**"),
+            pval.applymap(lambda x: f"{x:.3g}***"),
+        ]
+    elif isinstance(df.loc[subset], pd.Series):
+        formats = [
+            pval.apply(lambda x: f"{x:.3g}*"),
+            pval.apply(lambda x: f"{x:.3g}**"),
+            pval.apply(lambda x: f"{x:.3g}***"),
+        ]
     for significance_level, format in zip(significance_levels, formats):
         df.loc[subset] = df.loc[subset].mask(pval <= significance_level, format)
     return df

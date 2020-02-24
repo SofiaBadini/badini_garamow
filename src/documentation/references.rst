@@ -1,4 +1,4 @@
-.. _missing_analysis:
+.. _references:
 
 **********
 References
@@ -11,8 +11,8 @@ References
    :cite:`little1989analysis`
    :cite:`lee2009training`
    :cite:`kling2007experimental`
-   :cite:`acock2005working`
-   :cite:`huisman1998missing`
+   :cite:`acock2005`
+   :cite:`huisman1998`
 
 .. bibliography:: ../paper/bibliography.bib
    :style: plain
