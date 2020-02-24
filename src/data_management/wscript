@@ -5,7 +5,15 @@ def build(ctx):
     ctx(
         features="run_py_script",
         source="clean_data.py",
-        deps=ctx.path_to(ctx, "xxx", "xxx.dta"),
-        target=ctx.path_to(ctx, "xxx", "xxx.csv"),
+        deps=[
+            ctx.path_to(ctx, "IN_DATA", "application.csv"),
+            ctx.path_to(ctx, "IN_DATA", "final_variables.csv"),
+            ctx.path_to(ctx, "IN_DATA", "info_original_variables.csv"),
+            ctx.path_to(ctx, "IN_DATA", "wave2.csv"),
+        ],
+        target=[
+            ctx.path_to(ctx, "OUT_DATA", "gate_long.csv"),
+            ctx.path_to(ctx, "OUT_DATA", "gate_final.csv"),
+        ],
         name="clean_data",
     )

@@ -16,9 +16,10 @@ def set_project_paths(ctx):
     pp["IN_DATA"] = "src/original_data/"
     pp["IN_MODEL_CODE"] = "src/model_code"
     pp["OUT_DATA"] = f"{out}/out/data"
-    #pp["OUT_ANALYSIS"] = f"{out}/out/analysis"
-    #pp["OUT_FINAL"] = f"{out}/out/final"
     pp["OUT_FIGURES"] = f"{out}/out/figures"
+    pp["OUT_TABLES"] = f"{out}/out/tables"
+    # pp["OUT_ANALYSIS"] = f"{out}/out/analysis"
+    # pp["OUT_FINAL"] = f"{out}/out/final"
     # Convert the directories into Waf nodes.
     for key, val in pp.items():
         if not key == "ADO":
@@ -63,7 +64,7 @@ def configure(ctx):
     ctx.load("sphinx_build")
     ctx.load("write_project_headers")
     # ctx.find_program("dot")
-    ctx.load("tex")
+    ctx.load("biber")
 
 
 def build(ctx):

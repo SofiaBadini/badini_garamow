@@ -1,0 +1,32 @@
+#! python
+import os
+
+
+def build(ctx):
+    abspath = os.path.join(ctx.path.abspath(), "test_tables_functions.py")
+    ctx(
+        features="run_py_script",
+        source="test_functions_tables.py",
+        deps="functions_tables.py",
+        append=abspath,
+    )
+
+    for s in ("integrity", "missing", "levene", "chisq", "logistic"):
+        ctx(
+            features="run_py_script",
+            source="table_" + s + ".py",
+            deps=[ctx.path_to(ctx, "OUT_DATA", "gate_final.csv")],
+            target=[ctx.path_to(ctx, "OUT_TABLES", "table_" + s + ".tex")],
+            name="tables",
+        )
+
+    ctx(
+        features="run_py_script",
+        source="plots.py",
+        deps=[ctx.path_to(ctx, "OUT_DATA", "gate_final.csv")],
+        target=[
+            ctx.path_to(ctx, "OUT_FIGURES", "matrix_nan.png"),
+            ctx.path_to(ctx, "OUT_FIGURES", "heatmap_nan.png"),
+        ],
+        name="plots",
+    )

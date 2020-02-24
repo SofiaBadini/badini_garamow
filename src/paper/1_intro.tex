@@ -1,36 +1,41 @@
+% !TEX root = 000_paper.tex
+
 \section{Introduction}
 
-% MOTIVATION: 
+% MOTIVATION:
 
 % Problematic RCTs and missing data
-\acp{RCT} are widely used in economics, especially in the context of policy evaluation. In the ideal case, the random assignment of the population of interest into treatment and control groups eliminates the selection bias. For this reason the \ac{RCT} is sometimes referred to as the ``golden standard'' of the evaluation methods. 
-However, its validity can be threatened by missing data due to non-response or attrition in the follow up surveys.\footnote{See \cite{angrist_mostly_2008} for further discussion.} Incomplete data becomes a problem in case there is evidence that missing observations are missing in a non-random way. Hence, the remaining sample might not be representative. Individuals who are not willing to provide relevant information or participate in all follow-up surveys might be systematically different from the individuals who provide full information and participate in all follow up surveys. Consequently, handling missing data inappropriately might lead to biased results \citep{heckman1976common, lee2009training, kling2007experimental}. 
+\acp{RCT} are widely used in economics, especially in the context of policy evaluation. In the ideal case, the random assignment of the population of interest into treatment and control groups eliminates the selection bias. For this reason the \ac{RCT} is sometimes referred to as the "golden standard'' of the evaluation methods.
+However, its validity can be threatened by missing data due to non-response or attrition in the follow up surveys.\footnote{See \cite{angristmostly2008} for further discussion.} Incomplete data becomes a problem in case there is evidence that missing observations are missing in a non-random way. Hence, the remaining sample might not be representative. Individuals who are not willing to provide relevant information or participate in all follow-up surveys might be systematically different from the individuals who provide full information and participate in all follow up surveys. Consequently, handling missing data inappropriately might lead to biased results \cite{heckman1976common, lee2009training, kling2007experimental}.
 %However, to estimate treatment effects \acp{RCT} rely on panel data and therefore are, in many cases, impractical.
 
 % TYPE OF MISSINGS IN THE LITERATURE
-\cite{little1989analysis} differentiate between three missing data mechanisms: (1) data missing at completely random \ac{MCAR}, (2) data missing at random \ac{MAR}, and (3) data missing at non random \ac{MANR}. \ac{MCAR} is unrelated to observed and unobserved characteristics, \ac{MAR} is related to observed characteristics only, and \ac{MANR} is related to both observed and/ or unobserved characteristics. Because it is impossible to assign the available data to one of the three missing data mechanisms with certainty, information on the missing data can be inferred from observed data to come up with reasonable assumptions about the missing data mechanism. Yet, assumptions regarding the unobserved characteristics remain untestable. 
+\cite{little1989analysis} differentiate between three missing data mechanisms: (1) data missing at completely random \ac{MCAR}, (2) data missing at random \ac{MAR}, and (3) data missing at non random \ac{MANR}. \ac{MCAR} is unrelated to observed and unobserved characteristics, \ac{MAR} is related to observed characteristics only, and \ac{MANR} is related to both observed and/ or unobserved characteristics. Because it is impossible to assign the available data to one of the three missing data mechanisms with certainty, information on the missing data can be inferred from observed data to come up with reasonable assumptions about the missing data mechanism. Yet, assumptions regarding the unobserved characteristics remain untestable.
 
 % Why sentivity analysis
-Based on the underlying mechanism there are different ways to handle missing data: complete case analysis, single imputation, and multiple imputation. However, if the assumed underlying missing data mechanism is incorrect, the result may still be biased (Li et al., 2014). 
+%Based on the underlying mechanism there are different ways to handle missing data: complete case analysis, single imputation, and multiple imputation. However, if the assumed underlying missing data mechanism is incorrect, the result may still be biased (Li et al., 2014). 
+
+Based on the underlying mechanism there are different ways to handle missing data: complete case analysis, single imputation, and multiple imputation. However, if the assumed underlying missing data mechanism is incorrect, the result may still be biased (Li et al., 2014).
+
 In order to produce robust results, a sensitivity analysis which varies the assumptions about the underlying missing data mechanism and considers the appropriate methods respectively to handle missing data is necessarys.
 
-% GATE 
-Our analysis is illustrated with empirical examples based on the ``\ac{GATE}'' project by Fairlie et al. (2015). \textcolor{red}{INPUT SOFIA: The authors estimate the effect of the \ac{GATE} project, a subsidized entrepreneurship training in the USA on xxx. The project provides a notable example for the data missing problem because}.
+% GATE
+Our analysis is illustrated with empirical examples based on the "\ac{GATE}'' project by Fairlie et al. (2015). \textcolor{red}{INPUT SOFIA: The authors estimate the effect of the \ac{GATE} project, a subsidized entrepreneurship training in the USA on xxx. The project provides a notable example for the data missing problem because}.
 
 % OUR ANALYSIS IN DETAIL
-In our analysis we focus of the complete case analysis and the single imputation approach. 
+In our analysis we focus of the complete case analysis and the single imputation approach.
 
 % MISSINGS NON-RESPONSE
 % return to baseline, different assumptions about the outcome variabels
-For missing observations due to non-response, we apply three different methods. First, we conduct a bound analysis, imputing the minimum or the maximum value of the corresponding variable \textcolor{red}{PAPER}. Second, we impute the mean with some standard deviation. 
-Third, we follow the ``hot-deck'' procedure in the paper (Fairlie et al. (2015)). 
-%IF TIME: we extend the analysis by the ``nearest neighbor'' procedure to contrast the results in the paper. 
-%we drop observations that reveal missing information of relevant variables. 
+For missing observations due to non-response, we apply three different methods. First, we conduct a bound analysis, imputing the minimum or the maximum value of the corresponding variable \textcolor{red}{PAPER}. Second, we impute the mean with some standard deviation.
+Third, we follow the ``hot-deck'' procedure in the paper (Fairlie et al. (2015)).
+%IF TIME: we extend the analysis by the ``nearest neighbor'' procedure to contrast the results in the paper.
+%we drop observations that reveal missing information of relevant variables.
 
 % ATTRITION
 % last observation carried forward, mean +- sd1, Inverse probability Weights, return to baseline
-For the attrition \footnote{In this paper we focus on ``ex-post'' attrition methods to  since ``ex-ante'' approaches require tracking which usually bears large costs.} we again apply three different methods. As before, we first conduct a bound analysis, replacing missing individuals with an individual with the worst and best outcome of interest. Second, we impute the last observation carried forward. Third, we assume that the attrition is driven by selection on observables and apply the \ac{IPW} method. 
+For the attrition \footnote{In this paper we focus on ``ex-post'' attrition methods to  since ``ex-ante'' approaches require tracking which usually bears large costs.} we again apply three different methods. As before, we first conduct a bound analysis, replacing missing individuals with an individual with the worst and best outcome of interest. Second, we impute the last observation carried forward. Third, we assume that the attrition is driven by selection on observables and apply the \ac{IPW} method.
 % we replace a missing individual with the average individual in the group and add some noise to it such that the replacement resembles a random draw from a normal distribution around the group mean\footnote{The imputation is conducted separately for treatment and control group.}
 
 % CONCLUSION
-The complete case analysis is the easiest way to handle missing data. However, it leads to biased estimated when the missing data is \ac{MCAR}. Therefore, the bound analysis is a good start to conduct a sensitivity analysis on estimated results, mapping the full range of possible outcomes. This is especially helpful when there is reluctance to rely upon speciﬁc exclusion restrictions. Therefore, we will compare all the other methods to the complete case analysis and compare them to the bounds. 
+The complete case analysis is the easiest way to handle missing data. However, it leads to biased estimated when the missing data is \ac{MCAR}. Therefore, the bound analysis is a good start to conduct a sensitivity analysis on estimated results, mapping the full range of possible outcomes. This is especially helpful when there is reluctance to rely upon speciﬁc exclusion restrictions. Therefore, we will compare all the other methods to the complete case analysis and compare them to the bounds.

@@ -10,8 +10,12 @@ Welcome to our project's documentation!
     introduction
     original_data
     data_management
-    model_code
+    missing_analysis
+    method_define
+    method_implement
+    model_specs
     analysis
     paper
+    library
     final
     references

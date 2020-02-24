@@ -1,5 +1,12 @@
-%%% PREAMBEL %%%
-\documentclass[12pt, a4paper, leqno]{article}
+%%% PREAMBLE %%%
+\documentclass[11pt, a4paper, leqno]{article}
+\usepackage[top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{graphicx}
+%
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother
+%
 
 % PACKAGES
 \input{0_packages.tex}
@@ -9,12 +16,10 @@
 %\bibliography{biblio.bib}
 
 % HEADER
-\title{Effective Programming Practices for Economists\\
-        University of Bonn, Winter 2018/19 \\[2ex]
-        Sensitivity of OLS results to different imputation methods in a RCT framework}
+\title{Sensitivity of OLS results to different imputation methods \\ in a RCT framework \\ [0.2em] Effective Programming Practices for Economists \\
+         University of Bonn, Winter 2018/19}
 \author{Sofia Badini and Adelina Garamow}
 \date{\today}
-
 
 %%% START %%%
 \begin{document}
@@ -22,31 +27,25 @@
 \maketitle
 %\tableofcontents
 
-% ACRONYMS
-\input{0_acronyms.tex}
 
 % ABSTRACT
 \input{0_abstract.tex}
 
+% ACRONYMS
+\newpage
+\input{0_acronyms.tex}
 
 %%% MAIN PART %%%
-\newpage 
+\newpage
 \onehalfspacing
 
 \input{1_intro.tex}
-
 \input{2_gate.tex}
+\input{3_missing_data_analysis}
+\input{4_itt_estimates}
 
-\input{3_missing.tex}
-
-\input{4_attrition.tex}
-
-\input{5_summary.tex}
-
-\input{6_results.tex}
-
-\input{7_conclusion.tex}
-
+\newpage
+\printbibliography
 
 %%% APPENDIX %%%
 \clearpage %or \newpage
