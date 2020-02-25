@@ -2,9 +2,9 @@
 
 
 def build(ctx):
-    ctx(features="tex", source="000_paper.tex", prompt=1, name="000_paper")
+    ctx(features="tex", source="paper.tex", prompt=1, name="paper")
     # Install to the project root.
-    ctx.install_files(ctx.env.PROJECT_PATHS["PROJECT_ROOT"].abspath(), "000_paper.pdf")
+    ctx.install_files(ctx.env.PROJECT_PATHS["PROJECT_ROOT"].abspath(), "paper.pdf")
     # Running LaTeX processes in parallel leads to
     # too many potential problems.
     ctx.add_group()

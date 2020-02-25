@@ -11,8 +11,8 @@ import numpy as np
 import pandas as pd
 
 from bld.project_paths import project_paths_join as ppj
-from src.missing_analysis.functions_plots import heatmap_nan
-from src.missing_analysis.functions_plots import matrix_nan
+from src.model_code.functions_plots import heatmap_nan
+from src.model_code.functions_plots import matrix_nan
 
 
 # Load dataset

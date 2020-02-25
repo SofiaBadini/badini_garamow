@@ -6,20 +6,15 @@ Anaylsis of Missing Data Pattern and Mechanism
 
 Documentation of the code in *src.missing_analysis*.
 
+Here we investigate the missing data pattern and mechanism of the data, and
+output the results to plots and nicely formatted tables.
+
 
 ``plots.py``
 =========================
 
 .. automodule:: src.missing_analysis.plots
     :members:
-
-
-``functions_plots.py``
-=========================
-
-.. automodule:: src.missing_analysis.functions_plots
-    :members:
-
 
 ``table_integrity.py``
 =========================
@@ -43,17 +38,4 @@ Documentation of the code in *src.missing_analysis*.
 =========================
 
 .. automodule:: src.missing_analysis.table_chisq
-    :members:
-
-``functions_tables.py``
-=========================
-
-.. automodule:: src.missing_analysis.functions_tables
-    :members:
-
-
-``formatting_tables.py``
-=========================
-
-.. automodule:: src.missing_analysis.formatting_tables
     :members:

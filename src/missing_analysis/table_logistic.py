@@ -7,9 +7,9 @@ table to ``table_legistic.tex`` in the "OUT_TABLES" directory.
 import pandas as pd
 
 from bld.project_paths import project_paths_join as ppj
-from src.missing_analysis.formatting_tables import assign_stars
-from src.missing_analysis.functions_tables import generate_regression_output
-from src.missing_analysis.pretty_index import pretty_index_dict
+from src.model_code.formatting_tables import assign_stars
+from src.model_code.functions_tables import generate_regression_output
+from src.model_code.pretty_index import pretty_index_dict
 
 
 # Load dataset
@@ -46,15 +46,9 @@ table_logistic = pd.concat(
 )
 
 # Format DataFrame
-table_logistic = table_logistic.rename(
-    columns=({"coef": "Coeff.", "std err": "Std. Error", "P>|z|": "p-value"})
-)
 table_logistic = table_logistic.reindex(pretty_index_dict).rename(pretty_index_dict)
 table_logistic = table_logistic.dropna(how="all")
 idx = pd.IndexSlice
-table_logistic = table_logistic.loc[
-    idx[:, idx[:, ["Coeff.", "Std. Error", "p-value"]]]
-].copy()
 subset = idx[:, idx[:, "p-value"]]
 table_logistic = assign_stars(table_logistic, subset)
 table_logistic = table_logistic.fillna(" ")

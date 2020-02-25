@@ -3,6 +3,7 @@
 """
 
 pretty_index_dict = {
+    "constant": "constant",
     "treatment": "Treatment",
     "philadelphia": "Philadelphia",
     "pittsburgh": "Pittsburgh",

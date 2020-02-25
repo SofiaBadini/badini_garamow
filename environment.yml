@@ -18,6 +18,8 @@ dependencies:
   - pdbpp
   - tbb
   - seaborn
+  - missingno
+  - statsmodels
 
   - pip:
     - click==7.0

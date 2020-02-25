@@ -1,0 +1,19 @@
+#! python
+
+
+def build(ctx):
+    for table in ("withcontr", "nocontr"):
+        for i in (0, 1):
+            ctx(
+                features="run_py_script",
+                source="complete_case.py",
+                deps=[ctx.path_to(ctx, "OUT_DATA", "gate_final.csv")],
+                target=[
+                    ctx.path_to(
+                        ctx,
+                        "OUT_TABLES",
+                        "table_complete_" + str(table) + str(i) + ".tex",
+                    )
+                ],
+                name="complete_case",
+            )

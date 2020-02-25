@@ -1,4 +1,5 @@
-"""Functions to perform the calculations needed to generate all the tables.
+"""Functions to perform the calculations needed to generate all the tables
+present in the paper.
 
 """
 import numpy as np
@@ -180,23 +181,45 @@ def create_quantile_dummy(df, variable, median=False):
 def generate_regression_output(df, regressand, type="OLS"):
     """Generate DataFrame containing output of OLS or Logistic regression.
 
+    For Logistic regressions, generate DataFrames displaying parameters' estimates,
+    standard errors and p-values. For OLS regression, generate an additional
+    DataFrames displaying number of observations, R-squared, Adjusted R-squared,
+    and F Statistic.
+
     Args:
-        df: dataframe containing regressand and regressor(s)
-        regressand: the variable to be regressed on
-        type: "OLS" or "Logit", the regression to be performed. Default is OLS.
+        df (pd.DataFrame): dataframe containing regressand and regressor(s).
+        regressand (string): the variable to be regressed on.
+        type (string): "OLS" or "Logit", the regression to be performed.
+            Default is OLS.
 
     Returns:
-        pd.DataFrame: dataframe containing output of regression.
+        pd.DataFrame or list of DataFrames: Object containing output of regression.
 
     """
+    dict_ols = {"coef": "Coeff.", "std err": "Std. Error", "P>|t|": "p-value"}
+    dict_log = {"coef": "Coeff.", "std err": "Std. Error", "P>|z|": "p-value"}
     y = df[regressand]
     x = df.drop(regressand, axis=1)
     x.insert(0, "constant", 1)
+
     if type == "OLS":
         model = sm.OLS(endog=y, exog=x, missing="drop").fit()
         result = model.get_robustcov_results().summary().tables[1].as_html()
+        result = pd.read_html(result, header=0, index_col=0)[0]
+        result = result.rename(columns=(dict_ols))
+        result_coeff = result[["Coeff.", "Std. Error", "p-value"]].copy()
+        result_stat = pd.DataFrame(
+            data=[model.nobs, model.rsquared, model.rsquared_adj, model.fvalue],
+            index=["Observations", "R-squared", "Adjusted R-squared", "F Statistic"],
+            columns=["Summary statistics"],
+        )
+        result_final = [result_coeff, result_stat.T]
+
     elif type == "Logit":
         model = sm.Logit(y, x, missing="drop").fit(disp=False)
         result = model.summary().tables[1].as_html()
-    result_df = pd.read_html(result, header=0, index_col=0)[0]
-    return result_df
+        result_coeff = pd.read_html(result, header=0, index_col=0)[0]
+        result_coeff = result_coeff.rename(columns=(dict_log))
+        result_final = result_coeff[["Coeff.", "Std. Error", "p-value"]].copy()
+
+    return result_final

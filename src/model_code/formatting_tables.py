@@ -1,4 +1,4 @@
-"""Functions to format tables.
+"""Functions used to format the tables present in the final papers.
 
 """
 import numpy as np
@@ -14,7 +14,7 @@ def format_as_percentage(df, subset):
             elements of the dataframe must be formatted.
 
     Returns:
-        pd.DataFrame: formatted original dataframe.
+        pd.DataFrame: formatted dataframe.
 
     """
     df.loc[subset] = df.loc[subset].applymap(
@@ -35,7 +35,7 @@ def assign_stars(df, subset, correction=1):
             correction).
 
     Returns:
-        pd.DataFrame: formatted original dataframe.
+        pd.DataFrame: formatted dataframe.
 
     """
     significance_levels = np.array([0.1, 0.05, 0.01]) / correction

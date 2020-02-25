@@ -8,11 +8,11 @@ import numpy as np
 import pandas as pd
 
 from bld.project_paths import project_paths_join as ppj
-from src.missing_analysis.formatting_tables import assign_stars
-from src.missing_analysis.formatting_tables import format_as_percentage
-from src.missing_analysis.functions_tables import compute_sample_sizes
-from src.missing_analysis.functions_tables import ttest_by_column
-from src.missing_analysis.pretty_index import pretty_index_dict
+from src.model_code.formatting_tables import assign_stars
+from src.model_code.formatting_tables import format_as_percentage
+from src.model_code.functions_tables import compute_sample_sizes
+from src.model_code.functions_tables import ttest_by_column
+from src.model_code.pretty_index import pretty_index_dict
 
 # Load dataset
 gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))

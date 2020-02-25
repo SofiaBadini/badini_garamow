@@ -7,10 +7,10 @@ table to ``table_chisq.tex`` in the "OUT_TABLES" directory.
 import pandas as pd
 
 from bld.project_paths import project_paths_join as ppj
-from src.missing_analysis.formatting_tables import assign_stars
-from src.missing_analysis.functions_tables import chisquare_by_column
-from src.missing_analysis.functions_tables import create_quantile_dummy
-from src.missing_analysis.pretty_index import pretty_index_dict
+from src.model_code.formatting_tables import assign_stars
+from src.model_code.functions_tables import chisquare_by_column
+from src.model_code.functions_tables import create_quantile_dummy
+from src.model_code.pretty_index import pretty_index_dict
 
 
 # Load dataset

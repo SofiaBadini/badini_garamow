@@ -4,8 +4,10 @@
 Original Data
 *************
 
-Documentation of the different datasets in *original_data*.
+Documentation of the files in *src.original_data*.
 
+Here we store the GATE project's original datasets, as well as two .csv files
+containing description of these datasets.
 
 application.csv
 ================
@@ -36,4 +38,4 @@ Information on the original datasets' variable.
 final_variables.csv
 ====================
 
-Variables to be kept after data cleaning.
+Variables to be kept after the data management step.

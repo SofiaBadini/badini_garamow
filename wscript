@@ -18,8 +18,6 @@ def set_project_paths(ctx):
     pp["OUT_DATA"] = f"{out}/out/data"
     pp["OUT_FIGURES"] = f"{out}/out/figures"
     pp["OUT_TABLES"] = f"{out}/out/tables"
-    # pp["OUT_ANALYSIS"] = f"{out}/out/analysis"
-    # pp["OUT_FINAL"] = f"{out}/out/final"
     # Convert the directories into Waf nodes.
     for key, val in pp.items():
         if not key == "ADO":

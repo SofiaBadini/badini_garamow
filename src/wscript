@@ -3,12 +3,9 @@
 
 def build(ctx):
     ctx.recurse("data_management")
+    ctx.recurse("model_code")
     ctx.recurse("missing_analysis")
-    ctx.recurse("method_define")
-    ctx.recurse("method_implement")
-    ctx.recurse("model_specs")
-    ctx.recurse("analysis")
-    ctx.recurse("final")
+    ctx.recurse("itt_analysis")
     # Safety measure -- else the LaTeX scanner might fail because some
     # '.tex'-source file has not been generated.
     ctx.add_group()
