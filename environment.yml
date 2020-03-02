@@ -35,3 +35,6 @@ dependencies:
     - sphinx-autobuild==0.7.1
     - sphinx-rtd-theme==0.4.3
     - sphinxcontrib-bibtex==1.0.0
+
+    - statsmodels
+    - lxml
