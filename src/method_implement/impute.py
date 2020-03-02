@@ -1,32 +1,47 @@
-"""Here we impute the missing values/ observations."""
+"""Apply functions for imputation defined in ''method_define.py'' to get a
+full sample for further analysis.
+
+"""
+import numpy as np
+import pandas as pd
+from bld.project_paths import project_paths_join as ppj
 
 from src.method_define.impute_method import impute_kNN
-from src.method_define.impute_method import impute_median_sd
+from src.method_define.impute_method import impute_msd
 
-variable_name = {
-  'outcome': 'population',
-  'covariate': ['GDP', 'alpha-2'],
-}
+data = pd.read_csv(ppj("IN_DATA", "gate_final.csv"))
 
-imputation_variation= {
-  'variation1': {'function': impute_median_sd, 'sd_share': 0.10, 'sd_fixed': 0, 'k': 1},
-  'variation2': {'function': impute_median_sd, 'sd_share': 0.25, 'sd_fixed': 0, 'k': 1},
-  'variation3': {'function': impute_median_sd, 'sd_share': 0.75, 'sd_fixed': 0, 'k': 1},
-  'variation4': {'function': impute_median_sd, 'sd_share': 0.10, 'sd_fixed': 0, 'k': 10},
-  'variation5': {'function': impute_median_sd, 'sd_share': 0.25, 'sd_fixed': 0, 'k': 10},
-  'variation5': {'function': impute_median_sd, 'sd_share': 0.75, 'sd_fixed': 0, 'k': 10}
-}
+# Set the index to treatment and extrcat column names of columsn to be imputed.
+data.set_index(keys=["treatment"], drop=False, inplace=True)
+col_name = (
+    data.select_dtypes(np.number).columns.difference(["gateid", "treatment"]).tolist()
+)
 
-# Or directly variable_name['outcome']
-outcome_name = variable_name['outcome']
-covariate_name = variable_name['covariate']
+data_dict_v1 = {}
+data_dict_v2 = {}
 
-# Impute outcomes
-df_outcome_imputed_kNN = impute_kNN(OURDATA[outcome_name], k=1)
+for dict in data_dict_v1, data_dict_v2:
+    """Create several dictionaries for treatment and control groups, which
+    should be imputed later with different methods defined.
 
-df_outcome_imputed_median_sd = OURDATA[outcome_name].apply(
-                            impute_median_sd, sd_share=0.25, sd_fixed=0, k=1
-                            )
+    """
+    dict["treat"] = data.loc[data.treatment == 1].copy()
+    dict["control"] = data.loc[data.treatment == 0].copy()
 
-# Impute covariates
-df_covariate_imputed_kNN = impute_kNN(OURDATA[covariate_name], k=1)
+for _key, df in data_dict_v1.items():
+    # Apply the imputation method to each treatment group respectively.
+    df[col_name] = impute_msd(df, 1, 0.25, 0, col_name)
+
+for _key, df in data_dict_v2.items():
+    df[col_name] = impute_kNN(df, col_name)
+
+data_imputed_v1 = pd.concat(data_dict_v1.values(), ignore_index=True)
+data_imputed_v2 = pd.concat(data_dict_v2.values(), ignore_index=True)
+
+for df in data_imputed_v1, data_imputed_v2:
+    # Loop over data sets for completeness.
+    if df.isna().sum().any(axis=0) is True:
+        # See if data frame is complete.
+        print("Data frame not complete.")
+    else:
+        print("Data frame complete.")

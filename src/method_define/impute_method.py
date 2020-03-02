@@ -42,7 +42,7 @@ def impute_msd(df, k, sd_share, sd_fixed, col_name):
     return col_ndarray
 
 
-def impute_kNN_2(df, col_name):
+def impute_kNN(df, col_name):
     """Impute the missing values with the average of the k nearest neightbors.
 
     Args:
