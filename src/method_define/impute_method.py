@@ -4,7 +4,8 @@ from sklearn.preprocessing import StandardScaler
 
 nan = np.nan
 scaler = StandardScaler()
-imputer_kNN = KNNImputer(n_neighbors=1, missing_values=nan, weights="uniform")
+knn = 1
+imputer_kNN = KNNImputer(n_neighbors=knn, missing_values=nan, weights="uniform")
 
 
 def impute_msd(df, k, sd_share, sd_fixed, col_name):
@@ -14,7 +15,7 @@ def impute_msd(df, k, sd_share, sd_fixed, col_name):
     Args:
 
     df (pd.DataFrame() - data set
-    k (integer) - number of nearest n_neighbors
+    k (integer) - number of draws
     sd_share (integer) - share of variance applied
     sd_fixed (integer) - additional constant to variance
     col_name (list) - names of variables which should be imputed
