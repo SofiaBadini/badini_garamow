@@ -7,6 +7,8 @@ def build(ctx):
         target=[
             ctx.path_to(ctx, "OUT_DATA", "data_imputed_v1.csv"),
             ctx.path_to(ctx, "OUT_DATA", "data_imputed_v2.csv"),
+            ctx.path_to(ctx, "OUT_DATA", "data_imputed_v3.csv"),
+            ctx.path_to(ctx, "OUT_DATA", "data_imputed_v4.csv"),
         ],
         name="impute",
     )
