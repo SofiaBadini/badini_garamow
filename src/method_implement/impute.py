@@ -48,7 +48,7 @@ for dict_df in dict_df_v2, dict_df_v3, dict_df_v4:
     # Loop over the dictionareis _v2, _v3 and _v4.
     for _key, df in dict_df.items():
         # Impute the missing values in the covariates with the kNN imputer.
-        df[dict_colname["covariate"]] = impute_kNN(df, dict_colname["covariate"])
+        df[dict_colname["covariate"]] = impute_kNN(df, dict_colname["all"])
 
 for _key, df in dict_df_v2.items():
     # Impute the missing values in the outcome with the msd imputer.
