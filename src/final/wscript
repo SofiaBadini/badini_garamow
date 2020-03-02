@@ -1,0 +1,38 @@
+#! python
+
+
+def build(ctx):
+
+    ctx(
+        features="run_py_script",
+        source="plots.py",
+        deps=[ctx.path_to(ctx, "OUT_DATA", "gate_final.csv")],
+        target=[
+            ctx.path_to(ctx, "OUT_FIGURES", "matrix_nan.png"),
+            ctx.path_to(ctx, "OUT_FIGURES", "heatmap_nan.png"),
+        ],
+        name="plots",
+    )
+
+    for d in (
+        "chisq",
+        "integrity",
+        "levene",
+        "logistic",
+        "welch",
+        "complete_controls_coeff",
+        "complete_controls_summary",
+        "complete_no_controls_coeff",
+        "complete_no_controls_summary",
+    ):
+        ctx(
+            features="run_py_script",
+            source="tables.py",
+            deps=[
+                ctx.path_to(ctx, "OUT_ANALYSIS", d + "_df.csv"),
+                ctx.path_to(ctx, "IN_FINAL", "pretty_index.py"),
+                ctx.path_to(ctx, "IN_FINAL", "formatting.py"),
+            ],
+            target=[ctx.path_to(ctx, "OUT_TABLES", "table_" + d + ".tex")],
+            name="tables",
+        )

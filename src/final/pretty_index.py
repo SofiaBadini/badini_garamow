@@ -3,7 +3,7 @@
 """
 
 pretty_index_dict = {
-    "constant": "constant",
+    "constant": "intercept",
     "treatment": "Treatment",
     "philadelphia": "Philadelphia",
     "pittsburgh": "Pittsburgh",
@@ -35,11 +35,11 @@ pretty_index_dict = {
     "salaried_worker": "Salaried worker",
     "worked_for_relatives_friends_se": "Worked for self-employed friends",
     "benefits": "Receives unemployment benefits",
-    "hhincome_p25": "Yearly income lower than 25k",
-    "hhincome_p25_49": "Yearly income between 25k and 49k",
-    "hhincome_p50_74": "Yearly income between 50k and 74k",
-    "hhincome_p75_99": "Yearly income between 75k and 99k",
-    "hhincome_p100": "Yearly income higher than 100k",
+    "hhincome_25k": "Yearly income lower than 25k",
+    "hhincome_25_49k": "Yearly income between 25k and 49k",
+    "hhincome_50_74k": "Yearly income between 50k and 74k",
+    "hhincome_75_99k": "Yearly income between 75k and 99k",
+    "hhincome_100k": "Yearly income higher than 100k",
     "badcredit": "Has bad credit history",
     "autonomy_std": "Standardized autonomy index",
     "risk_tolerance_std": "Standardized risk-tolerance index",

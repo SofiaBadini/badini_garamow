@@ -6,7 +6,7 @@ def build(ctx):
     abspath = os.path.join(ctx.path.abspath(), "test_tables_functions.py")
     ctx(
         features="run_py_script",
-        source="test_functions_tables.py",
-        deps="functions_tables.py",
+        source="test_auxiliary_functions.py",
+        deps="auxiliary_functions.py",
         append=abspath,
     )

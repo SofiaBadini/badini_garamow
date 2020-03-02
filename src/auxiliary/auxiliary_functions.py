@@ -15,7 +15,8 @@ def ttest_by_column(df, dummy, equal_var=True):
     Args:
         df (pd.DataFrame): The dataframe on which to perform the t-tests.
         dummy (string): Name of *df* column (e.g. "Treatment"). Must represent
-            a dummy variable.
+            a dummy variable (take value 0 or 1). Observations where the dummy
+            value is missing are not considered.
         equal_var (bool): If True (default), perform a standard independent 2
             sample test that assumes equal population variances. If False, perform
             Welch’s t-test, which does not assume equal population variance.
@@ -49,27 +50,6 @@ def ttest_by_column(df, dummy, equal_var=True):
     return ttest_df
 
 
-def compute_sample_sizes(df, dummy):
-    """Split dataset in two groups according to a dummy variable and count the
-    number of observations in each group.
-
-    Args:
-        df (pd.DataFrame): The dataset of interest.
-        dummy (string): Name of *df* column (e.g. "Treatment"). Must be
-            a dummy variable.
-
-    Returns:
-        list of pd.Series: Sample size for control and for treatment, with
-            index "sample_size".
-
-    """
-    sample_size = []
-    for value in (0, 1):
-        size = pd.Series(df.groupby(dummy).size()[value], index=["sample_size"])
-        sample_size.append(size)
-    return sample_size
-
-
 def levene_by_column(df, dummy):
     """Iterate Levene's test for equality of variances for each column of a
     DataFrame, after splitting the observations in two groups according to a
@@ -78,7 +58,8 @@ def levene_by_column(df, dummy):
     Args:
         df (pd.DataFrame): The dataframe on which to perform the test.
         dummy (string): Name of *df* column (e.g. "Treatment"). Must represent
-            a dummy variable.
+            a dummy variable (take value 0 or 1). Observations where the dummy
+            value is missing are not considered.
 
     Returns:
         pd.DataFrame: A dataframe displaying, in each row,
@@ -102,8 +83,8 @@ def chisquare_by_column(df, dummy):
 
     Args:
         df (pd.DataFrame): The dataframe on which to perform the t-tests.
-        dummy (string): Name of *df* column (e.g. "Treatment"). Must be a dummy
-            variable.
+        dummy (string): Name of *df* column (e.g. "Treatment"). Must represent
+            a dummy variable (take value 0 or 1).
 
     Returns:
         pd.DataFrame: A dataframe displaying, in each row,
@@ -168,7 +149,7 @@ def create_quantile_dummy(df, variable, median=False):
             columns=[variable + "_p25", variable + "_p25_75", variable + "_p75"],
             index=df.index,
         )
-    else:
+    if median is True:
         values = np.where(
             np.isnan(df[variable]),
             np.nan,
@@ -179,18 +160,20 @@ def create_quantile_dummy(df, variable, median=False):
 
 
 def generate_regression_output(df, regressand, type="OLS"):
-    """Generate DataFrame containing output of OLS or Logistic regression.
+    """Perform OLS or Logistic regression taking as inputs the columns of a
+    DataFrame and generate DataFrame containing output of (robust) OLS or
+    Logistic regression.
 
     For Logistic regressions, generate DataFrames displaying parameters' estimates,
-    standard errors and p-values. For OLS regression, generate an additional
-    DataFrames displaying number of observations, R-squared, Adjusted R-squared,
+    standard errors and p-values. For (robust) OLS regression, generate an additional
+    DataFrame displaying number of observations, R-squared, Adjusted R-squared,
     and F Statistic.
 
     Args:
         df (pd.DataFrame): dataframe containing regressand and regressor(s).
-        regressand (string): the variable to be regressed on.
+        regressand (string): the variable to be regressed on, a column of *df*.
         type (string): "OLS" or "Logit", the regression to be performed.
-            Default is OLS.
+            Default is "OLS".
 
     Returns:
         pd.DataFrame or list of DataFrames: Object containing output of regression.
@@ -203,22 +186,27 @@ def generate_regression_output(df, regressand, type="OLS"):
     x.insert(0, "constant", 1)
 
     if type == "OLS":
-        model = sm.OLS(endog=y, exog=x, missing="drop").fit()
-        result = model.get_robustcov_results().summary().tables[1].as_html()
-        result = pd.read_html(result, header=0, index_col=0)[0]
+        fitted_model = sm.OLS(endog=y, exog=x, missing="drop").fit()
+        table = fitted_model.get_robustcov_results().summary().tables[1].as_html()
+        result = pd.read_html(table, header=0, index_col=0)[0]
         result = result.rename(columns=(dict_ols))
         result_coeff = result[["Coeff.", "Std. Error", "p-value"]].copy()
         result_stat = pd.DataFrame(
-            data=[model.nobs, model.rsquared, model.rsquared_adj, model.fvalue],
+            data=[
+                float(fitted_model.get_robustcov_results().nobs),
+                float(fitted_model.get_robustcov_results().rsquared),
+                float(fitted_model.get_robustcov_results().rsquared_adj),
+                float(fitted_model.get_robustcov_results().fvalue),
+            ],
             index=["Observations", "R-squared", "Adjusted R-squared", "F Statistic"],
             columns=["Summary statistics"],
         )
-        result_final = [result_coeff, result_stat.T]
+        result_final = [result_coeff, result_stat]
 
     elif type == "Logit":
-        model = sm.Logit(y, x, missing="drop").fit(disp=False)
-        result = model.summary().tables[1].as_html()
-        result_coeff = pd.read_html(result, header=0, index_col=0)[0]
+        fitted_model = sm.Logit(y, x, missing="drop").fit(disp=False)
+        table = fitted_model.summary().tables[1].as_html()
+        result_coeff = pd.read_html(table, header=0, index_col=0)[0]
         result_coeff = result_coeff.rename(columns=(dict_log))
         result_final = result_coeff[["Coeff.", "Std. Error", "p-value"]].copy()
 

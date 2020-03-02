@@ -20,6 +20,7 @@ dependencies:
   - seaborn
   - missingno
   - statsmodels
+  - lxml
 
   - pip:
     - click==7.0

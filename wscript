@@ -13,9 +13,12 @@ def set_project_paths(ctx):
     pp = OrderedDict()
     pp["PROJECT_ROOT"] = "."
     pp["BLD"] = ""
-    pp["IN_DATA"] = "src/original_data/"
-    pp["IN_MODEL_CODE"] = "src/model_code"
+    pp["IN_DATA"] = "src/original_data"
+    pp["IN_AUXILIARY"] = "src/auxiliary"
+    pp["IN_ANALYSIS"] = "src/analysis"
+    pp["IN_FINAL"] = "src/final"
     pp["OUT_DATA"] = f"{out}/out/data"
+    pp["OUT_ANALYSIS"] = f"{out}/out/analysis"
     pp["OUT_FIGURES"] = f"{out}/out/figures"
     pp["OUT_TABLES"] = f"{out}/out/tables"
     # Convert the directories into Waf nodes.

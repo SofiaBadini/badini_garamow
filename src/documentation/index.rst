@@ -10,8 +10,8 @@ Welcome to our project's documentation!
     introduction
     original_data
     data_management
-    missing_analysis
-    itt_analysis
-    model_code
+    analysis
+    final
+    auxiliary
     paper
     references

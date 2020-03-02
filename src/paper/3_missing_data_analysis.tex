@@ -20,7 +20,7 @@
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Throughout our paper we focus on a subset of about 30 baseline characteristics and on only one outcome, log household income at the wave 2 follow-up survey (18 months after random assignment). Figure~\ref{fig:matrix_nan} displays the missing data pattern for this subset of variables. Missing values in the baseline characteristics are found in 12\% of the total 4197 applicants, and appear to be more numerous for questions related to employment status, credit history, personal characteristics and health.
+Throughout our paper we focus on a subset of about 30 baseline characteristics (following \cite{fairlie2015behind}) and on only one outcome, log household income at the wave 2 follow-up survey (18 months after random assignment). Figure~\ref{fig:matrix_nan} displays the missing data pattern for this subset of variables. Missing values in the baseline characteristics are found in 12\% of the total 4197 applicants, and appear to be more numerous for questions related to employment status, credit history, personal characteristics and health.
 
 At the wave 2 follow-up survey, 18 months after random assignment, 1570 individuals (37.4\% of the full sample) do not report a value for household income at wave 2. Among them, 748 (47.6\%) are attriters --- in this context, individuals who do not answer any question of the wave 2 follow-up survey ---, while the remaining 822 (52.4\%) are not attriters in the strict sense, as they do take part in the survey, but do not answer any of the questions related to household income.
 
@@ -28,7 +28,7 @@ Figure~\ref{fig:heatmap_nan} displays the degree of nullity correlation between 
 
 The nullity correlation between the variable "Unemployed" and the variables "Salaried worker" and "Self-employed" is high because "Unemployed" is a generated variable, which takes value 1 if the individual claim to be either a salaried worker or self-employed, and 0 if the individual claims to be none of these categories. It seems that many individuals do not indicate whether they are self-employed, resulting in a missing value in the "Unemployed" variable. An hypothesis is that seasonal or occasional workers, while being clearly not salaried workers, may be unsure whether to consider themselves self-employed.
 
-We also observe a nullity correlation of 0.4 between the autonomy and risk-tolerance indexes. Since, looking at the Codebook for Wave 2 data \footnote{Available at \url{https://www.doleta.gov/reports/projectgate/}}, all questions related to personality traits were grouped together at the end of the questionnaire, this may be taken as an hint that many individuals skipped the entire section.
+We also observe a nullity correlation of 0.4 between the autonomy and risk-tolerance indexes. Since, looking at the Codebook for Wave 2 data\footnote{Available at \url{https://www.doleta.gov/reports/projectgate/}}, all questions related to personality traits were grouped together at the end of the questionnaire, this may be taken as an hint that many individuals skipped the entire section.
 
 
 \subsection{Exploring the Missing Data Mechanism}
@@ -38,7 +38,7 @@ We also observe a nullity correlation of 0.4 between the autonomy and risk-toler
 \centering
 \caption{\textsc{Missing Values Comparison of Characteristics for GATE Experiment}}
 \begin{adjustbox}{width=\textwidth,totalheight=\textheight,keepaspectratio}
-\input{../../out/tables/table_missing}
+\input{../../out/tables/table_welch}
 \end{adjustbox}
 
 
@@ -84,7 +84,7 @@ All reported characteristics are measured at time of application, prior to rando
 \raggedright
 \footnotesize
 \textit{Notes:} All reported characteristics are measured at time of application, prior to random assignment. The wave 2 follow-up survey is conducted 18 months after time of application. We adjust the significance levels for multiple testing using a Bonferroni correction. \\
-** Significant at the 5 percent level
+** Significant at the (adjusted) 5 percent level
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -100,7 +100,7 @@ For a consistency check, we additionally perform chi-squared tests for each char
 
 Furthermore, we run two separate logistic regression models where baseline characteristics are regressed firstly on a missing data dummy representing missings in the baseline characteristics, and secondly on a missing data dummy representing a missing in the outcome of interest. An advantage of this method over crude t-test comparisons is the possibility to adjust for the impact of the other variables on the missing data dummies.
 
-Table~\ref{tab:table_logistic} shows that, somewhat unsurprisingly, most of the significance disappears once the baseline characteristics are jointly considered, although missingness in the outcome of interest still appears to be significantly correlated with observed characteristics. Importatly, the data at hand display multi-collinearity issues \footnote{This problem was addressed by ultimately removing one baseline characteristic, "Worked for self-employed friends", from the logistic regression. This is obviously an arbitrary choice, but we also observed a loss of significance after removing other combinations of variables.}, which tend to make statistical inference less reliable.
+Table~\ref{tab:table_logistic} shows that, somewhat unsurprisingly, most of the significance disappears once the baseline characteristics are jointly considered, although missingness in the outcome of interest still appears to be significantly correlated with observed characteristics. Importantly, the data at hand display multi-collinearity issues \footnote{This problem was addressed by ultimately removing one baseline characteristic, "Worked for self-employed friends", from the logistic regression. This is obviously an arbitrary choice, but we also observed a loss of significance after removing other combinations of variables.}, which tend to make statistical inference less reliable.
 
 The internal validity of the complete case analysis' ITT, which we use as a benchmark, is unharmed as long as treatment and control groups are comparable. Table~\ref{tab:table_integrity} shows that baseline characteristics are balanced between treatment and control both after application and at the wave 2 follow-up survey, a reassuring result.
 

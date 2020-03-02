@@ -4,18 +4,24 @@
 
 \subsection{Complete-case Analysis}
 
-Table~\ref{tab:table_complete_withcontr} shows the ITT estimates for the complete-case analysis.
+Table~\ref{tab:table_complete_withcontr} shows the ITT estimate for the complete-case analysis, including the usual set of baseline characteristics as controls. The dependent variable is log household income 18 months after random assignment to treatment.
+
+The estimate for "Treatment", a variable that takes value 1 if the individual was offered free GATE services and 0 otherwise, is insignificant, and the confidence interval includes (relatively small) effects in both directions, from a 5\% increase to a 5\% decrease in yearly income.
+
+Log yearly income is highly correlated with the income stated at application, the reference category being yearly income between \$50,000 and \$74,000; negatively correlated with having a bad credit history, with having a minority racial background, and with age. More surprisingly, being married is negatively correlated with log household income. In general, we would expect married individuals to have an higher income, because their spouse' salary is counted as well.
+
+The ITT estimate is quite sensitive to removing controls, as shown in Table~\ref{tab:table_complete_nocontr} in Appendix~\ref{appendix_itt_estimates}. The coefficient for "Treatment" is still insignificant but larger (0.0206) and again the confidence interval includes effects in both directions, from an approximate 7.5\% increase to a 3.3\% decrease in yearly income.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{table}[t!]
 \centering
 \caption{\textsc{ITT Estimates on log Household Income}}
-\input{../../out/tables/table_complete_withcontr0}
+\input{../../out/tables/table_complete_controls_coeff}
 
 
 \medskip
 \begin{adjustbox}{width=0.825\textwidth, totalheight=\textheight, keepaspectratio}
-\input{../../out/tables/table_complete_withcontr1}
+\input{../../out/tables/table_complete_controls_summary}
 \end{adjustbox}
 
 \label{tab:table_complete_withcontr}
