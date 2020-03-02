@@ -1,14 +1,12 @@
-#! python
-import os
-
-
 def build(ctx):
-    abspath = os.path.join(ctx.path.abspath(), "test_impute.py")
+
     ctx(
         features="run_py_script",
-        source="test_impute.py",
-        deps=[
-            ctx.path_to(ctx, "IN_MODEL_CODE", "impute.py"),
+        source="impute.py",
+        deps=[ctx.path_to(ctx, "OUT_DATA", "gate_final.csv")],
+        target=[
+            ctx.path_to(ctx, "OUT_DATA", "data_imputed_v1.csv"),
+            ctx.path_to(ctx, "OUT_DATA", "data_imputed_v2.csv"),
         ],
-        append=abspath
+        name="impute",
     )

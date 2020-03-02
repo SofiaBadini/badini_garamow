@@ -9,6 +9,7 @@ from bld.project_paths import project_paths_join as ppj
 from src.method_define.impute_method import impute_kNN
 from src.method_define.impute_method import impute_msd
 
+
 data = pd.read_csv(ppj("IN_DATA", "gate_final.csv"))
 
 # Set the index to treatment and extrcat column names of columsn to be imputed.
@@ -42,6 +43,9 @@ for df in data_imputed_v1, data_imputed_v2:
     # Loop over data sets for completeness.
     if df.isna().sum().any(axis=0) is True:
         # See if data frame is complete.
-        print("Data frame not complete.")
+        print("Data set not complete.")
     else:
-        print("Data frame complete.")
+        print("Save complete data set.")
+
+df.to_csv(ppj("OUT_DATA", "data_imputed_v1.csv"), index=False)
+df.to_csv(ppj("OUT_DATA", "data_imputed_v2.csv"), index=False)
