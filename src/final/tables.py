@@ -1,5 +1,5 @@
 """Format results of missing data mechanism analysis, stored as .csv files in the
-"OUT_ANALYSIS" directory, as latex tables.
+"OUT_ANALYSIS" directory, as latex tables, and sore them in the "OUT_TABLES" directory.
 
 """
 import numpy as np
@@ -12,8 +12,7 @@ from src.final.pretty_index import pretty_index_dict
 
 
 def chisq_df_as_table():
-    """Format ``chisq_df.csv`` and save the result to ``table_chisq.tex`` in the
-    "OUT_TABLE" directory.
+    """Format ``chisq_df.csv`` and save the result to ``table_chisq.tex``.
 
     """
     chisq_df = pd.read_csv(
@@ -37,8 +36,7 @@ chisq_df_as_table()
 
 
 def integrity_df_as_table():
-    """Format ``integrity_df.csv`` and save the result to ``table_integrity.tex``
-    in the "OUT_TABLE" directory.
+    """Format ``integrity_df.csv`` and save the result to ``table_integrity.tex``.
 
     """
     integrity_df = pd.read_csv(
@@ -75,8 +73,7 @@ integrity_df_as_table()
 
 
 def levene_df_as_table():
-    """Format ``levene_df.csv`` and save the result to ``levene_table.tex``
-    in the "OUT_TABLE" directory.
+    """Format ``levene_df.csv`` and save the result to ``levene_table.tex``.
 
     """
     levene_df = pd.read_csv(
@@ -100,8 +97,7 @@ levene_df_as_table()
 
 
 def logistic_df_as_table():
-    """Format ``logistic_df.csv`` and save the result to ``logistic_table.csv``
-    in the "OUT_TABLE" directory.
+    """Format ``logistic_df.csv`` and save the result to ``logistic_table.csv``.
 
     """
     logistic_df = pd.read_csv(
@@ -125,8 +121,7 @@ logistic_df_as_table()
 
 
 def welch_df_as_table():
-    """Format ``welch_df.csv`` and save the result to ``table_welch.tex`` in the
-    "OUT_TABLE" directory.
+    """Format ``welch_df.csv`` and save the result to ``table_welch.tex``.
 
     """
     welch_df = pd.read_csv(
@@ -162,7 +157,7 @@ welch_df_as_table()
 def complete_controls_as_table():
     """Format ``complete_controls_coeff.csv`` and ``complete_controls_summary.csv``
     and save the result to ``table_complete_controls_coeff.tex`` and
-    ``table_complete_controls_summary.csv`` in the "OUT_TABLE" directory.
+    ``table_complete_controls_summary.tex``.
 
     """
     complete_controls_coeff = pd.read_csv(
@@ -197,7 +192,7 @@ complete_controls_as_table()
 def complete_no_controls_as_table():
     """Format ``complete_no_controls_coeff.csv`` and ``complete_no_controls_summary.csv``
     and save the result to ``table_complete_no_controls_coeff.tex`` and
-    ``complete_no_controls_summary.csv`` in the "OUT_TABLE" directory.
+    ``complete_no_controls_summary.tex``.
 
     """
     complete_no_controls_coeff = pd.read_csv(

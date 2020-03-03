@@ -1,5 +1,6 @@
 """Analysis of missing data mechanism in ``gate_final.csv``, stored in the
-"OUT_DATA" directory.
+"OUT_DATA" directory. Results are saved to .csv files and stored in the
+"OUT_ANALYSIS" directory.
 
 """
 import pandas as pd
@@ -16,11 +17,8 @@ gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
 
 
 def create_chisq_dataframe():
-    """Check for missing values mechanism of dataset ``gate_final.csv`` via
-    chi-square two-sample tests.
-
-    Compute Welch's t-test and mean comparison and save dataframe with results
-    to ``welch_df.csv`` in the "OUT_DATA" directory.
+    """Check for missing values mechanism of ``gate_final.csv`` via chi-square
+    two-sample tests and save results to ``welch_df.csv``.
 
     """
     df_chisq = gate_final.drop(
@@ -50,11 +48,8 @@ create_chisq_dataframe()
 
 
 def create_integrity_dataframe():
-    """Verify randomization integrity of dataset ``gate_final.csv``.
-
-    Verify randomization integrity at application and follow-up wave 2 via
-    Student's t-tests. Save dataframe with results to ``integrity_df.csv`` in
-    the "OUT_DATA" directory.
+    """Verify randomization integrity of ``gate_final.csv` at application and
+    follow-up wave 2 via Student's t-tests and save results to ``integrity_df.csv``.
 
     """
     df_app = gate_final.drop(
@@ -89,10 +84,9 @@ create_integrity_dataframe()
 
 
 def create_levene_dataframe():
-    """Perform paired Levene's test for equal variances on dataset ``gate_final.csv``.
+    """Perform paired Levene's test for equal variances on ``gate_final.csv``
+    and save results to ``levene_df.csv``.
 
-    Perform paired Levene's test for equal variances and save dataframe with results
-    to ``levene_df.csv`` in the "OUT_DATA" directory.
     """
     gate_levene = gate_final.drop(
         ["gateid", "completed_w2", "hhincome", "hhincome_w2", "site"], axis=1
@@ -113,10 +107,7 @@ create_levene_dataframe()
 
 def create_logistic_dataframe():
     """"Check for missing values mechanism of dataset ``gate_final.csv`` via logistic
-    regression.
-
-    Perform logistic regressions and save dataframe with results to
-    ``logistic_df.csv`` in the "OUT_DATA" directory.
+    regression and save results to ``logistic_df.csv``.
 
     """
     gate_logistic = gate_final.drop(
@@ -150,11 +141,8 @@ create_logistic_dataframe()
 
 
 def create_welch_dataframe():
-    """Check for missing values mechanism of dataset ``gate_final.csv`` via
-    Welch's t-tests.
-
-    Compute Welch's t-test and mean comparison and save dataframe with results
-    to ``welch_df.csv`` in the "OUT_DATA" directory.
+    """Check for missing values mechanism of ``gate_final.csv`` via
+    Welch's t-tests and save results to ``welch_df.csv``.
     """
     gate_welch = gate_final.drop(
         ["gateid", "completed_w2", "hhincome", "hhincome_w2", "site"], axis=1

@@ -12,11 +12,8 @@ gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
 
 
 def create_complete_case_controls_dataframe():
-    """Perform ITT complete-case analysis, with controls.
-
-    Perform OLS regressions to estimate ITT on dataset ``gate_final.csv``, with
-    controls, and save results to  "complete_controls_coeff.csv", and
-    "complete_controls_summary.csv" in the "OUT_TABLES" directory.
+    """Perform ITT complete-case analysis, with controls, on ``gate_final.csv``,
+    and save results to "complete_controls_coeff.csv", and "complete_controls_summary.csv".
 
     """
     gate_controls = gate_final.drop(
@@ -41,11 +38,9 @@ def create_complete_case_controls_dataframe():
 
 
 def create_complete_case_no_controls_dataframe():
-    """Perform ITT complete-case analysis, without controls.
-
-    Perform OLS regressions to estimate ITT on dataset ``gate_final.csv``, without
-    controls, and save results to "complete_no_controls_coeff.csv", and
-    "complete_no_controls_summary.csv" in the "OUT_TABLES" directory.
+    """Perform ITT complete-case analysis, without controls, on ``gate_final.csv``,
+    and save results to "complete_no_controls_coeff.csv", and
+    "complete_no_controls_summary.csv".
 
     """
     gate_no_controls = gate_final[["hhincome_w2", "treatment"]]
