@@ -16,6 +16,7 @@ def set_project_paths(ctx):
     pp["IN_DATA"] = "src/original_data/"
     pp["IN_MODEL_CODE"] = "src/model_code"
     pp["OUT_DATA"] = f"{out}/out/data"
+    pp["OUT_IMPUTED_DATA"] = f"{out}/out/imputed_data"
     pp["OUT_FIGURES"] = f"{out}/out/figures"
     pp["OUT_TABLES"] = f"{out}/out/tables"
     # pp["OUT_ANALYSIS"] = f"{out}/out/analysis"
