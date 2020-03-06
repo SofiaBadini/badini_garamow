@@ -4,10 +4,10 @@ full sample for further analysis.
 """
 import numpy as np
 import pandas as pd
-from bld.project_paths import project_paths_join as ppj
 
-from src.method_define.impute_method import impute_kNN
-from src.method_define.impute_method import impute_msd
+from bld.project_paths import project_paths_join as ppj
+from src.imputation_method.imputation_method import impute_kNN
+from src.imputation_method.imputation_method import impute_msd
 
 np.random.seed(42)
 
@@ -41,7 +41,7 @@ for dict in dict_df_list:
 
 for _key, df in dict_df_v1.items():
     # Impute missings in outcome variables and covariates with kNN method.
-    df[dict_colname["all"]] = impute_kNN(df, dict_colname["all"])
+    df[dict_colname["all"]] = impute_kNN(df, 1, dict_colname["all"])
 
 for _key, df in dict_df_v2.items():
     # Impute the outcome variabels with the median and some standard error.
@@ -60,17 +60,17 @@ for _key, df in dict_df_v4.items():
 for dict_df in dict_df_v2, dict_df_v3, dict_df_v3:
     # Impute the covariates with the kNN imputation method.
     for _key, df in dict_df.items():
-        df[dict_colname["all"]] = impute_kNN(df, dict_colname["all"])
+        df[dict_colname["all"]] = impute_kNN(df, 1, dict_colname["all"])
 
 data_imputed_v1 = pd.concat(dict_df_v1.values(), ignore_index=True).round(10)
 data_imputed_v2 = pd.concat(dict_df_v2.values(), ignore_index=True).round(10)
 data_imputed_v3 = pd.concat(dict_df_v3.values(), ignore_index=True).round(10)
 data_imputed_v4 = pd.concat(dict_df_v4.values(), ignore_index=True).round(10)
 
-data_imputed_v1.to_csv(ppj("OUT_DATA", "data_imputed_v1.csv"), index=False)
-data_imputed_v2.to_csv(ppj("OUT_DATA", "data_imputed_v2.csv"), index=False)
-data_imputed_v3.to_csv(ppj("OUT_DATA", "data_imputed_v3.csv"), index=False)
-data_imputed_v4.to_csv(ppj("OUT_DATA", "data_imputed_v4.csv"), index=False)
+data_imputed_v1.to_csv(ppj("OUT_IMPUTED_DATA", "data_imputed_v1.csv"), index=False)
+data_imputed_v2.to_csv(ppj("OUT_IMPUTED_DATA", "data_imputed_v2.csv"), index=False)
+data_imputed_v3.to_csv(ppj("OUT_IMPUTED_DATA", "data_imputed_v3.csv"), index=False)
+data_imputed_v4.to_csv(ppj("OUT_IMPUTED_DATA", "data_imputed_v4.csv"), index=False)
 
 
 for df in (

@@ -1,15 +1,10 @@
 import numpy as np
 import pandas as pd
 import pytest
-from impute_method import impute_kNN
 from pandas.testing import assert_frame_equal
 from sklearn.preprocessing import StandardScaler
 
-# from impute_method import impute_msd
-# from pandas.testing import assert_series_equal
-
-# from scr.method.define.impute_method import impute_kNN
-# from scr.method.define.impute_method import impute_msd
+from src.imputation_method.imputation_method import impute_kNN
 
 scaler = StandardScaler()
 nan = np.nan
