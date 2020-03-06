@@ -15,21 +15,21 @@ def build(ctx):
     )
 
     for d in (
-        "chisq",
-        "integrity",
-        "levene",
-        "logistic",
-        "welch",
-        "complete_controls_coeff",
-        "complete_controls_summary",
-        "complete_no_controls_coeff",
-        "complete_no_controls_summary",
+        "chisq_df",
+        "integrity_df",
+        "levene_df",
+        "logistic_df",
+        "welch_df",
+        "gate_complete_controls_coeff",
+        "gate_complete_controls_summary",
+        "gate_complete_no_controls_coeff",
+        "gate_complete_no_controls_summary",
     ):
         ctx(
             features="run_py_script",
             source="tables.py",
             deps=[
-                ctx.path_to(ctx, "OUT_ANALYSIS", d + "_df.csv"),
+                ctx.path_to(ctx, "OUT_ANALYSIS", d + ".csv"),
                 ctx.path_to(ctx, "IN_AUXILIARY", "formatting.py"),
                 ctx.path_to(ctx, "IN_AUXILIARY", "pretty_index.py"),
             ],

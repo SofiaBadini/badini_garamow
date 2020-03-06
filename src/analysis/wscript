@@ -16,18 +16,18 @@ def build(ctx):
         )
 
     for t in (
-        "complete_controls_coeff",
-        "complete_controls_summary",
-        "complete_no_controls_coeff",
-        "complete_no_controls_summary",
+        "gate_complete_controls_coeff",
+        "gate_complete_controls_summary",
+        "gate_complete_no_controls_coeff",
+        "gate_complete_no_controls_summary",
     ):
         ctx(
             features="run_py_script",
             source="complete_case_analysis.py",
             deps=[
-                ctx.path_to(ctx, "OUT_DATA", "gate_final.csv"),
+                ctx.path_to(ctx, "OUT_DATA", "gate_complete.csv"),
                 ctx.path_to(ctx, "IN_AUXILIARY", "auxiliary_functions.py"),
             ],
-            target=[ctx.path_to(ctx, "OUT_ANALYSIS", t + "_df.csv")],
+            target=[ctx.path_to(ctx, "OUT_ANALYSIS", t + ".csv")],
             name="complete_case_analysis",
         )
