@@ -10,6 +10,8 @@ Welcome to our project's documentation!
     introduction
     original_data
     data_management
+    imputation_method
+    imputation_implement
     analysis
     final
     auxiliary

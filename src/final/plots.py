@@ -116,9 +116,6 @@ def create_matrix_nan():
     matrix_nan.figure.savefig(ppj("OUT_FIGURES", "matrix_nan.png"), bbox_inches="tight")
 
 
-create_matrix_nan()
-
-
 def create_heatmap_nan():
     """Create nullity correlation heatmap and save the plot to ``matrix_nan.png``
     in the "OUT_DATA" directory.
@@ -153,4 +150,6 @@ def create_heatmap_nan():
     )
 
 
-create_heatmap_nan()
+if __name__ == "__main__":
+    create_matrix_nan()
+    create_heatmap_nan()

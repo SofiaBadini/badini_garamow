@@ -3,6 +3,9 @@
 
 def build(ctx):
     ctx.recurse("data_management")
+    ctx.recurse("imputation_method")
+    ctx.recurse("imputation_implement")
+    ctx.add_group()
     ctx.recurse("auxiliary")
     ctx.recurse("analysis")
     # Safety measure -- else the LaTeX scanner might fail because some

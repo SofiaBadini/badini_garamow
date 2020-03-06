@@ -1,5 +1,6 @@
 """Perform OLS regressions to estimate ITT in ``gate_final.csv``, stored in the
-"OUT_DATA" directory.
+"OUT_DATA" directory. Results are saved to .csv files and stored in the
+"OUT_ANALYSIS" directory.
 
 """
 import pandas as pd
@@ -8,12 +9,9 @@ from bld.project_paths import project_paths_join as ppj
 from src.auxiliary.auxiliary_functions import generate_regression_output
 
 
-gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
-
-
 def create_complete_case_controls_dataframe():
     """Perform ITT complete-case analysis, with controls, on ``gate_final.csv``,
-    and save results to "complete_controls_coeff.csv", and "complete_controls_summary.csv".
+    and save results to "complete_controls_coeff.csv" and "complete_controls_summary.csv".
 
     """
     gate_controls = gate_final.drop(
@@ -39,7 +37,7 @@ def create_complete_case_controls_dataframe():
 
 def create_complete_case_no_controls_dataframe():
     """Perform ITT complete-case analysis, without controls, on ``gate_final.csv``,
-    and save results to "complete_no_controls_coeff.csv", and
+    and save results to "complete_no_controls_coeff.csv" and
     "complete_no_controls_summary.csv".
 
     """
@@ -55,5 +53,7 @@ def create_complete_case_no_controls_dataframe():
     )
 
 
-create_complete_case_no_controls_dataframe()
-create_complete_case_controls_dataframe()
+if __name__ == "__main__":
+    gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
+    create_complete_case_no_controls_dataframe()
+    create_complete_case_controls_dataframe()

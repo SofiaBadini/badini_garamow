@@ -7,7 +7,10 @@ def build(ctx):
         ctx(
             features="run_py_script",
             source="missing_mechanism_analysis.py",
-            deps=[ctx.path_to(ctx, "OUT_DATA", "gate_final.csv")],
+            deps=[
+                ctx.path_to(ctx, "OUT_DATA", "gate_final.csv"),
+                ctx.path_to(ctx, "IN_AUXILIARY", "auxiliary_functions.py"),
+            ],
             target=[ctx.path_to(ctx, "OUT_ANALYSIS", t + "_df.csv")],
             name="missing_mechanism_analysis",
         )
@@ -21,7 +24,10 @@ def build(ctx):
         ctx(
             features="run_py_script",
             source="complete_case_analysis.py",
-            deps=[ctx.path_to(ctx, "OUT_DATA", "gate_final.csv")],
+            deps=[
+                ctx.path_to(ctx, "OUT_DATA", "gate_final.csv"),
+                ctx.path_to(ctx, "IN_AUXILIARY", "auxiliary_functions.py"),
+            ],
             target=[ctx.path_to(ctx, "OUT_ANALYSIS", t + "_df.csv")],
             name="complete_case_analysis",
         )

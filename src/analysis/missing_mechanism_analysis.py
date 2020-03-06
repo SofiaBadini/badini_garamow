@@ -13,9 +13,6 @@ from src.auxiliary.auxiliary_functions import levene_by_column
 from src.auxiliary.auxiliary_functions import ttest_by_column
 
 
-gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
-
-
 def create_chisq_dataframe():
     """Check for missing values mechanism of ``gate_final.csv`` via chi-square
     two-sample tests and save results to ``welch_df.csv``.
@@ -42,9 +39,6 @@ def create_chisq_dataframe():
         sort=False,
     )
     chisq_df.to_csv(ppj("OUT_ANALYSIS", "chisq_df.csv"))
-
-
-create_chisq_dataframe()
 
 
 def create_integrity_dataframe():
@@ -80,9 +74,6 @@ def create_integrity_dataframe():
     integrity_df.to_csv(ppj("OUT_ANALYSIS", "integrity_df.csv"))
 
 
-create_integrity_dataframe()
-
-
 def create_levene_dataframe():
     """Perform paired Levene's test for equal variances on ``gate_final.csv``
     and save results to ``levene_df.csv``.
@@ -100,9 +91,6 @@ def create_levene_dataframe():
         sort=False,
     )
     levene_df.to_csv(ppj("OUT_ANALYSIS", "levene_df.csv"))
-
-
-create_levene_dataframe()
 
 
 def create_logistic_dataframe():
@@ -137,9 +125,6 @@ def create_logistic_dataframe():
     logistic_df.to_csv(ppj("OUT_ANALYSIS", "logistic_df.csv"))
 
 
-create_logistic_dataframe()
-
-
 def create_welch_dataframe():
     """Check for missing values mechanism of ``gate_final.csv`` via
     Welch's t-tests and save results to ``welch_df.csv``.
@@ -158,4 +143,10 @@ def create_welch_dataframe():
     welch_df.to_csv(ppj("OUT_ANALYSIS", "welch_df.csv"))
 
 
-create_welch_dataframe()
+if __name__ == "__main__":
+    gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
+    create_chisq_dataframe()
+    create_integrity_dataframe()
+    create_levene_dataframe()
+    create_logistic_dataframe()
+    create_welch_dataframe()

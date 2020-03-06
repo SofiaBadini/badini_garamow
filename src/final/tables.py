@@ -6,9 +6,9 @@ import numpy as np
 import pandas as pd
 
 from bld.project_paths import project_paths_join as ppj
-from src.final.formatting import assign_stars
-from src.final.formatting import format_as_percentage
-from src.final.pretty_index import pretty_index_dict
+from src.auxiliary.formatting import assign_stars
+from src.auxiliary.formatting import format_as_percentage
+from src.auxiliary.pretty_index import pretty_index_dict
 
 
 def chisq_df_as_table():
@@ -30,9 +30,6 @@ def chisq_df_as_table():
         float_format="{:.3g}".format,
         multicolumn_format="c",
     )
-
-
-chisq_df_as_table()
 
 
 def integrity_df_as_table():
@@ -69,9 +66,6 @@ def integrity_df_as_table():
     )
 
 
-integrity_df_as_table()
-
-
 def levene_df_as_table():
     """Format ``levene_df.csv`` and save the result to ``levene_table.tex``.
 
@@ -93,9 +87,6 @@ def levene_df_as_table():
     )
 
 
-levene_df_as_table()
-
-
 def logistic_df_as_table():
     """Format ``logistic_df.csv`` and save the result to ``logistic_table.csv``.
 
@@ -115,9 +106,6 @@ def logistic_df_as_table():
         na_rep=" ",
         multicolumn_format="c",
     )
-
-
-logistic_df_as_table()
 
 
 def welch_df_as_table():
@@ -149,9 +137,6 @@ def welch_df_as_table():
         na_rep=" ",
         multicolumn_format="c",
     )
-
-
-welch_df_as_table()
 
 
 def complete_controls_as_table():
@@ -186,9 +171,6 @@ def complete_controls_as_table():
     )
 
 
-complete_controls_as_table()
-
-
 def complete_no_controls_as_table():
     """Format ``complete_no_controls_coeff.csv`` and ``complete_no_controls_summary.csv``
     and save the result to ``table_complete_no_controls_coeff.tex`` and
@@ -219,4 +201,11 @@ def complete_no_controls_as_table():
     )
 
 
-complete_no_controls_as_table()
+if __name__ == "__main__":
+    chisq_df_as_table()
+    integrity_df_as_table()
+    levene_df_as_table()
+    logistic_df_as_table()
+    welch_df_as_table()
+    complete_controls_as_table()
+    complete_no_controls_as_table()

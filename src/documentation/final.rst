@@ -22,10 +22,3 @@ Here we create the plots and tables present in the paper.
 
 .. automodule:: src.final.tables
     :members:
-
-
-``formatting.py``
-=========================
-
-.. automodule:: src.final.formatting
-    :members:

@@ -30,8 +30,8 @@ def build(ctx):
             source="tables.py",
             deps=[
                 ctx.path_to(ctx, "OUT_ANALYSIS", d + "_df.csv"),
-                ctx.path_to(ctx, "IN_FINAL", "pretty_index.py"),
-                ctx.path_to(ctx, "IN_FINAL", "formatting.py"),
+                ctx.path_to(ctx, "IN_AUXILIARY", "formatting.py"),
+                ctx.path_to(ctx, "IN_AUXILIARY", "pretty_index.py"),
             ],
             target=[ctx.path_to(ctx, "OUT_TABLES", "table_" + d + ".tex")],
             name="tables",
