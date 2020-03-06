@@ -23,11 +23,11 @@ def build(ctx):
     ):
         ctx(
             features="run_py_script",
-            source="complete_case_analysis.py",
+            source="itt_analysis.py",
             deps=[
                 ctx.path_to(ctx, "OUT_DATA", "gate_complete.csv"),
                 ctx.path_to(ctx, "IN_AUXILIARY", "auxiliary_functions.py"),
             ],
             target=[ctx.path_to(ctx, "OUT_ANALYSIS", t + ".csv")],
-            name="complete_case_analysis",
+            name="itt_analysis",
         )
