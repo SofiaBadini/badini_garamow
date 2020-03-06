@@ -5,7 +5,7 @@ def build(ctx):
         source="impute.py",
         deps=[
             ctx.path_to(ctx, "OUT_IMPUTED_DATA", "gate_final.csv")],
-            ctx.path_to(ctx, "IMPUTATION_METHOD", "imputation_method.py"),
+            ctx.path_to(ctx, "IN_IMPUTATION_METHOD", "imputation_method.py"),
         target=[
             ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_v1.csv"),
             ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_v2.csv"),

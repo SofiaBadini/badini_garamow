@@ -8,20 +8,19 @@ scaler = StandardScaler()
 
 def impute_msd(df, k, sd_share, sd_fixed, col_name):
     """Impute the missing values with the median, plus/ minus some share of the
-    standard deviation of the specific variable. Please note that the data frame
-    is divided
+    standard deviation of the specific variable/ column.
+    Please note that the data frame is divided into two data frames, data frame
+    with the treated and control observations, contained in a dictionary.
 
     Args:
-
-    df (pd.DataFrame() - data set
-    k (integer) - number of draws
-    sd_share (integer) - share of variance applied
-    sd_fixed (integer) - additional constant to variance
-    col_name (list) - names of variables which should be imputed
+        df (pd.DataFrame() - data set
+        k (integer) - number of draws
+        sd_share (integer) - share of variance applied
+        sd_fixed (integer) - additional constant to variance
+        col_name (list) - names of variables which should be imputed
 
     Returns:
-
-    colmiss_ndarray (nd array) - imputed nd array
+        colmiss_ndarray (nd array) - imputed nd array
 
     """
     col_ndarray = df[col_name].values
@@ -46,14 +45,12 @@ def impute_kNN(df, knn, col_name):
     """Impute the missing values with the average of the k nearest neightbors.
 
     Args:
-
-    df (pd.DataFrame() - data set
-    knn (integer) - number of nearest neighbors
-    col_name (list) - names of variables which should be imputed
+        df (pd.DataFrame() - data set
+        knn (integer) - number of nearest neighbors
+        col_name (list) - names of variables which should be imputed
 
     Returns:
-
-    col_ndarray_inverse () - imputed nd array
+        col_ndarray_inverse () - imputed nd array
 
     """
     imputer_kNN = KNNImputer(n_neighbors=knn, missing_values=nan, weights="uniform")
