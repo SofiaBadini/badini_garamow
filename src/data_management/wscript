@@ -14,6 +14,7 @@ def build(ctx):
         target=[
             ctx.path_to(ctx, "OUT_DATA", "gate_long.csv"),
             ctx.path_to(ctx, "OUT_DATA", "gate_final.csv"),
+            ctx.path_to(ctx, "OUT_DATA", "gate_complete.csv"),
         ],
         name="clean_data",
     )

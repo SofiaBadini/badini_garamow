@@ -212,3 +212,4 @@ gate_final["missing_out"] = np.where(np.isnan(gate_final["hhincome_w2"]), 1, 0)
 # Save gate_df as long dataset and gate_final as final dataset to work with
 gate_df.to_csv(ppj("OUT_DATA", "gate_long.csv"), index=False)
 gate_final.to_csv(ppj("OUT_DATA", "gate_final.csv"), index=False)
+gate_final.dropna().to_csv(ppj("OUT_DATA", "gate_complete.csv"), index=False)

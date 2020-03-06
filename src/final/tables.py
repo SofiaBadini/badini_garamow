@@ -26,7 +26,7 @@ def chisq_df_as_table():
     chisq_df = assign_stars(chisq_df, subset, correction)
     chisq_df = chisq_df.fillna(" ")
     chisq_df.to_latex(
-        ppj("OUT_TABLES", "table_chisq.tex"),
+        ppj("OUT_TABLES", "table_chisq_df.tex"),
         float_format="{:.3g}".format,
         multicolumn_format="c",
     )
@@ -59,7 +59,7 @@ def integrity_df_as_table():
     correction = len(integrity_df) - 1
     integrity_df = assign_stars(integrity_df, subset_stars, correction)
     integrity_df.to_latex(
-        ppj("OUT_TABLES", "table_integrity.tex"),
+        ppj("OUT_TABLES", "table_integrity_df.tex"),
         float_format="{:.3f}".format,
         na_rep=" ",
         multicolumn_format="c",
@@ -81,7 +81,7 @@ def levene_df_as_table():
     levene_df = assign_stars(levene_df, subset, correction)
     levene_df = levene_df.fillna(" ")
     levene_df.to_latex(
-        ppj("OUT_TABLES", "table_levene.tex"),
+        ppj("OUT_TABLES", "table_levene_df.tex"),
         float_format="{:.3g}".format,
         multicolumn_format="c",
     )
@@ -101,7 +101,7 @@ def logistic_df_as_table():
     logistic_df = assign_stars(logistic_df, subset)
     logistic_df = logistic_df.fillna(" ")
     logistic_df.to_latex(
-        ppj("OUT_TABLES", "table_logistic.tex"),
+        ppj("OUT_TABLES", "table_logistic_df.tex"),
         float_format="{:.3g}".format,
         na_rep=" ",
         multicolumn_format="c",
@@ -132,24 +132,29 @@ def welch_df_as_table():
     correction = len(welch_df) - 1
     welch_df = assign_stars(welch_df, subset_stars, correction)
     welch_df.to_latex(
-        ppj("OUT_TABLES", "table_welch.tex"),
+        ppj("OUT_TABLES", "table_welch_df.tex"),
         float_format="{:.3g}".format,
         na_rep=" ",
         multicolumn_format="c",
     )
 
 
-def complete_controls_as_table():
-    """Format ``complete_controls_coeff.csv`` and ``complete_controls_summary.csv``
-    and save the result to ``table_complete_controls_coeff.tex`` and
-    ``table_complete_controls_summary.tex``.
+def itt_analysis_with_controls_as_table(name_df):
+    """Load ITT analysis results, with controls, for a version of
+    ``gate_final.csv``, format them and save them as .tex tabulars.
+
+    Args:
+        name_df (string): name of a version of ``gate_final.csv``.
+
+    Returns:
+         Save results to .tex files.
 
     """
     complete_controls_coeff = pd.read_csv(
-        ppj("OUT_ANALYSIS", "complete_controls_coeff_df.csv"), index_col=0
+        ppj("OUT_ANALYSIS", name_df + "_controls_coeff.csv"), index_col=0
     )
     complete_controls_summary = pd.read_csv(
-        ppj("OUT_ANALYSIS", "complete_controls_summary_df.csv"), index_col=0
+        ppj("OUT_ANALYSIS", name_df + "_controls_summary.csv"), index_col=0
     )
     complete_controls_coeff = complete_controls_coeff.reindex(pretty_index_dict).rename(
         pretty_index_dict
@@ -158,43 +163,48 @@ def complete_controls_as_table():
     subset = pd.IndexSlice[:, "p-value"]
     complete_controls_coeff = assign_stars(complete_controls_coeff, subset)
     complete_controls_coeff.to_latex(
-        ppj("OUT_TABLES", "table_complete_controls_coeff.tex"),
+        ppj("OUT_TABLES", "table_" + name_df + "_controls_coeff.tex"),
         float_format="{:.3g}".format,
         na_rep=" ",
         multicolumn_format="c",
     )
     complete_controls_summary.T.to_latex(
-        ppj("OUT_TABLES", "table_complete_controls_summary.tex"),
+        ppj("OUT_TABLES", "table_" + name_df + "_controls_summary.tex"),
         float_format="{:.3g}".format,
         na_rep=" ",
         multicolumn_format="c",
     )
 
 
-def complete_no_controls_as_table():
-    """Format ``complete_no_controls_coeff.csv`` and ``complete_no_controls_summary.csv``
-    and save the result to ``table_complete_no_controls_coeff.tex`` and
-    ``complete_no_controls_summary.tex``.
+def itt_analysis_without_controls_as_table(name_df):
+    """Load ITT analysis results, without controls, for a version of
+    ``gate_final.csv``, format them and save them as .tex tabulars.
+
+    Args:
+        name_df (string): name of a version of ``gate_final.csv``.
+
+    Returns:
+         Save results to .tex files.
 
     """
     complete_no_controls_coeff = pd.read_csv(
-        ppj("OUT_ANALYSIS", "complete_no_controls_coeff_df.csv"), index_col=0
+        ppj("OUT_ANALYSIS", name_df + "_no_controls_coeff.csv"), index_col=0
     )
     complete_no_controls_summary = pd.read_csv(
-        ppj("OUT_ANALYSIS", "complete_no_controls_summary_df.csv"), index_col=0
+        ppj("OUT_ANALYSIS", name_df + "_no_controls_summary.csv"), index_col=0
     )
     complete_no_controls_coeff = complete_no_controls_coeff.reindex(
         pretty_index_dict
     ).rename(pretty_index_dict)
     complete_no_controls_coeff = complete_no_controls_coeff.dropna(how="all")
     complete_no_controls_coeff.to_latex(
-        ppj("OUT_TABLES", "table_complete_no_controls_coeff.tex"),
+        ppj("OUT_TABLES", "table_" + name_df + "_no_controls_coeff.tex"),
         float_format="{:.3g}".format,
         na_rep=" ",
         multicolumn_format="c",
     )
     complete_no_controls_summary.T.to_latex(
-        ppj("OUT_TABLES", "table_complete_no_controls_summary.tex"),
+        ppj("OUT_TABLES", "table_" + name_df + "_no_controls_summary.tex"),
         float_format="{:.3g}".format,
         na_rep=" ",
         multicolumn_format="c",
@@ -207,5 +217,5 @@ if __name__ == "__main__":
     levene_df_as_table()
     logistic_df_as_table()
     welch_df_as_table()
-    complete_controls_as_table()
-    complete_no_controls_as_table()
+    itt_analysis_with_controls_as_table("gate_complete")
+    itt_analysis_without_controls_as_table("gate_complete")
