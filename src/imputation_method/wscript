@@ -1,6 +1,12 @@
 #! python
+import os
 
 
 def build(ctx):
-
-    pass
+    abspath = os.path.join(ctx.path.abspath(), "test_imputation_method.py")
+    ctx(
+        features="run_py_script",
+        source="test_imputation_method.py",
+        deps=[ctx.path_to(ctx, "IN_IMPUTATION_METHOD", "imputation_method.py")],
+        append=abspath,
+    )

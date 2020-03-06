@@ -3,4 +3,18 @@
 
 def build(ctx):
 
-    pass
+    ctx(
+        features="run_py_script",
+        source="impute.py",
+        deps=[
+            ctx.path_to(ctx, "OUT_IMPUTED_DATA", "gate_final.csv"),
+            ctx.path_to(ctx, "IN_IMPUTATION_METHOD", "imputation_method.py"),
+        ],
+        target=[
+            ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_v1.csv"),
+            ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_v2.csv"),
+            ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_v3.csv"),
+            ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_v4.csv"),
+        ],
+        name="impute",
+    )
