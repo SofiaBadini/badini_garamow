@@ -9,6 +9,7 @@ from bld.project_paths import project_paths_join as ppj
 from src.method_define.impute_method import impute_kNN
 from src.method_define.impute_method import impute_msd
 
+np.random.seed(42)
 
 data = pd.read_csv(ppj("IN_DATA", "gate_final.csv"))
 
@@ -17,9 +18,7 @@ data.set_index(keys=["treatment"], drop=False, inplace=True)
 
 colname_outcome = ["hhincome_w2"]
 colname_covariate = (
-    data.select_dtypes(np.number)
-    .columns.difference(["treatment", "gateid", "hhincome_w2"])
-    .tolist()
+    data.select_dtypes(np.number).columns.difference(["gateid", "hhincome_w2"]).tolist()
 )
 colname_all = colname_outcome + colname_covariate
 dict_colname = {
@@ -41,35 +40,38 @@ for dict in dict_df_list:
     dict["control"] = data.loc[data.treatment == 0].copy()
 
 for _key, df in dict_df_v1.items():
-    # important to round!!!
+    # Impute missings in outcome variables and covariates with kNN method.
     df[dict_colname["all"]] = impute_kNN(df, dict_colname["all"])
 
-for dict_df in dict_df_v2, dict_df_v3, dict_df_v4:
-    # Loop over the dictionareis _v2, _v3 and _v4.
-    for _key, df in dict_df.items():
-        # Impute the missing values in the covariates with the kNN imputer.
-        df[dict_colname["covariate"]] = impute_kNN(df, dict_colname["covariate"])
-
 for _key, df in dict_df_v2.items():
-    # Impute the missing values in the outcome with the msd imputer.
+    # Impute the outcome variabels with the median and some standard error.
     df[dict_colname["outcome"]] = impute_msd(df, 1, 0.25, 0, dict_colname["outcome"])
 
 for _key, df in dict_df_v3.items():
-    # Impute the missing values in the outcome with the column minimum.
+    df[dict_colname["outcome"]] = df[dict_colname["outcome"]].apply(
+        lambda x: x.fillna(x.max(), axis=0, inplace=False)
+    )
+
+for _key, df in dict_df_v4.items():
     df[dict_colname["outcome"]] = df[dict_colname["outcome"]].apply(
         lambda x: x.fillna(x.min(), axis=0, inplace=False)
     )
 
-for _key, df in dict_df_v4.items():
-    # Impute the missing values in the outcome with the column maximum.
-    df[dict_colname["outcome"]] = df[dict_colname["outcome"]].apply(
-        lambda x: x.fillna(x.max(), axis=0, inplace=False)
-    )
+for dict_df in dict_df_v2, dict_df_v3, dict_df_v3:
+    # Impute the covariates with the kNN imputation method.
+    for _key, df in dict_df.items():
+        df[dict_colname["all"]] = impute_kNN(df, dict_colname["all"])
 
 data_imputed_v1 = pd.concat(dict_df_v1.values(), ignore_index=True).round(10)
 data_imputed_v2 = pd.concat(dict_df_v2.values(), ignore_index=True).round(10)
 data_imputed_v3 = pd.concat(dict_df_v3.values(), ignore_index=True).round(10)
 data_imputed_v4 = pd.concat(dict_df_v4.values(), ignore_index=True).round(10)
+
+data_imputed_v1.to_csv(ppj("OUT_DATA", "data_imputed_v1.csv"), index=False)
+data_imputed_v2.to_csv(ppj("OUT_DATA", "data_imputed_v2.csv"), index=False)
+data_imputed_v3.to_csv(ppj("OUT_DATA", "data_imputed_v3.csv"), index=False)
+data_imputed_v4.to_csv(ppj("OUT_DATA", "data_imputed_v4.csv"), index=False)
+
 
 for df in (
     data_imputed_v1,
@@ -83,8 +85,3 @@ for df in (
         print("Data set not complete.")
     else:
         print("Save complete data set.")
-
-df.to_csv(ppj("OUT_DATA", "data_imputed_v1.csv"), index=False)
-df.to_csv(ppj("OUT_DATA", "data_imputed_v2.csv"), index=False)
-df.to_csv(ppj("OUT_DATA", "data_imputed_v3.csv"), index=False)
-df.to_csv(ppj("OUT_DATA", "data_imputed_v4.csv"), index=False)

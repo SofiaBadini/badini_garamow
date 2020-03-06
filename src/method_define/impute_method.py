@@ -4,13 +4,12 @@ from sklearn.preprocessing import StandardScaler
 
 nan = np.nan
 scaler = StandardScaler()
-knn = 1
-imputer_kNN = KNNImputer(n_neighbors=knn, missing_values=nan, weights="uniform")
 
 
 def impute_msd(df, k, sd_share, sd_fixed, col_name):
     """Impute the missing values with the median, plus/ minus some share of the
-    standard deviation of the specific variable.
+    standard deviation of the specific variable. Please note that the data frame
+    is divided
 
     Args:
 
@@ -43,12 +42,13 @@ def impute_msd(df, k, sd_share, sd_fixed, col_name):
     return col_ndarray
 
 
-def impute_kNN(df, col_name):
+def impute_kNN(df, knn, col_name):
     """Impute the missing values with the average of the k nearest neightbors.
 
     Args:
 
     df (pd.DataFrame() - data set
+    knn (integer) - number of nearest neighbors
     col_name (list) - names of variables which should be imputed
 
     Returns:
@@ -56,6 +56,7 @@ def impute_kNN(df, col_name):
     col_ndarray_inverse () - imputed nd array
 
     """
+    imputer_kNN = KNNImputer(n_neighbors=knn, missing_values=nan, weights="uniform")
     col_ndarray = df[col_name].values
     col_ndarray_normlized = scaler.fit_transform(col_ndarray)
     col_ndarray_imputed = imputer_kNN.fit_transform(col_ndarray_normlized)
