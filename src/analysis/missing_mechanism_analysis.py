@@ -14,8 +14,8 @@ from src.analysis.analysis_functions import create_welch_dataframe
 
 
 gate_final = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
-create_chisq_dataframe()
-create_integrity_dataframe()
-create_levene_dataframe()
-create_logistic_dataframe()
-create_welch_dataframe()
+create_chisq_dataframe(gate_final)
+create_integrity_dataframe(gate_final)
+create_levene_dataframe(gate_final)
+create_logistic_dataframe(gate_final)
+create_welch_dataframe(gate_final)

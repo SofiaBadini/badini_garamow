@@ -3,8 +3,8 @@ and in the "OUT_IMPUTED_DATA" directory. Results are saved to .csv files and sto
 in the "OUT_ANALYSIS" directory.
 
 """
-from src.analyis.analysis_functions import itt_analysis_with_controls
-from src.analyis.analysis_functions import itt_analysis_without_controls
+from src.analysis.analysis_functions import itt_analysis_with_controls
+from src.analysis.analysis_functions import itt_analysis_without_controls
 
 
 dict_data_list = {
@@ -16,6 +16,5 @@ dict_data_list = {
 }
 
 for key, in_dir in dict_data_list.items():
-
     itt_analysis_with_controls(key, in_dir)
     itt_analysis_without_controls(key, in_dir)
