@@ -1,16 +1,8 @@
 % !TEX root = 000_paper.tex
 
 \begin{appendices}
-	\section*{APPENDIX}
-\subsection*{Additional Tables for Missing Data Analysis} \label{appendix_missing_analysis}
-
-\renewcommand{\thetable}{\Alph{section}\arabic{table}}
-\setcounter{table}{0}
-
-\renewcommand{\thefigure}{\Alph{section}\arabic{figure}}
-\setcounter{figure}{0}
-
-
+	\section{APPENDIX}
+\subsection{Additional Tables for Missing Data Analysis} \label{appendix_missing_analysis}
 \begin{table}[H]
 \centering
 \caption{\textsc{Levene's Test for Homogeneity of Variances}}
@@ -49,11 +41,11 @@ All reported characteristics are measured at time of application, prior to rando
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpage
-\subsection*{Additional Tables for ITT Estimates} \label{appendix_itt_estimates}
+\subsection{Additional Tables for ITT Estimates} \label{appendix_itt_estimates}
 
 %%%%%% ANALYSIS ON IMPUTED DATA  %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[htbp]
+\begin{table}[t!]
 \centering
 \caption{\textsc{ITT Estimates on log Household Income - Analysis on Imputed Data}}
 \input{../../bld/out/tables/table_data_imputed_kNN_controls_coeff}
@@ -73,9 +65,9 @@ All reported characteristics are measured at time of application, prior to rando
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[htbp]
+\begin{table}[t!]
 \centering
 \caption{\textsc{ITT Estimates on log Household Income - Analysis on Imputed Data}}
 \input{../../bld/out/tables/table_data_imputed_kNN_min_controls_coeff}
@@ -95,9 +87,8 @@ All reported characteristics are measured at time of application, prior to rando
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[htbp]
+\begin{table}[t!]
 \centering
 \caption{\textsc{ITT Estimates on log Household Income - Analysis on Imputed Data}}
 \input{../../bld/out/tables/table_data_imputed_kNN_max_controls_coeff}
@@ -117,7 +108,6 @@ All reported characteristics are measured at time of application, prior to rando
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{table}[H]
 \centering
