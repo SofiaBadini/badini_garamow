@@ -14,8 +14,8 @@ Documentation of the code in *src.analysis*. This is the core of our project.
     :members:
 
 
-``complete_case_analysis.py``
+``itt_analysis.py``
 =============================
 
-.. automodule:: src.analysis.complete_case_analysis
+.. automodule:: src.analysis.itt_analysis
     :members:
