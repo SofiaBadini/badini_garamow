@@ -11,10 +11,10 @@ def build(ctx):
             ctx.path_to(ctx, "IN_IMPUTATION_METHOD", "imputation_method.py"),
         ],
         target=[
-            ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_v1.csv"),
-            ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_v2.csv"),
-            ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_v3.csv"),
-            ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_v4.csv"),
+            ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_kNN.csv"),
+            ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_kNN_msd.csv"),
+            ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_kNN_max.csv"),
+            ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_kNN_min.csv"),
         ],
         name="impute",
     )

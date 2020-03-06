@@ -217,5 +217,15 @@ if __name__ == "__main__":
     levene_df_as_table()
     logistic_df_as_table()
     welch_df_as_table()
-    itt_analysis_with_controls_as_table("gate_complete")
-    itt_analysis_without_controls_as_table("gate_complete")
+
+    list_data = [
+        "gate_complete",
+        "data_imputed_kNN",
+        "data_imputed_kNN_msd",
+        "data_imputed_kNN_max",
+        "data_imputed_kNN_min",
+    ]
+
+    for data in list_data:
+        itt_analysis_with_controls_as_table(data)
+        itt_analysis_without_controls_as_table(data)
