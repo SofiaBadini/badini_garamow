@@ -1,5 +1,19 @@
-"""Apply functions for imputation defined in ''method_define.py'' to get a
-full sample for further analysis.
+"""Apply functions for imputation defined in ''imputation_method.py'' to get a
+full sample for further analysis. The following data frames are created:
+
+    **data_imputed_kNN** - imputed data frame, using the kNN imputation method.
+
+    **data_imputed_kNN_msd** - imputed data frame, using first the ``msd``
+    imputation method on the outcome and using the kNN imputation method on the
+    covariates in the second step.
+
+    **data_imputed_kNN_max** - imputed data frame, imputing first the mssings
+    in the outcomes with the ``max`` of each column respectively and imputing the kNN imputation
+    method on the missing values in the covariates in the second step.
+
+    **data_imputed_kNN_min** - imputed data frame, imputing first the mssings
+    in the outcomes with the ``min`` of each column respectively and imputing the kNN imputation
+    method on the missing values in the covariates in the second step.
 
 """
 import numpy as np
@@ -48,11 +62,13 @@ for _key, df in dict_df_v2.items():
     df[dict_colname["outcome"]] = impute_msd(df, 1, 0.25, 0, dict_colname["outcome"])
 
 for _key, df in dict_df_v3.items():
+    # Impute the max of the column for the missings.
     df[dict_colname["outcome"]] = df[dict_colname["outcome"]].apply(
         lambda x: x.fillna(x.max(), axis=0, inplace=False)
     )
 
 for _key, df in dict_df_v4.items():
+    # Impute the min of the column for the missings.
     df[dict_colname["outcome"]] = df[dict_colname["outcome"]].apply(
         lambda x: x.fillna(x.min(), axis=0, inplace=False)
     )
@@ -62,26 +78,32 @@ for dict_df in dict_df_v2, dict_df_v3, dict_df_v3:
     for _key, df in dict_df.items():
         df[dict_colname["all"]] = impute_kNN(df, 1, dict_colname["all"])
 
-data_imputed_v1 = pd.concat(dict_df_v1.values(), ignore_index=True).round(10)
-data_imputed_v2 = pd.concat(dict_df_v2.values(), ignore_index=True).round(10)
-data_imputed_v3 = pd.concat(dict_df_v3.values(), ignore_index=True).round(10)
-data_imputed_v4 = pd.concat(dict_df_v4.values(), ignore_index=True).round(10)
+data_imputed_kNN = pd.concat(dict_df_v1.values(), ignore_index=True).round(10)
+data_imputed_kNN_msd = pd.concat(dict_df_v2.values(), ignore_index=True).round(10)
+data_imputed_kNN_max = pd.concat(dict_df_v3.values(), ignore_index=True).round(10)
+data_imputed_kNN_min = pd.concat(dict_df_v4.values(), ignore_index=True).round(10)
 
-data_imputed_v1.to_csv(ppj("OUT_IMPUTED_DATA", "data_imputed_v1.csv"), index=False)
-data_imputed_v2.to_csv(ppj("OUT_IMPUTED_DATA", "data_imputed_v2.csv"), index=False)
-data_imputed_v3.to_csv(ppj("OUT_IMPUTED_DATA", "data_imputed_v3.csv"), index=False)
-data_imputed_v4.to_csv(ppj("OUT_IMPUTED_DATA", "data_imputed_v4.csv"), index=False)
+data_imputed_kNN.to_csv(ppj("OUT_IMPUTED_DATA", "data_imputed_kNN.csv"), index=False)
+data_imputed_kNN_msd.to_csv(
+    ppj("OUT_IMPUTED_DATA", "data_imputed_kNN_msd.csv"), index=False
+)
+data_imputed_kNN_max.to_csv(
+    ppj("OUT_IMPUTED_DATA", "data_imputed_kNN_max.csv"), index=False
+)
+data_imputed_kNN_min.to_csv(
+    ppj("OUT_IMPUTED_DATA", "data_imputed_kNN_min.csv"), index=False
+)
 
 
 for df in (
-    data_imputed_v1,
-    data_imputed_v2,
-    data_imputed_v3,
-    data_imputed_v4,
+    data_imputed_kNN,
+    data_imputed_kNN_msd,
+    data_imputed_kNN_max,
+    data_imputed_kNN_min,
 ):
     # Loop over data sets for completeness.
     if df.isna().sum().any(axis=0) is True:
         # See if data frame is complete.
-        print("Data set not complete.")
+        print("This data set is not complete.")
     else:
         print("Save complete data set.")

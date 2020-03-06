@@ -88,6 +88,20 @@ def setup_imputation_kNN():
 
 
 @pytest.fixture
+def setup_imputation_msd():
+    out = {}
+
+    # case1: Imputing missings from a normal distribution around the mean with
+    # the respective standard deviation times 0.25, of each column respectively.
+    case1 = {
+        "df": pd.DataFrame([[1, 2, np.nan], [np.nan, 3, 4], [5, np.nan, 6]]),
+    }
+    out["case1"] = case1
+
+    return out
+
+
+@pytest.fixture
 def expected_imputation_kNN():
     out = {}
 
@@ -150,34 +164,6 @@ def expected_imputation_kNN():
     return out
 
 
-def test_imputer_kNN(setup_imputation_kNN, expected_imputation_kNN):
-    """Test the imputation of kNN imputer.
-
-    """
-    for case, expected_outcome in expected_imputation_kNN.items():
-        calc_imputation = setup_imputation_kNN[case]["df"]
-        calc_imputation[setup_imputation_kNN[case]["col_name"]] = impute_kNN(
-            **setup_imputation_kNN[case]
-        )
-        calc_imputation = calc_imputation.round(10)
-
-        assert_frame_equal(calc_imputation, expected_outcome["df"], check_dtype=False)
-
-
-@pytest.fixture
-def setup_imputation_msd():
-    out = {}
-
-    # case1: Imputing missings from a normal distribution around the mean with
-    # the respective standard deviation times 0.25, of each column respectively.
-    case1 = {
-        "df": pd.DataFrame([[1, 2, np.nan], [np.nan, 3, 4], [5, np.nan, 6]]),
-    }
-    out["case1"] = case1
-
-    return out
-
-
 @pytest.fixture
 def expected_imputation_msd():
     out = {}
@@ -190,8 +176,35 @@ def expected_imputation_msd():
     return out
 
 
+def test_imputer_kNN(setup_imputation_kNN, expected_imputation_kNN):
+    """Test the imputation of the kNN imputer.
+
+        **case1**: Test a standard case with one nearest neighbor, k=1.
+        **cse2**: Test a standard case with two nearest neighbor, k=2.
+        **case3**: Test the case in which one row is completely missing (k=1).
+        **case4**: Test the case in which missing observations have the same
+        distance to other observations (k=1).
+
+    """
+    for case, expected_outcome in expected_imputation_kNN.items():
+        calc_imputation = setup_imputation_kNN[case]["df"]
+        calc_imputation[setup_imputation_kNN[case]["col_name"]] = impute_kNN(
+            **setup_imputation_kNN[case]
+        )
+        calc_imputation = calc_imputation.round(10)
+
+        assert_frame_equal(calc_imputation, expected_outcome["df"], check_dtype=False)
+
+
 def test_imputer_msd(setup_imputation_msd, expected_imputation_msd):
-    """Test the imputation of msd imputer.
+    """Test the imputation of the msd imputer. Because the imputation from
+    a normal distribution faces a random component, we are not able to test for the
+    exact imputation. Yet, we can test wether the imputed values are within the
+    expected boundaries.
+
+    **case1**: Test whether the imputed values are within the boundaries of the
+    distribution, meaning the median +/- the share of the standard deviation of
+    each column respectively.
 
     """
 

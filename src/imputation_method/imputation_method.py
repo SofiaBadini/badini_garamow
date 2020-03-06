@@ -8,9 +8,10 @@ scaler = StandardScaler()
 
 def impute_msd(df, k, sd_share, sd_fixed, col_name):
     """Impute the missing values with the median, plus/ minus some share of the
-    standard deviation of the specific variable/ column.
-    Please note that the data frame is divided into two data frames, data frame
-    with the treated and control observations, contained in a dictionary.
+    standard deviation of the specific variable/ column. Thereby, the number of
+    the random draws from the standard normal distribution can be specified with
+    k. Only the information in the columns specified in the list of column names
+    (*col_name*), is used for the imputation.
 
     Args:
         df (pd.DataFrame() - data set
@@ -43,6 +44,9 @@ def impute_msd(df, k, sd_share, sd_fixed, col_name):
 
 def impute_kNN(df, knn, col_name):
     """Impute the missing values with the average of the k nearest neightbors.
+    Thereby, the number of nearest neighbors can be specified with knn. Only the
+    information in the columns specified in the list of column names
+    (*col_name*), is used for the imputation.
 
     Args:
         df (pd.DataFrame() - data set
