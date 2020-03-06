@@ -25,7 +25,7 @@ from src.imputation_method.imputation_method import impute_msd
 
 np.random.seed(42)
 
-data = pd.read_csv(ppj("IN_DATA", "gate_final.csv"))
+data = pd.read_csv(ppj("OUT_DATA", "gate_final.csv"))
 
 # Set the index to treatment and extrcat column names of columsn to be imputed.
 data.set_index(keys=["treatment"], drop=False, inplace=True)
