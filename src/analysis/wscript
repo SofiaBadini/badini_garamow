@@ -40,7 +40,7 @@ def build(ctx):
     ):
         ctx(
             features="run_py_script",
-            source="regression.py",
+            source="itt_analysis.py",
             deps=[
                 ctx.path_to(ctx, "OUT_DATA", "gate_complete.csv"),
                 ctx.path_to(ctx, "OUT_IMPUTED_DATA", "data_imputed_kNN.csv"),
@@ -51,5 +51,5 @@ def build(ctx):
                 ctx.path_to(ctx, "IN_ANALYSIS", "analysis_functions.py"),
             ],
             target=[ctx.path_to(ctx, "OUT_ANALYSIS", t + ".csv")],
-            name="regression",
+            name="itt_analysis",
         )
