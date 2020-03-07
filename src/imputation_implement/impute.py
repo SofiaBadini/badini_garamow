@@ -73,7 +73,7 @@ for _key, df in dict_df_v4.items():
         lambda x: x.fillna(x.min(), axis=0, inplace=False)
     )
 
-for dict_df in dict_df_v2, dict_df_v3, dict_df_v3:
+for dict_df in dict_df_v2, dict_df_v3, dict_df_v4:
     # Impute the covariates with the kNN imputation method.
     for _key, df in dict_df.items():
         df[dict_colname["all"]] = impute_kNN(df, 1, dict_colname["all"])

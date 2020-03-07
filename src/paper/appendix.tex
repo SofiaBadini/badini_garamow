@@ -53,7 +53,7 @@ All reported characteristics are measured at time of application, prior to rando
 
 %%%%%% ANALYSIS ON IMPUTED DATA  %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[htbp]
+\begin{table}[h!]
 \centering
 \caption{\textsc{ITT Estimates on log Household Income - Analysis on Imputed Data}}
 \input{../../bld/out/tables/table_data_imputed_kNN_controls_coeff}
@@ -75,7 +75,7 @@ All reported characteristics are measured at time of application, prior to rando
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[htbp]
+\begin{table}[h!]
 \centering
 \caption{\textsc{ITT Estimates on log Household Income - Analysis on Imputed Data}}
 \input{../../bld/out/tables/table_data_imputed_kNN_min_controls_coeff}
@@ -90,28 +90,6 @@ All reported characteristics are measured at time of application, prior to rando
 \bigskip
 \raggedright
 \footnotesize
-\textit{Notes:} The dependent variable is log household income 18 months after random assignment. All reported characteristics are measured at time of application, prior to random assignment. The missing values in the data are imputed as follows: The outcomes are imputed with the maximum of the variable/ column while the covariates are imputed with the \ac{kNN} imputation method. \\
-*** Significant at the 1 percent level ** Significant at the 5 percent level * Significant at the 10 percent level
-\end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[htbp]
-\centering
-\caption{\textsc{ITT Estimates on log Household Income - Analysis on Imputed Data}}
-\input{../../bld/out/tables/table_data_imputed_kNN_max_controls_coeff}
-
-
-\medskip
-\begin{adjustbox}{width=0.825\textwidth, totalheight=\textheight, keepaspectratio}
-\input{../../bld/out/tables/table_data_imputed_kNN_max_controls_summary}
-\end{adjustbox}
-
-\label{tab:table_kNN_max_withcontr}
-\bigskip
-\raggedright
-\footnotesize
 \textit{Notes:} The dependent variable is log household income 18 months after random assignment. All reported characteristics are measured at time of application, prior to random assignment. The missing values in the data are imputed as follows: The outcomes are imputed with the minimum of the variable/ column while the covariates are imputed with the \ac{kNN} imputation method. \\
 *** Significant at the 1 percent level ** Significant at the 5 percent level * Significant at the 10 percent level
 \end{table}
@@ -120,6 +98,28 @@ All reported characteristics are measured at time of application, prior to rando
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{table}[H]
+\centering
+\caption{\textsc{ITT Estimates on log Household Income - Analysis on Imputed Data}}
+\input{../../bld/out/tables/table_data_imputed_kNN_max_controls_coeff.tex}
+
+
+\medskip
+\begin{adjustbox}{width=0.825\textwidth, totalheight=\textheight, keepaspectratio}
+\input{../../bld/out/tables/table_data_imputed_kNN_max_controls_summary.tex}
+\end{adjustbox}
+
+\label{tab:table_kNN_max_withcontr}
+\bigskip
+\raggedright
+\footnotesize
+\textit{Notes:} The dependent variable is log household income 18 months after random assignment. All reported characteristics are measured at time of application, prior to random assignment. The missing values in the data are imputed as follows: The outcomes are imputed with the maximum of the variable/ column while the covariates are imputed with the \ac{kNN} imputation method. \\
+*** Significant at the 1 percent level ** Significant at the 5 percent level * Significant at the 10 percent level
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[h!]
 \centering
 \caption{\textsc{ITT Estimates on log Household Income}}
 \addtolength{\tabcolsep}{24pt}
