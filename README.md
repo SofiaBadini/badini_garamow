@@ -38,7 +38,7 @@ Sofia Badini:
 
 Adelina Garamow:
 
-+ Set-up of the skeletton of the project
++ Set-up of the skeleton of the project
 + Write functions for the imputation methods and tests, see folder ``imputation_method``
 + Implement the imputation on the data, see folder ``imputation_implement``
 + Writing the "Introduction", "Imputation and Hypothesis", "ITT Estimates" and "Conclusion"
