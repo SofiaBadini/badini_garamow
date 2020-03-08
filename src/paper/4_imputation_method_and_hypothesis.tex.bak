@@ -1,4 +1,6 @@
 \section{Imputation Methods, Design and Hypothesis}
+\label{sec:imputation_method}
+
 % Complete case and other scenarios
 For the analysis on sensitivity of \ac{OLS} results to different imputation method we compare the complete-case analysis to four imputation methods. For the complete-case analysis, we drop all observations which have missing value. For the analysis on the impute data, we impute the missing values in the outcomes and covariates with the \ac{kNN} method or with a random draw from a normal distribution or simply the minimum or maximum of the respective variable. In the following, we first introduce these two methods in more detail and then present the different imputations, conducted for our sensitivity analysis the \ac{OLS} results. in the last paragraph on this section we state our expected hypothesis for the conducted imputation designs.
 
@@ -36,11 +38,10 @@ For the four different imputation designs, we established three main hypothesis:
 
 	\item[H2] For the ``kNN-msd scenario'' we hypothesize that the treatment effect, ``Treatment'' decreases and that standard errors of the estimates decrease. We expect the treatment effect to decrease because most of the missings are observed in the control group and for people with lower income levels see section 3.2, Table~\ref{tab:table_missing}. Through the imputation of the outcome variable, household income in the second wave, with the median plus, minus some noise, leads to possibly better values for the ones who dropped out or did not provide information on the outcome. This leads to the fact that the imputation decreases the difference between the treatment and control group on the outcome variable. Hence, the results show a lower effect of the treatment. As above, the standard errors decrease because the missings are imputed from the same sample and the number of observations increases in the
 
-	\item[H3] For the ``kNN-min scenario'' and the ``kNN-max scenario'', we hypothesize that the treatment effect will decrease when imputing the maximum and increase when imputing the minimum while the standard deviation of all estimates tends to increase.
+	\item[H3] For the ``kNN-min scenario'' and the ``kNN-max scenario'', we hypothesize that the treatment effect will decrease when imputing the maximum and increase when imputing the minimum while the standard deviation of all estimates tends to increase. The ``kNN-min scenario'' will hence provide the upper bound while the ``kNN-max scenario'' will provide the lower bound of the treatment effect estimate. As mentioned above, the first part of the hypothesis relies of the fact that missings are mostly observed for people in the control group. When completing the missings in the outcome with the maximum value, the distance between the treatment and control group decrease and the positive treatment effect observed decreases. Contrary, to this, completing the missings in the outcome with the minimum increases the difference between the treatment and control group in the outcome, enforcing the positive treatment effect. The standard errors are expect to increase since the imputation is based on the two most extreme values of the distribution. Finally, all the estimates produced for the treatment effect should fall into the bounds of the ``kNN-min scenario'' and the ``kNN-max scenario''.
 
 \end{itemize}
 
-We compare our hypothesis with the results in section
-
+We compare our hypothesis with the results in section 5.
 
 

@@ -180,8 +180,11 @@ def test_imputer_kNN(setup_imputation_kNN, expected_imputation_kNN):
     """Test the imputation of the kNN imputer.
 
         **case1**: Test a standard case with one nearest neighbor, k=1.
+
         **cse2**: Test a standard case with two nearest neighbor, k=2.
+
         **case3**: Test the case in which one row is completely missing (k=1).
+
         **case4**: Test the case in which missing observations have the same
         distance to other observations (k=1).
 

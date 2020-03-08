@@ -15,9 +15,13 @@ def impute_msd(df, k, sd_share, sd_fixed, col_name):
 
     Args:
         df (pd.DataFrame() - data set
+
         k (integer) - number of draws
+
         sd_share (integer) - share of variance applied
+
         sd_fixed (integer) - additional constant to variance
+
         col_name (list) - names of variables which should be imputed
 
     Returns:
@@ -50,7 +54,9 @@ def impute_kNN(df, knn, col_name):
 
     Args:
         df (pd.DataFrame() - data set
+
         knn (integer) - number of nearest neighbors
+
         col_name (list) - names of variables which should be imputed
 
     Returns:
