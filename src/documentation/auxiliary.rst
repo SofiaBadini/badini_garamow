@@ -5,7 +5,6 @@ Auxiliary
 ************
 
 Documentation of the code in *src.auxiliary*.
-
 Auxiliary functions used to perform calculations and format tables.
 
 

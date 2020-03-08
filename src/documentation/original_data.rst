@@ -13,7 +13,7 @@ application.csv
 ================
 
 The original panel dataset of applicants' data, collected at the application
-for the GATE services. Available in .sas7bcat format at the `ETA`_
+for the GATE services. Available in .sas7bdat format at the `ETA`_
 website (Employment & Training Administration, an agency within the U.S.
 Department of Labor).
 
@@ -23,7 +23,7 @@ wave2.csv
 ==========
 
 The original panel dataset of applicants' data, collected 18 months after
-receipt of the GATE services. Available in .sas7bcat format at the `ETA`_
+receipt of the GATE services. Available in .sas7bdat format at the `ETA`_
 website (Employment & Training Administration, an agency within the U.S.
 Department of Labor).
 

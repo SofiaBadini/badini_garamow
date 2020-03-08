@@ -1,5 +1,5 @@
 """Format results of missing data mechanism analysis, stored as .csv files in the
-"OUT_ANALYSIS" directory, as latex tables, and sore them in the "OUT_TABLES" directory.
+"OUT_ANALYSIS" directory, as latex tables, and store them in the "OUT_TABLES" directory.
 
 """
 import numpy as np
@@ -228,4 +228,5 @@ if __name__ == "__main__":
 
     for data in list_data:
         itt_analysis_with_controls_as_table(data)
-        itt_analysis_without_controls_as_table(data)
+
+    itt_analysis_without_controls_as_table("gate_complete")

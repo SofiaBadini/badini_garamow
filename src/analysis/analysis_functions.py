@@ -1,3 +1,4 @@
+"""Functions called in ``itt_analysis.py`` and ``missing_mechanism_analysis.py``."""
 import pandas as pd
 
 from bld.project_paths import project_paths_join as ppj
@@ -89,7 +90,7 @@ def create_levene_dataframe(name_df):
 
 
 def create_logistic_dataframe(name_df):
-    """"Check for missing values mechanism of dataset ``gate_final.csv`` via logistic
+    """Check for missing values mechanism of dataset ``gate_final.csv`` via logistic
     regression and save results to ``logistic_df.csv``.
 
     """

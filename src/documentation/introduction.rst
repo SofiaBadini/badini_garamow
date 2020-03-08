@@ -5,7 +5,7 @@
 Introduction
 ************
 
-Our project is concerned with the sensitivity results of OLS results to different
+Our project is concerned with the sensitivity of OLS results to different
 imputation methods for missing values in an Randomized Control Trial (RCT) framework.
 For this purpose we base our analysis on a large RCT, the Growing America through
 Entrepreneurship (GATE) project, implemented by the US Department
