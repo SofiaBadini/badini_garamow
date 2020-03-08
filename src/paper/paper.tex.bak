@@ -41,8 +41,9 @@
 \input{1_intro.tex}
 \input{2_gate.tex}
 \input{3_missing_data_analysis.tex}
-\input{4_itt_estimates.tex}
-\input{5_conclusion.tex}
+\input{4_imputation_method_and_hypothesis.tex}
+\input{5_itt_estimates.tex}
+\input{6_conclusion.tex}
 
 \clearpage
 \printbibliography

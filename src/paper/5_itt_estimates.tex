@@ -1,0 +1,70 @@
+
+% !TEX root = 000_paper.tex
+
+\section{Intention-to-Treat Estimates}
+\label{sec:itt_estimates}
+\subsection{Complete-case Analysis}
+
+The following tables, Table~\ref{tab:table_complete_withcontr} and Table~\ref{tab:table_kNN_withcontr}, depict the \ac{OLS} regression results, whereby the outcome variable, household income in the second wave, is regressed on usual set of baseline characteristics.
+
+While Table~\ref{tab:table_complete_withcontr} shows the results for the complete-case\footnote{Observations with any missing information are dropped.} analysis Table~\ref{tab:table_kNN_withcontr} shows the results for the analysis on the imputed data in the ``\ac{kNN} scenario''\footnote{In this case the data is imputed as follows: First, the outcomes are imputed with the mean from the draws from a normal distribution, with the mean equal to the median and a share of 0.25 of the standard deviation of each column. In a second step, the covariates are imputed with the \ac{kNN} estimator.}. The complete data set contains 3,720 observations while the imputed data set preserved all the observations through imputation, amounting to 480 observations more (4,200).
+
+For the complete case analysis (Table~\ref{tab:table_complete_withcontr}) the ``Treatment'' is insignificant and the confidence interval includes effects in both directions. Furthermore, log yearly income is highly correlated with the income stated at application, the reference category being yearly income between \$50,000 and \$74,000; negatively correlated with having a bad credit history, with having a minority racial background, and with age. More surprisingly, being married is negatively correlated with log household income. In general, we would expect married individuals to have an higher income, because their spouse' salary is counted as well. An explanation for this observation could be that a married couple is more likely to have kids and hence one spouse is likely to work less. Yet, we observe that household income is positively correlated with having kids. This could be because mainly households with a higher income decide to have children or work more to increase their household earnings.
+
+Moreover, looking at the ITT estimate shown in Table~\ref{tab:table_complete_nocontr} in Appendix~\ref{appendix_itt_estimates}, we can see that the result is quite sensitive to removing controls. The coefficient for "Treatment" is still insignificant but increases by almost 70\% (0.0425). As before, the confidence interval includes effects in both directions, from an approximate 10\% increase to a 1.5\% decrease in yearly income.
+
+Comparing the complete-case analysis to the analysis on the imputed data in the ``kNN imputation'' in Table ~\ref{tab:table_kNN_withcontr}, we can see that while the coefficients increase or decrease, the standard errors always decrease. However, the treatment coefficient, ``Treatment'', is hardly affected by the imputation. It increases only very slightly, by 0.0009 percentage points while its standard error decreases by 0.01, from 0.049 to 0.039, and remains insignificant. AS in the complete-case analysis, the confidence interval includes effects in both directions. In general, the results are reassuring because even though the magnitude of the coefficients of the covariates change, the direction of the relation and significance level remain for most estimates as in the complete-case analysis, e.g., ``Pittsburgh'', ``Age'', and ``Married'' etc. In the ``kNN imputation'' the variables ``Has children'' and `` Has bad credit history'' loose their significance while the variables ``Has an health problem'' and `` Salaried worker'' become significant. These results are likely due to increase in the number of observations. Finally, these results are in line with our hypothesis in \textbf{H1}
+
+Comparing the complete case-analysis to the ``kNN-msd scenario'', see Appendix~\ref{appendix_itt_estimates} in Table ~\ref{tab:table_kNN_msd_withcontr}, we see that overall, both the magnitude of the coefficients and their respective standard error decrease. The coefficient of the ``Treatment'' remained insignificant and reduces by almost 30\%, to 0.01 and its standard error reduces to 0.32. As in the complete-case analysis, the confidence interval includes effects in both directions. In general, the results are reassuring because the significant coefficients in the complete-case analysis, like ``Pittsburg'' ``Married'', ``Age'' etc. remain significant in the analysis on the imputed data in the ``kNN-msd scenario''. The decrease in the treatment can be explained as follows: Most of the observations which have a missing are from the control group. The imputation in the ``kNN-msd scenario'' decreases the difference in the outcome between the treatment and control group. Hence, the difference between the treatment and control groups becomes less severe and the treatment effect decreases. This leads to a coefficient of the ``Treatment'' in the ``kNN-msd scenario'' that is smaller compared to the complete case analysis and the ``kNN scenario''. Finally, these results are in line with our hypothesis \textbf{H2}
+
+The bound analysis in the Appendix~\ref{appendix_itt_estimates} in Table ~\ref{tab:table_kNN_min_withcontr} and Table ~\ref{tab:table_kNN_max_withcontr} confirm the hypothesis \textbf{H3}. The coefficient of ``Treatment in the ``kNN-min'' scenario is the highest, amounting to 0.586 while the coefficient for the ``kNN-max'' scenario is the lowest, amounting to -0.32. In both cases, the standard error increases and the confidence interval includes effects only in one direction. As stated in the hypothesis, the results from the complete case analysis and the ``kNN scenario'' are in between these bounds. Furthermore, the treatment coefficient becomes significant in the ``kNN-min'' and ``kNN-max''.
+
+All in all, these results confirm all our hypothesis.
+
+%For brevity reasons, the regression results on the imputed data in the ``kNN-msd scenario'' and the bound analysis, with the ``kNN-min scenario'' and ``kNN-max scenario''  are presented in the.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[t!]
+\centering
+\caption{\textsc{ITT Estimates on log Household Income - Complete Case Analysis}}
+\input{../../bld/out/tables/table_gate_complete_controls_coeff}
+
+
+\medskip
+\begin{adjustbox}{width=0.825\textwidth, totalheight=\textheight, keepaspectratio}
+\input{../../bld/out/tables/table_gate_complete_controls_summary}
+\end{adjustbox}
+
+\label{tab:table_complete_withcontr}
+\bigskip
+\raggedright
+\footnotesize
+\textit{Notes:} The dependent variable is log household income 18 months after random assignment. All reported characteristics are measured at time of application, prior to random assignment. \\
+*** Significant at the 1 percent level ** Significant at the 5 percent level * Significant at the 10 percent level
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%% ANALYSIS ON IMPUTED DATA  %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[t!]
+\centering
+\caption{\textsc{ITT Estimates on log Household Income - Analysis on Imputed Data}}
+\input{../../bld/out/tables/table_data_imputed_kNN_controls_coeff}
+
+
+\medskip
+\begin{adjustbox}{width=0.825\textwidth, totalheight=\textheight, keepaspectratio}
+\input{../../bld/out/tables/table_data_imputed_kNN_controls_summary}
+\end{adjustbox}
+
+\label{tab:table_kNN_withcontr}
+\bigskip
+\raggedright
+\footnotesize
+\textit{Notes:} The dependent variable is log household income 18 months after random assignment. All reported characteristics are measured at time of application, prior to random assignment. The missing values in the data are imputed as follows: First, the outcomes are imputed with the mean from the draws from a normal distribution, with the mean equal to the median and a share of 0.25 of the standard deviation of each column. In a second step, the covariates are imputed with the \ac{kNN} estimator. \\
+*** Significant at the 1 percent level ** Significant at the 5 percent level * Significant at the 10 percent level
+\end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
