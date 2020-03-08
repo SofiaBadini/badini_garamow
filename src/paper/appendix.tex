@@ -14,7 +14,7 @@
 \centering
 \caption{\textsc{Levene's Test for Homogeneity of Variances}}
 \begin{adjustbox}{width=\textwidth,totalheight=\textheight,keepaspectratio}
-\input{../../bld/out/tables/table_levene_df}
+\input{../../out/tables/table_levene_df}
 \end{adjustbox}
 
 
@@ -33,7 +33,7 @@ All reported characteristics are measured at time of application, prior to rando
 \centering
 \caption{\textsc{Missing Values Comparison of Characteristics for GATE Experiment}}
 \begin{adjustbox}{width=\textwidth,totalheight=\textheight,keepaspectratio}
-\input{../../bld/out/tables/table_chisq_df}
+\input{../../out/tables/table_chisq_df}
 \end{adjustbox}
 
 
@@ -49,18 +49,16 @@ All reported characteristics are measured at time of application, prior to rando
 
 \newpage
 \subsection*{Additional Tables for ITT Estimates} \label{appendix_itt_estimates}
-
-\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{table}[H]
 \centering
 \caption{\textsc{ITT Estimates on log Household Income}}
 \addtolength{\tabcolsep}{24pt}
-\input{../../bld/out/tables/table_gate_complete_no_controls_coeff}
+\input{../../out/tables/table_gate_complete_no_controls_coeff}
 \addtolength{\tabcolsep}{-24pt}
 
 \medskip
-\input{../../bld/out/tables/table_gate_complete_no_controls_summary}
+\input{../../out/tables/table_gate_complete_no_controls_summary}
 
 \label{tab:table_complete_nocontr}
 \bigskip
@@ -72,15 +70,15 @@ All reported characteristics are measured at time of application, prior to rando
 
 %%%%%% ANALYSIS ON IMPUTED DATA  %%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[h!]
+\begin{table}[t!]
 \centering
 \caption{\textsc{ITT Estimates on log Household Income - Analysis on Imputed Data}}
-\input{../../bld/out/tables/table_data_imputed_kNN_msd_controls_coeff}
+\input{../../out/tables/table_data_imputed_kNN_msd_controls_coeff}
 
 
 \medskip
 \begin{adjustbox}{width=0.825\textwidth, totalheight=\textheight, keepaspectratio}
-\input{../../bld/out/tables/table_data_imputed_kNN_msd_controls_summary}
+\input{../../out/tables/table_data_imputed_kNN_msd_controls_summary}
 \end{adjustbox}
 
 \label{tab:table_kNN_msd_withcontr}
@@ -94,15 +92,15 @@ All reported characteristics are measured at time of application, prior to rando
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[h!]
+\begin{table}[t!]
 \centering
 \caption{\textsc{ITT Estimates on log Household Income - Analysis on Imputed Data}}
-\input{../../bld/out/tables/table_data_imputed_kNN_min_controls_coeff}
+\input{../../out/tables/table_data_imputed_kNN_min_controls_coeff}
 
 
 \medskip
 \begin{adjustbox}{width=0.825\textwidth, totalheight=\textheight, keepaspectratio}
-\input{../../bld/out/tables/table_data_imputed_kNN_min_controls_summary}
+\input{../../out/tables/table_data_imputed_kNN_min_controls_summary}
 \end{adjustbox}
 
 \label{tab:table_kNN_min_withcontr}
@@ -114,17 +112,16 @@ All reported characteristics are measured at time of application, prior to rando
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[H]
+\begin{table}[t]
 \centering
 \caption{\textsc{ITT Estimates on log Household Income - Analysis on Imputed Data}}
-\input{../../bld/out/tables/table_data_imputed_kNN_max_controls_coeff.tex}
+\input{../../out/tables/table_data_imputed_kNN_max_controls_coeff.tex}
 
 
 \medskip
 \begin{adjustbox}{width=0.825\textwidth, totalheight=\textheight, keepaspectratio}
-\input{../../bld/out/tables/table_data_imputed_kNN_max_controls_summary.tex}
+\input{../../out/tables/table_data_imputed_kNN_max_controls_summary.tex}
 \end{adjustbox}
 
 \label{tab:table_kNN_max_withcontr}

@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t]
     \caption{Nullity Matrix for GATE Dataset}
-    \includegraphics[width=\textwidth]{../../bld/out/figures/matrix_nan.png}
+    \includegraphics[width=\textwidth]{../../out/figures/matrix_nan.png}
     \label{fig:matrix_nan}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -15,18 +15,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t]
     \caption{Nullity Correlation Heatmap for GATE Dataset}
-    \includegraphics[width=\textwidth]{../../bld/out/figures/heatmap_nan.png}
+    \includegraphics[width=\textwidth]{../../out/figures/heatmap_nan.png}
     \label{fig:heatmap_nan}
 \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Throughout our paper we focus on a subset of about 30 baseline characteristics (following \cite{fairlie2015behind}) and on only one outcome, log household income at the wave 2 follow-up survey (18 months after random assignment). Figure~\ref{fig:matrix_nan} displays the missing data pattern for this subset of variables. Missing values in the baseline characteristics are found in 12\% of the total 4197 applicants, and appear to be more numerous for questions related to employment status, credit history, personal characteristics and health.
+Throughout our paper we focus on a subset of about 30 baseline characteristics (following \cite{fairlie2015behind}) and on only one outcome, log household income at the second wave follow-up survey (18 months after random assignment). Figure~\ref{fig:matrix_nan} displays the missing data pattern for this subset of variables. Missing values in the baseline characteristics are found in 12\% of the total 4,197 applicants, and appear to be more numerous for questions related to employment status, credit history, personal characteristics and health.
 
-At the wave 2 follow-up survey, 18 months after random assignment, 1570 individuals (37.4\% of the full sample) do not report a value for household income at wave 2. Among them, 748 (47.6\%) are attriters --- in this context, individuals who do not answer any question of the wave 2 follow-up survey ---, while the remaining 822 (52.4\%) are not attriters in the strict sense, as they do take part in the survey, but do not answer any of the questions related to household income.
+At the second wave follow-up survey, 18 months after random assignment, 1,570 individuals (37.4\% of the full sample) do not report a value for household income. Among them, 748 (47.6\%) are attriters --- in this context, individuals who do not answer any question of the follow-up survey ---, while the remaining 822 (52.4\%) are not attriters in the strict sense, as they do take part in the survey, but do not answer any of the questions related to household income. In the analysis we do not differentiate between them.
 
-Figure~\ref{fig:heatmap_nan} displays the degree of nullity correlation between paired different characteristics (variables with no missing values are excluded). A positive nullity correlation indicates that the first and the second characteristics are likely to both have missing values, while a negative nullity correlation means that one of the features is missing and the second is likely not to be missing. The heatmap shows that, in general, nullity correlation is weakly positive, with larger uncertainty in information related to household composition.
+Figure~\ref{fig:heatmap_nan} displays the degree of nullity correlation between paired different characteristics (variables with no missing values are excluded). A positive nullity correlation indicates that the first and the second characteristics are likely to both have missing values, while a negative nullity correlation means that if one of the features is missing the second is likely not to be missing. The heatmap shows that, in general, nullity correlation is weakly positive, with larger uncertainty in information related to household composition.
 
-The nullity correlation between the variable "Unemployed" and the variables "Salaried worker" and "Self-employed" is high because "Unemployed" is a generated variable, which takes value 1 if the individual claim to be either a salaried worker or self-employed, and 0 if the individual claims to be none of these categories. It seems that many individuals do not indicate whether they are self-employed, resulting in a missing value in the "Unemployed" variable. An hypothesis is that seasonal or occasional workers, while being clearly not salaried workers, may be unsure whether to consider themselves self-employed.
+The nullity correlation between the variable "Unemployed" and the variables "Salaried worker" and "Self-employed" is high because "Unemployed" is a generated variable, which takes value 1 if the individual claims to be either a salaried worker or self-employed, and 0 if the individual claims to be none of these categories. It seems that many individuals do not indicate whether they are self-employed, resulting in a missing value in the "Unemployed" variable. An hypothesis is that seasonal or occasional workers, while being clearly not salaried workers, may be unsure whether to consider themselves self-employed.
 
 We also observe a nullity correlation of 0.4 between the autonomy and risk-tolerance indexes. Since, looking at the Codebook for Wave 2 data\footnote{Available at \url{https://www.doleta.gov/reports/projectgate/}}, all questions related to personality traits were grouped together at the end of the questionnaire, this may be taken as an hint that many individuals skipped the entire section.
 
@@ -38,7 +38,7 @@ We also observe a nullity correlation of 0.4 between the autonomy and risk-toler
 \centering
 \caption{\textsc{Missing Values Comparison of Characteristics for GATE Experiment}}
 \begin{adjustbox}{width=\textwidth,totalheight=\textheight,keepaspectratio}
-\input{../../bld/out/tables/table_welch_df}
+\input{../../out/tables/table_welch_df}
 \end{adjustbox}
 
 
@@ -48,7 +48,7 @@ We also observe a nullity correlation of 0.4 between the autonomy and risk-toler
 \footnotesize
 \textit{Notes:} Welch's t-tests are performed to assess whether missingness in the data is related to individuals' characteristics.
 All reported characteristics are measured at time of application, prior to random assignment. The outcome of interest is log household income 18 months after time of application. We adjust the significance levels for multiple testing using a Bonferroni correction. \\
-*** Significant at the (adjusted) 1 percent level ** Significant at the (adjusted) 5 percent level * Significant at the (adjusted) 1 percent level
+*** Significant at the (adjusted) 1 percent level ** Significant at the (adjusted) 5 percent level * Significant at the (adjusted) 10 percent level
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -57,7 +57,7 @@ All reported characteristics are measured at time of application, prior to rando
 \centering
 \caption{\textsc{Logistic Regression on Missing Values for GATE Experiment}}
 \begin{adjustbox}{width=\textwidth,totalheight=\textheight,keepaspectratio}
-\input{../../bld/out/tables/table_logistic_df}
+\input{../../out/tables/table_logistic_df}
 \end{adjustbox}
 
 
@@ -75,7 +75,7 @@ All reported characteristics are measured at time of application, prior to rando
 \centering
 \caption{\textsc{Treatment/Control Comparison of Characteristics \\ for GATE Experiment}}
 \begin{adjustbox}{width=\textwidth, totalheight=\textheight, keepaspectratio}
-\input{../../bld/out/tables/table_integrity_df}
+\input{../../out/tables/table_integrity_df}
 \end{adjustbox}
 
 
@@ -83,33 +83,29 @@ All reported characteristics are measured at time of application, prior to rando
 \medskip
 \raggedright
 \footnotesize
-\textit{Notes:} All reported characteristics are measured at time of application, prior to random assignment. The wave 2 follow-up survey is conducted 18 months after time of application. We adjust the significance levels for multiple testing using a Bonferroni correction. \\
+\textit{Notes:} All reported characteristics are measured at time of application, prior to random assignment. The second wave follow-up survey is conducted 18 months after time of application. We adjust the significance levels for multiple testing using a Bonferroni correction. \\
 ** Significant at the (adjusted) 5 percent level
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We explore the missing data mechanism by first performing paired t-tests between respondent and non-respondent for each characteristic (\cite{acock2005}, \cite{huisman1998}). We differentiate between individuals with missing values in the baseline characteristics and individuals with missing values in the outcome of interest. A significant difference between respondents and non-respondents indicates an association between the given characteristic and the missigness pattern, therefore ruling out MCAR.
+We explore the missing data mechanism by first performing paired t-tests between respondent and non-respondent for each characteristic (\cite{acock2005}, \cite{huisman1998}). We differentiate between individuals with missing values in the baseline characteristics and individuals with missing values in the outcome of interest. A significant difference between respondents and non-respondents indicates an association between the given characteristic and the missing pattern, therefore ruling out \ac{MCAR}.
 
 We choose Welch's t-tests, also known as unequal variances t-test, over the more common Student's t-test, because respondents are about one order of magnitude more numerous than non-respondents for each characteristic. As the variance of a sample is affected by its size, we expect unequal variances across respondents and non-respondents for each characteristics. Indeed, the Levene's test rejects the null hypothesis of equal variances for a number of characteristics, as shown in Table~\ref{tab:table_levene} in Appendix~\ref{appendix_missing_analysis}.
 
 Table~\ref{tab:table_missing} shows that having missing values is significantly associated with a number of baseline characteristics. Having missing values seem to be generally associated with site of treatment, racial background, level of education, and yearly income.
 
-Having a missing value in the outcome of interest appears to be further correlated with financial status: non-respondents are on average younger than non-respondents, and more likely to be foreigners, to belong to racial minorities, to receive employment benefits and to have a bad credit history. Moreover, individuals who claimed their yearly household income to be \$25,000 or lower at application are more likely not to state their income at the wave 2 follow-up survey, while on the contrary individuals who initially claimed to have a yearly income of \$100,000 dollars or more are less likely to be non-respondents.
+Having a missing value in the outcome of interest appears to be further correlated with socio-economic status: non-respondents are on average younger than non-respondents, and more likely to be foreigners, to belong to racial minorities, to receive employment benefits and to have a bad credit history. Moreover, individuals who claimed their yearly household income to be \$25,000 or lower at application are more likely not to state their income at the second wave follow-up survey, while on the contrary individuals who initially claimed to have a yearly income of \$100,000 dollars or more are less likely to be non-respondents.
 
 For a consistency check, we additionally perform chi-squared tests for each characteristic, which are more indicated for categorical variables. Although we lose some interpretability, as we do not obtain an explicit mean comparison any longer, the results shown in~\ref{tab:table_chisq}, in Appendix~\ref{appendix_missing_analysis}, seem to substantially confirm the pattern.
 
 Furthermore, we run two separate logistic regression models where baseline characteristics are regressed firstly on a missing data dummy representing missings in the baseline characteristics, and secondly on a missing data dummy representing a missing in the outcome of interest. An advantage of this method over crude t-test comparisons is the possibility to adjust for the impact of the other variables on the missing data dummies.
 
-Table~\ref{tab:table_logistic} shows that, somewhat unsurprisingly, most of the significance disappears once the baseline characteristics are jointly considered, although missingness in the outcome of interest still appears to be significantly correlated with observed characteristics. Importantly, the data at hand display multi-collinearity issues \footnote{This problem was addressed by ultimately removing one baseline characteristic, "Worked for self-employed friends", from the logistic regression. This is obviously an arbitrary choice, but we also observed a loss of significance after removing other combinations of variables.}, which tend to make statistical inference less reliable.
+Table~\ref{tab:table_logistic} shows that, somewhat unsurprisingly, most of the significance disappears once the baseline characteristics are jointly considered, although missingness in the outcome of interest still appears to be significantly correlated with some observed characteristics. Importantly, the data at hand display multi-collinearity issues \footnote{This problem was addressed by ultimately removing one baseline characteristic, "Worked for self-employed friends", from the logistic regression. This is obviously an arbitrary choice, but we also observed a loss of significance after removing other combinations of variables.}, which tend to make statistical inference less reliable.
 
-The internal validity of the complete case analysis' ITT, which we use as a benchmark, is unharmed as long as treatment and control groups are comparable. Table~\ref{tab:table_integrity} shows that baseline characteristics are balanced between treatment and control both after application and at the wave 2 follow-up survey, a reassuring result.
+The internal validity of the complete case analysis' \ac{ITT}, which we use as a benchmark, is unharmed as long as treatment and control groups are comparable. Table~\ref{tab:table_integrity} shows that baseline characteristics are balanced between treatment and control both after application and at the follow-up survey, a reassuring result.
 
-However, missingness in the outcome of interest appears not to be balanced between treatment groups, with untreated individual being statistically more likely not to answer questions related to household income. Relatedly, attrition is also higher for untreated individuals, as shown by \cite{fairlie2015behind}. The different non-response rate for treatment and control and the wave 2 follow-up survey may indicate correlation between treatment status and outcome, and therefore requires further investigation.
+However, missingness in the outcome of interest appears not to be balanced between treatment groups, with untreated individual being statistically more likely not to answer questions related to household income. Relatedly, attrition is also higher for untreated individuals, as shown by \cite{fairlie2015behind}. The different non-response rate for treatment and control and the follow-up survey may indicate correlation between treatment status and outcome, and therefore requires further investigation.
 
-In all, these results seem to rule out the possibility of MCAR. Missingness, especially in the outcome of interest, appears to be significantly correlated with a number of baseline observed characteristics, which does not harm the internal validity of the ITT estimates for the complete case analysis because treatment-control balance is still present, but results in certain subgroups being under-represented, which may lead the ITT estimates to be sensitive to the inclusion of controls for baseline characteristics. Further problems to external validity of the estimates and takeup of treatment are discussed in the literature (see, for example, \cite{millan2017})
+In all, these results seem to rule out the possibility of \ac{MCAR}. Missingness, especially in the outcome of interest, appears to be significantly correlated with some baseline observed characteristics, which does not harm the internal validity of the \ac{ITT} estimates for the complete-case analysis because treatment-control balance is still present, but results in certain subgroups being under-represented, which may lead the \ac{ITT} estimates to be sensitive to the inclusion of controls for baseline characteristics. Further problems of external validity of the estimates and take-up of treatment are discussed in the literature (see, for example, \cite{millan2017})
 
-Later, we impute these missing values assuming different missingness mechanisms.
-
-First, we assume a MCAR pattern and employ a k-nearest neighbor algorithm. We assume that all the relevant information on the outcome of interest can be drawn from the observed baseline characteristics (plus treatment and attrition status). This greatly simplify the analysis, but a clear drawback is that we neglect information on business outcomes present in the wave 1 follow-up survey (6 months after random assignment) and information on business outcomes besides household income present in the wave 2 follow-up survey, which are both likely correlated with our outcome of interest and thus may be used to predict its missing values.
-
-Second, we assume a MANR pattern for the outcome of interest. We address the different non-renspose rate for treatment and control conducting a bounds analysis to investigate the effect of different assumptions on the ITT estimates.
+In the next section, we impute these missing values in outcome and covariates in four different ways.
