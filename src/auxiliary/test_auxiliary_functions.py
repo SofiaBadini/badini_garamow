@@ -1,3 +1,4 @@
+"""Test functions in ``auxiliary_functions.py``"""
 import numpy as np
 import pandas as pd
 import pytest

@@ -4,7 +4,15 @@
 Anaylsis
 *********
 
-Documentation of the code in *src.analysis*. This is the core of our project.
+Documentation of the code in *src.analysis*.
+This is the core of our project.
+
+
+``analysis_functions.py``
+=================================
+
+.. automodule:: src.analysis.analysis_functions
+    :members:
 
 
 ``missing_mechanism_analysis.py``

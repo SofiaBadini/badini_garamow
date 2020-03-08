@@ -6,7 +6,6 @@ Final
 
 
 Documentation of the code in *src.final*.
-
 Here we create the plots and tables present in the paper.
 
 

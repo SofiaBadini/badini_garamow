@@ -1,8 +1,8 @@
 """Pre-process data from the original GATE datasets.
 
 Process original data stored in ``application.csv`` and ``wave2.csv`` located
-in the "IN_DATA" directory, and save the final datasets to ``gate_long.csv``
-and ``gate_final.csv`` in the "OUT_DATA" directory.
+in the "IN_DATA" directory, and save the final datasets to ``gate_long.csv``,
+``gate_final.csv`` and ``gate_complete.csv`` in the "OUT_DATA" directory.
 
 """
 import numpy as np

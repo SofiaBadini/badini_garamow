@@ -1,6 +1,4 @@
-"""Dictionary to be used as tables' new index.
-
-"""
+"""Dictionary to be used as tables' new index."""
 
 pretty_index_dict = {
     "constant": "intercept",
