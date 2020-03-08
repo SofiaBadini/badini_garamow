@@ -192,7 +192,7 @@ latex_documents = [
     (
         "index",
         "project_documentation.tex",
-        r"""Documentation of the \emph{Effective Programming Practice for Economists}
+        r"""Documentation of the \emph{Effective Programming Practices for Economists}
         project""",
         r"""\hfill Sofia Badini \\\ \hfill Adelina Garamow\\\ \hfill""",
         "manual",
